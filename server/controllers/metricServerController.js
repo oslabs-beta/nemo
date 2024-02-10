@@ -5,6 +5,7 @@ kc.loadFromDefault();
 
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
 const k8sNetworkingApi = kc.makeApiClient(k8s.NetworkingV1Api);
+const k8sAppsApi = kc.makeApiClient(k8s.AppsV1Api);
 //const k8sApiMetrics = kc.makeApiClient(k8s.CustomObjectsApi);
 
 const metricServerController = {};
@@ -89,7 +90,22 @@ metricServerController.getIngresses = async (req, res, next) => {
   }
 };
 
-//listNamespacedIngress
+metricServerController.getDeployments = async (req, res, next) => {
+  try {
+    const data = await k8sAppsApi.listDeploymentForAllNamespaces();
+    res.locals.deployments = data.body.items;
+    return next();
+  } catch (err) {
+    return next({
+      log: `metricServerController.getDeployments: ERROR ${err}`,
+      status: 500,
+      message: {
+        err: 'Error occured in metricServerController.getDeployments. Check server logs.',
+      },
+    });
+  }
+};
+
 //listNamespacedDeployment
 
 //config maps? --- listNamespacedConfigMap

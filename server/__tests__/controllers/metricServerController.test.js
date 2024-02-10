@@ -67,4 +67,17 @@ describe('Metric Server Controller', function () {
         });
     });
   });
+
+  describe('GET /metricserver/deployments', function () {
+    it('should return an array of deployments with status 200', function (done) {
+      request(app)
+        .get('/metricserver/deployments')
+        .expect(200)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('array');
+          done();
+        });
+    });
+  });
 });

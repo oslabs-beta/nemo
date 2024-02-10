@@ -22,4 +22,12 @@ router.get('/ingresses', metricServerController.getIngresses, (req, res) => {
   return res.status(200).json(res.locals.ingresses);
 });
 
+router.get(
+  '/deployments',
+  metricServerController.getDeployments,
+  (req, res) => {
+    return res.status(200).json(res.locals.deployments);
+  }
+);
+
 export default router;
