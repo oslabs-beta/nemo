@@ -1,22 +1,45 @@
 import express from 'express';
-const app = express();
-import k8MetricController from './controllers/k8MetricController.js';
+//import metricServerController from './controllers/metricServerController.js';
+import metricServerRouter from './routes/metricServerRouter.js';
 
+const app = express();
 const PORT = 3000;
 
+/**
+ * import routers
+ */
+
+/**
+ * handle data parsing requirements
+ */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+/**
+ * use route handlers
+ */
+app.use('/metricserver', metricServerRouter);
+
+/**
+ * handle requests to the root
+ */
 app.get('/', (req, res) => {
   return res.sendStatus(200);
 });
 
-app.get('/pods', k8MetricController.getPods, (req, res) => {
-  res.status(200).send(res.locals.pods);
-});
+//to be moved into metricserverrouter file
+// app.get('/pods', metricServerController.getPods, (req, res) => {
+//   res.status(200).send(res.locals.pods);
+// });
 
+/**
+ * catch requests to unknown routes
+ */
 app.use((req, res) => res.sendStatus(404));
 
+/**
+ * global error handler
+ */
 app.use((err, req, res, next) => {
   const defaultErr = {
     log: `Express error handler caught unknown error: ${err}`,
@@ -28,6 +51,9 @@ app.use((err, req, res, next) => {
   return res.status(errorObj.status).json(errorObj.message);
 });
 
+/**
+ * start the server
+ */
 app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
 
 export default app;

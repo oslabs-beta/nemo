@@ -6,24 +6,23 @@ kc.loadFromDefault();
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
 const k8sApiMetrics = kc.makeApiClient(k8s.CustomObjectsApi);
 
-const k8MetricController = {};
+const metricServerController = {};
 
-k8MetricController.getPods = async (req, res, next) => {
+metricServerController.getPods = async (req, res, next) => {
   try {
     //need to work to make 'kube-system' dynamic to work with any users contexts/namespaces
     const data = await k8sApi.listNamespacedPod('kube-system');
-    console.log(data.body.items);
     res.locals.pods = data.body.items;
     return next();
   } catch (err) {
     return next({
-      log: `k8MetricController.getPods: ERROR ${err}`,
+      log: `metricServerController.getPods: ERROR ${err}`,
       status: 500,
       message: {
-        err: 'Error occured in k8MetricController.getPods. Check server logs.',
+        err: 'Error occured in metricServerController.getPods. Check server logs.',
       },
     });
   }
 };
 
-export default k8MetricController;
+export default metricServerController;
