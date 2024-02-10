@@ -15,4 +15,30 @@ describe('Metric Server Controller', function () {
         });
     });
   });
+
+  describe('GET /metricserver/nodes', function () {
+    it('should return an array of nodes with status 200', function (done) {
+      request(app)
+        .get('/metricserver/nodes')
+        .expect(200)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('array');
+          done();
+        });
+    });
+  });
+
+  describe('GET /metricserver/namespaces', function () {
+    it('should return an array of namespaces with status 200', function (done) {
+      request(app)
+        .get('/metricserver/namespaces')
+        .expect(200)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('array');
+          done();
+        });
+    });
+  });
 });
