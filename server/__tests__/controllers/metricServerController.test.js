@@ -41,4 +41,30 @@ describe('Metric Server Controller', function () {
         });
     });
   });
+
+  describe('GET /metricserver/services', function () {
+    it('should return an array of services with status 200', function (done) {
+      request(app)
+        .get('/metricserver/services')
+        .expect(200)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('array');
+          done();
+        });
+    });
+  });
+
+  describe('GET /metricserver/ingresses', function () {
+    it('should return an array of ingresses with status 200', function (done) {
+      request(app)
+        .get('/metricserver/ingresses')
+        .expect(200)
+        .end((err, res) => {
+          if (err) return done(err);
+          expect(res.body).to.be.an('array');
+          done();
+        });
+    });
+  });
 });
