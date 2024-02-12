@@ -226,13 +226,15 @@ nodeExporterController.getDisk = (req, res, next) => {
   const tempObj = {};
 
   regXArr.forEach((el) => {
-    console.log('disk_:', el);
-
     let xMatch = res.locals.getMetrics.match(regX[el]);
-    console.log('xMatch[0]:', xMatch[0]);
 
     tempObj[el] = getMeMetric(xMatch[0]);
   });
+
+  tempObj.DISK_Available = tempObj.availBytes;
+  tempObj.DISK_Used = tempObj.sizeBytes - tempObj.availBytes;
+  tempObj.DISK_Total = tempObj.sizeBytes;
+  tempObj.DISK_UsagePercent = (tempObj.DISK_Used / tempObj.DISK_Total) * 100;
   console.log('tempObj: ', tempObj);
   res.locals.disk = tempObj;
   return next();
