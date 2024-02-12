@@ -1,6 +1,7 @@
 import express from 'express';
 //import metricServerController from './controllers/metricServerController.js';
 import metricServerRouter from './routes/metricServerRouter.js';
+import nodeExporter from './routes/nodeExporterRoute.js';
 
 const app = express();
 const PORT = 3000;
@@ -19,6 +20,7 @@ app.use(express.urlencoded({ extended: true }));
  * use route handlers
  */
 app.use('/metricserver', metricServerRouter);
+app.use('/nodeExporter', nodeExporter);
 
 /**
  * handle requests to the root
