@@ -106,8 +106,6 @@ metricServerController.getDeployments = async (req, res, next) => {
   }
 };
 
-//listNamespacedDeployment
-
 //config maps? --- listNamespacedConfigMap
 //persistent volume? --- listPersistentVolume, listNamespacedPersistentVolumeClaim
 
