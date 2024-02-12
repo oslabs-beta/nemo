@@ -13,7 +13,7 @@ nodeExporterController.getMetrics = async (req, res, next) => {
       throw new Error(`Error: ${response.statusText}`);
     }
     const metrics = await response.text();
-    console.log('metrics:', metrics);
+    // console.log('metrics:', metrics);
     res.locals.getMetrics = metrics;
     return next();
   } catch (error) {
@@ -217,7 +217,7 @@ nodeExporterController.getDisk = (req, res, next) => {
   );
   // read all property keys from regX object into array
   const regXArr = Object.keys(regX);
-  console.log('regxArr: ', regXArr);
+  // console.log('regxArr: ', regXArr);
 
   res.locals.disk = {};
   // for each metric, find the appropriate string on res.locals.getMetrics stream
@@ -235,7 +235,7 @@ nodeExporterController.getDisk = (req, res, next) => {
   tempObj.DISK_Used = tempObj.sizeBytes - tempObj.availBytes;
   tempObj.DISK_Total = tempObj.sizeBytes;
   tempObj.DISK_UsagePercent = (tempObj.DISK_Used / tempObj.DISK_Total) * 100;
-  console.log('tempObj: ', tempObj);
+  // console.log('tempObj: ', tempObj);
   res.locals.disk = tempObj;
   return next();
 };
