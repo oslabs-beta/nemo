@@ -25,6 +25,28 @@ nodeExporterController.getMetrics = async (req, res, next) => {
   }
 };
 
+// helper function to convert number in scientific notation (using exponent notation)
+// to regular number
+const getMeMetric = (metric) => {
+  let tempNum;
+  let exponent;
+
+  if (metric === 0) return 0;
+  if (!metric) return null;
+  // get index of space in regex match[0]
+  const spaceIdx = metric.indexOf(' ');
+  // slice everything after the space to get the number of interest
+  tempNum = metric.slice(spaceIdx + 1);
+  // get index of where 'e' occurs in sliced string
+  const eIdx = tempNum.indexOf('e');
+  // read exponent into numeric variable
+  exponent = Number(tempNum.slice(eIdx + 2));
+  // to get the actual number, slice everything up to where exponent is declared
+  tempNum = Number(tempNum.slice(0, eIdx));
+  // multiply tempNum by exponent to get relevent mem number in bytes
+  return (tempNum = tempNum * 10 ** exponent);
+};
+
 nodeExporterController.getMemory = (req, res, next) => {
   // returns various memory metrics for single node as an object
   // all returned numeric values in bytes, except for perUsed in percent
@@ -36,31 +58,13 @@ nodeExporterController.getMemory = (req, res, next) => {
   const regxMemAvail =
     /node_memory_MemAvailable_bytes\s+\d+(\.\d+)?(e[+\-]?\d+)?/g;
 
-  // helper function to grab various memory metrics
-  const getMeMetric = (regExp) => {
-    const match = res.locals.getMetrics.match(regExp);
-    let tempNum;
-    let exponent;
-
-    if (!match) return null;
-    // get index of space in regex match[0]
-    const spaceIdx = match[0].indexOf(' ');
-    // slice everything after the space to get the number of interest
-    tempNum = match[0].slice(spaceIdx + 1);
-    // get index of where 'e' occurs in sliced string
-    const eIdx = tempNum.indexOf('e');
-    // read exponent into numeric variable
-    exponent = Number(tempNum.slice(eIdx + 2));
-    // to get the actual number, slice everything up to where exponent is declared
-    tempNum = Number(tempNum.slice(0, eIdx));
-    // multiply tempNum by exponent to get relevent mem number in bytes
-    return (tempNum = tempNum * 10 ** exponent);
-  };
+  const arrTotMem = res.locals.getMetrics.match(regxTotMem);
+  const arrMemAvail = res.locals.getMetrics.match(regxMemAvail);
 
   // total memory on node in bytes
-  memObj.total = getMeMetric(regxTotMem);
+  memObj.total = getMeMetric(arrTotMem[0]);
   // total available memory on node in bytes
-  memObj.avail = getMeMetric(regxMemAvail);
+  memObj.avail = getMeMetric(arrMemAvail[0]);
 
   if (!memObj.total || !memObj.avail) {
     return next({
@@ -110,7 +114,7 @@ nodeExporterController.getCPU = (req, res, next) => {
   // there are numerous processes running on each cpu
   // the sum of all of these processes (including idle cycle) should indicate the total capacity of the cpu
   // by the sum of all non-idle processes by the total of all processes, we should arrive at an estimate of cpu usage
-  
+
   // pass in a cpu index to obtain stats for that particular cpu using this helper function
   const getCPUUsage = (cpuIdx) => {
     const cpuStats = {};
@@ -152,7 +156,10 @@ nodeExporterController.getCPU = (req, res, next) => {
     cpuStats.CPU_Index = cpuIdx;
     // Usage percentage is calculated by dividing (total CPU cycles - idle CPU cyles) by total CPU cycles,
     // and multiplying by 100
-    cpuStats.CPU_UsagePercent = ((cpuStats.CPU_TotalCycles - cpuStats.CPU_IdleCycles) / cpuStats.CPU_TotalCycles) * 100;
+    cpuStats.CPU_UsagePercent =
+      ((cpuStats.CPU_TotalCycles - cpuStats.CPU_IdleCycles) /
+        cpuStats.CPU_TotalCycles) *
+      100;
 
     return cpuStats;
   };
@@ -160,20 +167,75 @@ nodeExporterController.getCPU = (req, res, next) => {
   // now, add a cpuStats object for each cpu to res.local.cpus
   res.locals.cpus = [];
 
-  try{
+  try {
     const cpuNum = getNumCPU(regxCPUs);
-    for (let i = 0; i < cpuNum; i++){
-      res.locals.cpus.push(getCPUUsage(i))
+    for (let i = 0; i < cpuNum; i++) {
+      res.locals.cpus.push(getCPUUsage(i));
     }
 
     return next();
-  } catch {
+  } catch (err) {
     return next({
       log: `Express error handler caught in getCPU controller method: ${err}`,
       status: 500,
       message: { err: 'Unknown Error' },
     });
   }
+};
+
+nodeExporterController.getDisk = (req, res, next) => {
+  // returns various disk usage metrics
+  const regX = {};
+  regX.availBytes = new RegExp(
+    'node_filesystem_avail_bytes\\{device="/dev/sda1",fstype="ext4",mountpoint="/etc/hostname"\\}\\s(\\d+)\\.?(\\d*)e?\\+?(\\d*)',
+    'g'
+  );
+
+  regX.deviceError = new RegExp(
+    'node_filesystem_device_error\\{device="/dev/sda1",fstype="ext4",mountpoint="/etc/hostname"\\}\\s(\\d+)\\.?(\\d*)e?\\+?(\\d*)',
+    'g'
+  );
+  regX.files = new RegExp(
+    'node_filesystem_files\\{device="/dev/sda1",fstype="ext4",mountpoint="/etc/hostname"\\}\\s(\\d+)\\.?(\\d*)e?\\+?(\\d*)',
+    'g'
+  );
+  regX.filesFree = new RegExp(
+    'node_filesystem_files_free\\{device="/dev/sda1",fstype="ext4",mountpoint="/etc/hostname"\\}\\s(\\d+)\\.?(\\d*)e?\\+?(\\d*)',
+    'g'
+  );
+  regX.freeBytes = new RegExp(
+    'node_filesystem_free_bytes\\{device="/dev/sda1",fstype="ext4",mountpoint="/etc/hostname"\\}\\s(\\d+)\\.?(\\d*)e?\\+?(\\d*)',
+    'g'
+  );
+  regX.readOnly = new RegExp(
+    'node_filesystem_readonly\\{device="/dev/sda1",fstype="ext4",mountpoint="/etc/hostname"\\}\\s(\\d+)\\.?(\\d*)e?\\+?(\\d*)',
+    'g'
+  );
+  regX.sizeBytes = new RegExp(
+    'node_filesystem_size_bytes\\{device="/dev/sda1",fstype="ext4",mountpoint="/etc/hostname"\\}\\s(\\d+)\\.?(\\d*)e?\\+?(\\d*)',
+    'g'
+  );
+  // read all property keys from regX object into array
+  const regXArr = Object.keys(regX);
+  console.log('regxArr: ', regXArr);
+
+  res.locals.disk = {};
+  // for each metric, find the appropriate string on res.locals.getMetrics stream
+  // let tempStr = res.locals.getMetrics.match(regExp)[0];
+
+  const tempObj = {};
+
+  regXArr.forEach((el) => {
+    console.log('disk_:', el);
+
+    let xMatch = res.locals.getMetrics.match(regX[el]);
+    console.log('xMatch[0]:', xMatch[0]);
+
+    tempObj[el] = getMeMetric(xMatch[0]);
+  });
+  console.log('tempObj: ', tempObj);
+  res.locals.disk = tempObj;
+  return next();
 };
 
 export default nodeExporterController;

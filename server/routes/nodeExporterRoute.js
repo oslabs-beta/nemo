@@ -32,4 +32,15 @@ router.get(
   }
 );
 
+// endpoint to obtain information on disk usage on cluster
+router.get(
+  '/disk',
+  nodeExporterController.getMetrics,
+  nodeExporterController.getDisk,
+  (req, res) => {
+    console.log('--- RETURNING DISK USAGE STATS ---');
+    return res.status(200).send(res.locals.disk);
+  }
+);
+
 export default router;
