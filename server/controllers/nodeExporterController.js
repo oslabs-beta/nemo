@@ -16,7 +16,7 @@ nodeExporterController.getMetrics = async (req, res, next) => {
     // console.log('metrics:', metrics);
     res.locals.getMetrics = metrics;
     return next();
-  } catch (error) {
+  } catch (err) {
     next({
       log: `Express error handler caught in get metrics controller: ${err}`,
       status: 500,

@@ -2,10 +2,12 @@ import express from 'express';
 //import metricServerController from './controllers/metricServerController.js';
 import metricServerRouter from './routes/metricServerRouter.js';
 import nodeExporter from './routes/nodeExporterRoute.js';
+import cors from 'cors';
 
 const app = express();
 const PORT = 3000;
 
+app.use(cors());
 /**
  * import routers
  */

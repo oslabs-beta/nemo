@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@kubernetes/client-node": "^0.20.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "node-fetch": "^3.3.2",
