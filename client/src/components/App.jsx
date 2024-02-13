@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
+import MainContainer from './MainContainer.jsx';
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <h1>Hello World!</h1>
-      </div>
-    );
-  }
-}
+const App = () => {
+  return (
+    <div>
+      <MainContainer />
+    </div>
+  );
+};
 
 export default App;
