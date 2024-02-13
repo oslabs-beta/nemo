@@ -3,9 +3,13 @@ import express from 'express';
 import metricServerRouter from './routes/metricServerRouter.js';
 import nodeExporter from './routes/nodeExporterRoute.js';
 import cors from 'cors';
+import portObj from './portForward.js';
 
 const app = express();
 const PORT = 3000;
+
+// establish port forwarding for node-exporter
+portObj.pForward();
 
 app.use(cors());
 /**
