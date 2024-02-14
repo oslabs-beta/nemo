@@ -28,8 +28,17 @@ module.exports = {
       },
       {
         test: /\.s?css$/,
-        exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader',],
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+      },
+      {
+        test: /\.(woff|woff2|ttf|eot)$/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'fonts/',
+          },
+        },
       },
     ],
   },
