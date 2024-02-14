@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 const NodeSummary = () => {
+
+  
   const [UID, setUID] = useState('');
   const [extIp, setExtIp] = useState('');
   const [intIp, setIntIp] = useState('');
