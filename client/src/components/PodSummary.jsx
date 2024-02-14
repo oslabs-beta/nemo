@@ -1,162 +1,66 @@
 import React, { useEffect, useState } from 'react';
 
 const PodSummary = () => {
-  //   const [UID, setUID] = useState('');
-  //   const [nodeMemoryTotal, setNodeMemoryTotal] = useState('');
-  //   const [nodeMemoryAvail, setNodeMemoryAvail] = useState('');
-  //   const [nodeMemoryPercUsed, setNodeMemoryPercUsed] = useState('');
+  const [podsData, setPodsData] = useState([]);
 
-  //   useEffect(() => {
-  //     fetch('http://localhost:3000/metricserver/nodes', {
-  //       // mode: 'cors',
-  //       // headers: {
-  //       //   'Access-Control-Allow-Origin': '*',
-  //       // },
-  //     })
-  //       .then((data) => data.json())
-  //       .then((data) => {
-  //         console.log('Node Info: ', data[0].status.nodeInfo);
-  //         console.log(data[0].status.addresses);
-  //         console.log(data[0].status.capacity);
-  //         console.log(data[0].status.images);
-  //         setUID(data[0].metadata.uid);
-  //         console.table(data[0].metadata.managedFields);
-  //         console.log(data);
-  //       });
+  useEffect(() => {
+    fetch('http://localhost:3000/metricserver/pods')
+      .then((data) => data.json())
+      .then((data) => {
+        console.log(data);
+        setPodsData(data);
+      })
+      .catch((error) => {
+        console.error('Error fetching pod data: ', error);
+      });
+  }, []);
 
-  //     fetch('http://localhost:3000/nodeExporter/memory', {
-  //       // mode: 'cors',
-  //       // headers: {
-  //       //   'Access-Control-Allow-Origin': '*',
-  //       // },
-  //     })
-  //       .then((data) => data.json())
-  //       .then((data) => {
-  //         console.log('Node Exporter: ', data);
-  //         setNodeMemoryTotal((data.total / 1000000000).toFixed(2));
-  //         setNodeMemoryAvail((data.avail / 1000000000).toFixed(2));
-  //         setNodeMemoryPercUsed(data.perUsed.toFixed(2));
-  //       });
-  //   }, []);
-  let podArray;
-  const pods = [];
-  fetch('http://localhost:3000/metricserver/pods', {
-    // mode: 'cors',
-    // headers: {
-    //   'Access-Control-Allow-Origin': '*',
-    // },
-  })
-    .then((data) => data.json())
-    .then((data) => {
-      //   console.log('Node Info: ', data[0].status.nodeInfo);
-      //   console.log(data[0].status.addresses);
-      //   console.log(data[0].status.capacity);
-      //   console.log(data[0].status.images);
-      //   console.table(data[0].metadata.managedFields);
-      console.log(data);
-      //podArrayLength = data.length;
-      podArray = data;
+  const styles = {
+    podSummaryContainer: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'space-between',
+      alignItems: 'flex-start',
+    },
+    podItem: {
+      border: 'solid black 1px',
+      borderRadius: '15px',
+      padding: '10px',
+      margin: '10px',
+      width: '300px',
+    },
+    podContent: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+    buttonContainer: {
+      padding: '10px',
+      display: 'flex',
+    },
+  };
 
-      for (let i = 0; i < podArray.length; i++) {
-        pods.push(
-          <div
-            style={{
-              border: 'solid black 1px',
-              borderRadius: '15px',
-              padding: '10px',
-              width: '300px',
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
-              <table>
-                <th>Pod Summary</th>
-                <tr>Pod ID: </tr>
-                <tr>Pod Total: GB</tr>
-                <tr>Pod Memory Available: GB</tr>
-                <tr>Pod Memory Percent Used: %</tr>
-              </table>
-            </div>
-            <div style={{ padding: '10px', display: 'flex' }}>
-              <button>Button 1</button>
-              <button>Button 2</button>
-            </div>
-          </div>
-        );
-      }
-    });
+  const pods = podsData.map((pod, index) => (
+    <div key={index} style={styles.podItem}>
+      <div style={styles.podContent}>
+        <table>
+          <th>Pod {index} Summary</th>
+          <tr>Pod Name: {pod.metadata.name}</tr>
+          <tr>Pod ID: {pod.metadata.uid}</tr>
+          <tr>Pod Container Count: {pod.spec.containers.length}</tr>
+          <tr>Pod Memory Total: GB</tr>
+          <tr>Pod Memory Available: GB</tr>
+          <tr>Pod Memory Percent Used: %</tr>
+        </table>
+      </div>
+      <div style={styles.buttonContainer}>
+        <button>Button 1</button>
+        <button>Button 2</button>
+      </div>
+    </div>
+  ));
 
-  //console.log('pods: ', typeof pods);
-  // for (let i = 0; i < podArray.length; i++) {
-  //   pods.push(
-  //     <div
-  //       style={{
-  //         border: 'solid black 1px',
-  //         borderRadius: '15px',
-  //         padding: '10px',
-  //         width: '300px',
-  //       }}
-  //     >
-  //       <div
-  //         style={{
-  //           display: 'flex',
-  //           flexDirection: 'column',
-  //           alignItems: 'center',
-  //         }}
-  //       >
-  //         <table>
-  //           <th>Pod Summary</th>
-  //           <tr>Pod ID: </tr>
-  //           <tr>Pod Total: GB</tr>
-  //           <tr>Pod Memory Available: GB</tr>
-  //           <tr>Pod Memory Percent Used: %</tr>
-  //         </table>
-  //       </div>
-  //       <div style={{ padding: '10px', display: 'flex' }}>
-  //         <button>Button 1</button>
-  //         <button>Button 2</button>
-  //       </div>
-  //     </div>
-  //   );
-  // }
-
-  // return (
-  //   <div
-  //     style={{
-  //       border: 'solid black 1px',
-  //       borderRadius: '15px',
-  //       padding: '10px',
-  //       width: '300px',
-  //     }}
-  //   >
-  //     <div
-  //       style={{
-  //         display: 'flex',
-  //         flexDirection: 'column',
-  //         alignItems: 'center',
-  //       }}
-  //     >
-  //       <table>
-  //         <th>Pod Summary</th>
-  //         <tr>Pod ID: </tr>
-  //         <tr>Pod Total: GB</tr>
-  //         <tr>Pod Memory Available: GB</tr>
-  //         <tr>Pod Memory Percent Used: %</tr>
-  //       </table>
-  //     </div>
-  //     <div style={{ padding: '10px', display: 'flex' }}>
-  //       <button>Button 1</button>
-  //       <button>Button 2</button>
-  //     </div>
-  //   </div>
-  // );
-
-  return <div className="podSummary">{pods}</div>;
+  return <div style={styles.podSummaryContainer}>{pods}</div>;
 };
 
 export default PodSummary;
