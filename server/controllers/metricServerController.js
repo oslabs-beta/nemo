@@ -10,6 +10,8 @@ const k8sAppsApi = kc.makeApiClient(k8s.AppsV1Api);
 
 const metricServerController = {};
 
+const metricsClient = new k8s.Metrics(kc);
+
 metricServerController.getPods = async (req, res, next) => {
   try {
     const data = await k8sApi.listPodForAllNamespaces();
@@ -106,11 +108,54 @@ metricServerController.getDeployments = async (req, res, next) => {
   }
 };
 
-//config maps? --- listNamespacedConfigMap
-//persistent volume? --- listPersistentVolume, listNamespacedPersistentVolumeClaim
+metricServerController.getPodMem = async (req, res, next) => {
+  try {
+    const data = await k8s.topPods(k8sApi, metricsClient, '');
+    const podsColumns = data.map((pod) => {
+      return {
+        POD: pod.Pod.metadata.name,
+        'CPU(cores)': pod.CPU.CurrentUsage,
+        // number is provided as bigInt by api
+        'MEMORY(bytes)': Number(pod.Memory.CurrentUsage),
+      };
+    });
+    res.locals.podMem = podsColumns;
+    return next();
+  } catch (err) {
+    return next({
+      log: `metricServerController.getPodMem: ERROR ${err}`,
+      status: 500,
+      message: {
+        err: 'Error occured in metricServerController.getPodMem. Check server logs.',
+      },
+    });
+  }
+};
 
-//jobs cronjobs --- listNamespacedJob, listNamespacedCronJob
-//secrets --- listNamespacedSecret
-//roles and role binding --- listNamespacedRole, listNamespacedRoleBinding
+// metricServerController.getContainers = async (req, res, next) => {
+//   try {
+//     const data = await k8s.topPods(k8sApi, metricsClient, '');
+//     const podsAndContainersColumns = data.flatMap((pod) => {
+//       return pod.Containers.map((containerUsage) => {
+//         return {
+//           POD: pod.Pod.metadata.name,
+//           NAME: containerUsage.Container,
+//           'CPU(cores)': containerUsage.CPUUsage.CurrentUsage,
+//           'MEMORY(bytes)': containerUsage.MemoryUsage.CurrentUsage,
+//         };
+//       });
+//     });
+//     console.table(podsAndContainersColumns);
+//     res.locals.containers = podsAndContainersColumns;
+//   } catch (err) {
+//     return next({
+//       log: `metricServerController.getContainers: ERROR ${err}`,
+//       status: 500,
+//       message: {
+//         err: 'Error occured in metricServerController.getContainers. Check server logs.',
+//       },
+//     });
+//   }
+// };
 
 export default metricServerController;

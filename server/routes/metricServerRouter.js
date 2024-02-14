@@ -6,6 +6,14 @@ router.get('/pods', metricServerController.getPods, (req, res) => {
   return res.status(200).json(res.locals.pods);
 });
 
+router.get('/podMem', metricServerController.getPodMem, (req, res) => {
+  return res.status(200).json(res.locals.podMem);
+});
+
+router.get('/containers', metricServerController.getContainers, (req, res) => {
+  return res.status(200).json(res.locals.containers);
+});
+
 router.get('/nodes', metricServerController.getNodes, (req, res) => {
   return res.status(200).json(res.locals.nodes);
 });
