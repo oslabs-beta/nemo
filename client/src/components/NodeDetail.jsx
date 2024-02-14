@@ -4,7 +4,8 @@ const NodeDetail = () => {
   return (
     <div
       style={{
-        border: 'solid #ffffff 1px',
+        backgroundColor: 'lavender',
+        border: 'solid black 1px',
         borderRadius: '15px',
         padding: '10px',
         width: '75%',
@@ -15,7 +16,6 @@ const NodeDetail = () => {
         style={{
           display: 'flex',
           justifyContent: 'center',
-          fontFamily: 'Roboto',
         }}
       >
         <h2>Details</h2>
