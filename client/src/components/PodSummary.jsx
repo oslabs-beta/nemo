@@ -21,6 +21,8 @@ const PodSummary = () => {
       flexWrap: 'wrap',
       justifyContent: 'space-between',
       alignItems: 'flex-start',
+      marginLeft: '250px', // Adjusted for the sidebar width
+      padding: '20px', // Added padding to create space for the sidebar
     },
     podItem: {
       border: 'solid black 1px',
@@ -64,3 +66,4 @@ const PodSummary = () => {
 };
 
 export default PodSummary;
+
