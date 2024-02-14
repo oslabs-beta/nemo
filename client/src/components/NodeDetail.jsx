@@ -15,7 +15,6 @@ const NodeDetail = () => {
         style={{
           display: 'flex',
           justifyContent: 'center',
-          fontFamily: 'Roboto',
         }}
       >
         <h2>Details</h2>
