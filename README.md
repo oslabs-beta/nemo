@@ -21,11 +21,11 @@ Nemo provides Kubernetes cluster monitoring and data visualization in a simple a
   
 ## Nemo Setup
 
-- [] Step 1
-- [] Step 2
-- [] Step 3
-- [] Step 4
-- [] Step 5
+- [ ] Step 1
+- [ ] Step 2
+- [ ] Step 3
+- [ ] Step 4
+- [ ] Step 5
   
 ## Notes, Future Features
 
