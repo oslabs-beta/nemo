@@ -13,7 +13,7 @@ nodeExporterController.getMetrics = async (req, res, next) => {
       throw new Error(`Error: ${response.statusText}`);
     }
     const metrics = await response.text();
-    // console.log('metrics:', metrics);
+    //console.log('metrics:', metrics);
     res.locals.getMetrics = metrics;
     return next();
   } catch (err) {

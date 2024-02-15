@@ -32,8 +32,8 @@ const NodeSummary = () => {
   const [diskUsagePercent, setDiskUsagePercent] = useState('');
 
   useEffect(() => {
-    setInterval(() => {
-      fetch('http://localhost:3000/metricserver/nodes', {})
+    const fetchData = async () => {
+      await fetch('http://localhost:3000/metricserver/nodes', {})
         .then((data) => data.json())
         .then((data) => {
           setUID(data[0].metadata.uid); // Node ID
@@ -82,7 +82,7 @@ const NodeSummary = () => {
           // console.log('data: ', data[0]);
         });
 
-      fetch('http://localhost:3000/nodeExporter/memory', {})
+      await fetch('http://localhost:3000/nodeExporter/memory', {})
         .then((data) => data.json())
         .then((data) => {
           // console.log('Node Exporter Memory: ', data);
@@ -91,7 +91,7 @@ const NodeSummary = () => {
           setNodeMemoryPercUsed(data.perUsed.toFixed(3));
         });
 
-      fetch('http://localhost:3000/nodeExporter/CPU', {})
+      await fetch('http://localhost:3000/nodeExporter/CPU', {})
         .then((data) => data.json())
         .then((data) => {
           // console.log('Node Exporter CPU: ', data);
@@ -99,7 +99,7 @@ const NodeSummary = () => {
           setCPUUsage2(data[1].CPU_UsagePercent.toFixed(2));
         });
 
-      fetch('http://localhost:3000/nodeExporter/disk', {})
+      await fetch('http://localhost:3000/nodeExporter/disk', {})
         .then((data) => data.json())
         .then((data) => {
           console.log('Node Exporter Disk: ', data);
@@ -107,106 +107,108 @@ const NodeSummary = () => {
           setDiskCapacity((data.DISK_Total / 1000000000).toFixed(2));
           setDiskUsagePercent(data.DISK_UsagePercent.toFixed(2));
         });
-    }, 2000);
+    };
+    const interval = setInterval(fetchData, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
-    <div id='nodeCardContainer'>
-      <div id='table'>
+    <div id="nodeCardContainer">
+      <div id="table">
         <h2>CLUSTER SUMMARY</h2>
         <div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Architecture:</b> {architecture}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Boot ID:</b> {bootID}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Container Run Time:</b> {containerRunTime}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Kernel Version:</b> {kernelVersion}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Kube Proxy Version:</b> {kubeProxyVersion}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Kubelet Version:</b> {kubeletVersion}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Machine ID:</b> {machineID}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Operating System:</b> {os}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>OS Image:</b> {osImage}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>System UUID:</b> {systemUUID}
           </div>
         </div>
 
         <h2>CLUSTER INFORMATION</h2>
         <div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>CPU Capacity:</b> {clusterCPU}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>CPU Allocatable:</b> {clusterCPUAlloc}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Ephemeral Storage Capacity:</b> {clusterEphStorage} GB
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Ephemeral Storage Allocatable:</b> {clusterEphStorageAlloc}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Memory Capacity:</b> {clusterMemory} GB
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Memory Allocatable:</b> {clusterMemoryAlloc} GB
           </div>
         </div>
       </div>
       ,
-      <div id='table'>
+      <div id="table">
         <div>
           <h2>NODE SUMMARY</h2>
           <h3>IP ADDRESSES</h3>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Internal IP:</b> {intIp}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>External IP:</b> {extIp}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Node ID:</b> {UID}
           </div>
           <h3>NODE MEMORY</h3>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Node Memory Total:</b> {nodeMemoryTotal} GB
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Node Memory Available:</b> {nodeMemoryAvail} GB
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Node Memory Percent Used:</b> {nodeMemoryPercUsed}%
           </div>
           <h3>NODE CPU</h3>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>CPU 1 Usage:</b> {CPUUsage1}%
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>CPU 2 Usage:</b> {CPUUsage2}%
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Storage Capacity:</b> {diskCapacity}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Storage Used:</b> {diskUsed}
           </div>
-          <div id='tableRow'>
+          <div id="tableRow">
             <b>Storage Used Percentage:</b> {diskUsagePercent}%
           </div>
         </div>

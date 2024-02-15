@@ -16,17 +16,20 @@ const PodSummary = () => {
   // }, []);
 
   useEffect(() => {
-    setInterval(() => {
-      fetch('http://localhost:3000/metricserver/podMem')
+    const fetchData = async () => {
+      await fetch('http://localhost:3000/metricserver/podMem')
         .then((data) => data.json())
         .then((data) => {
           console.log(data);
           setPodsData(data);
         })
         .catch((error) => {
+          //error needs to be handled in a way that presents to the user
           console.error('Error fetching pod data: ', error);
         });
-    }, 2000);
+    };
+    const interval = setInterval(fetchData, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   const totalUsage = podsData.reduce(
@@ -79,22 +82,38 @@ const PodSummary = () => {
       <div key={index} style={styles.podItem}>
         <div style={styles.podContent}>
           <table>
-            <th>Pod {index} Summary</th>
-            <tr>Pod Name: {pod.POD}</tr>
-            <tr>Pod ID: {pod.ID}</tr>
-            <tr>Pod Container Count: {pod['CONTAINER COUNT']}</tr>
-            <tr>
-              Pod CPU Usage: {pod['CPU(cores)'].toFixed(3)} cores{' '}
-              {cpuPercentage}%
-            </tr>
-            <tr>
-              Pod Memory Usage: {pod['MEMORY(bytes)']} bytes {memoryPercentage}%
-            </tr>
+            <thead>
+              <tr>
+                <th>Pod {index + 1} Summary</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Pod Name: {pod.POD}</td>
+              </tr>
+              <tr>
+                <td>Pod ID: {pod.ID}</td>
+              </tr>
+              <tr>
+                <td>Pod Container Count: {pod['CONTAINER COUNT']}</td>
+              </tr>
+              <tr>
+                <td>
+                  Pod CPU Usage: {pod['CPU(cores)'].toFixed(3)} cores{' '}
+                  {cpuPercentage}%
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Pod Memory Usage: {pod['MEMORY(bytes)']} bytes{' '}
+                  {memoryPercentage}%
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
         <div style={styles.buttonContainer}>
-          <button>Button 1</button>
-          <button>Button 2</button>
+          <button>Visualize</button>
         </div>
       </div>
     );
@@ -104,4 +123,3 @@ const PodSummary = () => {
 };
 
 export default PodSummary;
-
