@@ -4,7 +4,7 @@ const router = express.Router();
 
 // add a parsing controller to the chain
 router.get('/metrics', nodeExporterController.getMetrics, (req, res) => {
-  console.log('--- ENTERING GET METRICS ROUTER ---');
+  //console.log('--- ENTERING GET METRICS ROUTER ---');
   return res.status(200).json(res.locals.getMetrics);
 });
 
@@ -14,7 +14,7 @@ router.get(
   nodeExporterController.getMetrics,
   nodeExporterController.getMemory,
   (req, res) => {
-    console.log('--- RETURNING MEMORY STATS ---');
+    //console.log('--- RETURNING MEMORY STATS ---');
     return res.status(200).json(res.locals.memory);
   }
 );
@@ -27,7 +27,7 @@ router.get(
   nodeExporterController.getMetrics,
   nodeExporterController.getCPU,
   (req, res) => {
-    console.log('--- RETURNING CPU STATS ---');
+    //console.log('--- RETURNING CPU STATS ---');
     return res.status(200).json(res.locals.cpus);
   }
 );
@@ -38,7 +38,7 @@ router.get(
   nodeExporterController.getMetrics,
   nodeExporterController.getDisk,
   (req, res) => {
-    console.log('--- RETURNING DISK USAGE STATS ---');
+    //console.log('--- RETURNING DISK USAGE STATS ---');
     return res.status(200).json(res.locals.disk);
   }
 );
