@@ -20,6 +20,7 @@ const PodSummary = () => {
       await fetch('http://localhost:3000/metricserver/podMem')
         .then((data) => data.json())
         .then((data) => {
+          console.log(data);
           setPodsData(data);
         })
         .catch((error) => {
@@ -112,8 +113,7 @@ const PodSummary = () => {
           </table>
         </div>
         <div style={styles.buttonContainer}>
-          <button>Button 1</button>
-          <button>Button 2</button>
+          <button>Visualize</button>
         </div>
       </div>
     );
