@@ -25,6 +25,11 @@ const NodeSummary = () => {
   const [os, setOs] = useState('');
   const [osImage, setOsImage] = useState('');
   const [systemUUID, setSystemUUID] = useState('');
+  const [CPUUsage1, setCPUUsage1] = useState('');
+  const [CPUUsage2, setCPUUsage2] = useState('');
+  const [diskUsed, setDiskUsed] = useState('');
+  const [diskCapacity, setDiskCapacity] = useState('');
+  const [diskUsagePercent, setDiskUsagePercent] = useState('');
 
   useEffect(() => {
     setInterval(() => {
@@ -47,7 +52,7 @@ const NodeSummary = () => {
               data[0].status.capacity.memory.slice(0, -2) / 976562.5
             ).toFixed(2)
           ); // Cluster Memory
-          setClusterPods(data[0].status.capacity.pods); // Cluster Pods
+          // setClusterPods(data[0].status.capacity.pods); // Cluster Pods
           setClusterCPUAlloc(
             Number(data[0].status.allocatable.cpu.slice(0, -1)) / 1000
           ); // Cluster CPU
@@ -59,10 +64,10 @@ const NodeSummary = () => {
               data[0].status.allocatable.memory.slice(0, -2) / 976562.5
             ).toFixed(2)
           ); // Cluster Memory
-          setClusterPodsAlloc(data[0].status.allocatable.pods); // Cluster Pods
+          // setClusterPodsAlloc(data[0].status.allocatable.pods); // Cluster Pods
           setArchitecture(data[0].status.nodeInfo.architecture);
           setBootID(data[0].status.nodeInfo.bootID);
-          setContainerRunTime(data[0].status.nodeInfo.containerRunTime);
+          setContainerRunTime(data[0].status.nodeInfo.containerRuntimeVersion);
           setKernelVersion(data[0].status.nodeInfo.kernelVersion);
           setKubeProxyVersion(data[0].status.nodeInfo.kubeProxyVersion);
           setKubeletVersion(data[0].status.nodeInfo.kubeletVersion);
@@ -70,84 +75,141 @@ const NodeSummary = () => {
           setOs(data[0].status.nodeInfo.operatingSystem);
           setOsImage(data[0].status.nodeInfo.osImage);
           setSystemUUID(data[0].status.nodeInfo.systemUUID);
-          console.log('Node Info: ', data[0].status.nodeInfo);
+          // console.log('Node Info: ', data[0].status.nodeInfo);
           // console.log('allocatable: ', data[0].status.allocatable);
           // console.log('table 3: ', data[0].status.images);
           // console.table('table 4: ', data[0].metadata.managedFields);
-          console.log('data: ', data[0]);
+          // console.log('data: ', data[0]);
         });
 
       fetch('http://localhost:3000/nodeExporter/memory', {})
         .then((data) => data.json())
         .then((data) => {
-          // console.log('Node Exporter: ', data);
+          // console.log('Node Exporter Memory: ', data);
           setNodeMemoryTotal((data.total / 1000000000).toFixed(2));
           setNodeMemoryAvail((data.avail / 1000000000).toFixed(2));
           setNodeMemoryPercUsed(data.perUsed.toFixed(3));
+        });
+
+      fetch('http://localhost:3000/nodeExporter/CPU', {})
+        .then((data) => data.json())
+        .then((data) => {
+          // console.log('Node Exporter CPU: ', data);
+          setCPUUsage1(data[0].CPU_UsagePercent.toFixed(2));
+          setCPUUsage2(data[1].CPU_UsagePercent.toFixed(2));
+        });
+
+      fetch('http://localhost:3000/nodeExporter/disk', {})
+        .then((data) => data.json())
+        .then((data) => {
+          console.log('Node Exporter Disk: ', data);
+          setDiskUsed((data.DISK_Used / 1000000000).toFixed(2));
+          setDiskCapacity((data.DISK_Total / 1000000000).toFixed(2));
+          setDiskUsagePercent(data.DISK_UsagePercent.toFixed(2));
         });
     }, 2000);
   }, []);
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center' }}>
-      <div
-        style={{
-          border: 'solid #ffffff 1px',
-          borderRadius: '15px',
-          padding: '10px',
-          width: '400px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <table style={{ gap: '15px' }}>
-          <th>CLUSTER SUMMARY</th>
-          <tr>Architecture: {architecture}</tr>
-          <tr>Boot ID: {bootID}</tr>
-          <tr>Container Run Time: {containerRunTime}</tr>
-          <tr>Kernel Version: {kernelVersion}</tr>
-          <tr>Kube Proxy Version: {kubeProxyVersion}</tr>
-          <tr>Kubelet Version: {kubeletVersion}</tr>
-          <tr>Machine ID: {machineID}</tr>
-          <tr>Operating System: {os}</tr>
-          <tr>OS Image: {osImage}</tr>
-          <tr>System UUID: {systemUUID}</tr>
-        </table>
+    <div id='nodeCardContainer'>
+      <div id='table'>
+        <h2>CLUSTER SUMMARY</h2>
+        <div>
+          <div id='tableRow'>
+            <b>Architecture:</b> {architecture}
+          </div>
+          <div id='tableRow'>
+            <b>Boot ID:</b> {bootID}
+          </div>
+          <div id='tableRow'>
+            <b>Container Run Time:</b> {containerRunTime}
+          </div>
+          <div id='tableRow'>
+            <b>Kernel Version:</b> {kernelVersion}
+          </div>
+          <div id='tableRow'>
+            <b>Kube Proxy Version:</b> {kubeProxyVersion}
+          </div>
+          <div id='tableRow'>
+            <b>Kubelet Version:</b> {kubeletVersion}
+          </div>
+          <div id='tableRow'>
+            <b>Machine ID:</b> {machineID}
+          </div>
+          <div id='tableRow'>
+            <b>Operating System:</b> {os}
+          </div>
+          <div id='tableRow'>
+            <b>OS Image:</b> {osImage}
+          </div>
+          <div id='tableRow'>
+            <b>System UUID:</b> {systemUUID}
+          </div>
+        </div>
+
+        <h2>CLUSTER INFORMATION</h2>
+        <div>
+          <div id='tableRow'>
+            <b>CPU Capacity:</b> {clusterCPU}
+          </div>
+          <div id='tableRow'>
+            <b>CPU Allocatable:</b> {clusterCPUAlloc}
+          </div>
+          <div id='tableRow'>
+            <b>Ephemeral Storage Capacity:</b> {clusterEphStorage} GB
+          </div>
+          <div id='tableRow'>
+            <b>Ephemeral Storage Allocatable:</b> {clusterEphStorageAlloc}
+          </div>
+          <div id='tableRow'>
+            <b>Memory Capacity:</b> {clusterMemory} GB
+          </div>
+          <div id='tableRow'>
+            <b>Memory Allocatable:</b> {clusterMemoryAlloc} GB
+          </div>
+        </div>
       </div>
       ,
-      <div
-        style={{
-          border: 'solid #ffffff 1px',
-          borderRadius: '15px',
-          padding: '10px',
-          width: '400px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <table>
-          <th>Node Summary</th>
-          <tr></tr>
-          <th>IP ADDRESSES</th>
-          <tr>Internal IP: {intIp}</tr>
-          <tr>External IP: {extIp}</tr>
-          <tr>Node ID: {UID}</tr>
-          <th>CLUSTER INFORMATION</th>
-          <tr>CPU Capacity: {clusterCPU}</tr>
-          <tr>CPU Allocatable: {clusterCPUAlloc}</tr>
-          <tr>Ephemeral Storage Capacity: {clusterEphStorage} GB</tr>
-          <tr>Ephemeral Storage Allocatable: {clusterEphStorageAlloc}</tr>
-          <tr>Memory Capacity: {clusterMemory} GB</tr>
-          <tr>Memory Allocatable: {clusterMemoryAlloc} GB</tr>
-          <tr>Pods Capacity: {clusterPods}</tr>
-          <tr>Pods Allocatable: {clusterPodsAlloc}</tr>
-          <th>NODE MEMORY</th>
-          <tr>Node Memory Total: {nodeMemoryTotal} GB</tr>
-          <tr>Node Memory Available: {nodeMemoryAvail} GB</tr>
-          <tr>Node Memory Percent Used: {nodeMemoryPercUsed}%</tr>
-        </table>
+      <div id='table'>
+        <div>
+          <h2>NODE SUMMARY</h2>
+          <h3>IP ADDRESSES</h3>
+          <div id='tableRow'>
+            <b>Internal IP:</b> {intIp}
+          </div>
+          <div id='tableRow'>
+            <b>External IP:</b> {extIp}
+          </div>
+          <div id='tableRow'>
+            <b>Node ID:</b> {UID}
+          </div>
+          <h3>NODE MEMORY</h3>
+          <div id='tableRow'>
+            <b>Node Memory Total:</b> {nodeMemoryTotal} GB
+          </div>
+          <div id='tableRow'>
+            <b>Node Memory Available:</b> {nodeMemoryAvail} GB
+          </div>
+          <div id='tableRow'>
+            <b>Node Memory Percent Used:</b> {nodeMemoryPercUsed}%
+          </div>
+          <h3>NODE CPU</h3>
+          <div id='tableRow'>
+            <b>CPU 1 Usage:</b> {CPUUsage1}%
+          </div>
+          <div id='tableRow'>
+            <b>CPU 2 Usage:</b> {CPUUsage2}%
+          </div>
+          <div id='tableRow'>
+            <b>Storage Capacity:</b> {diskCapacity}
+          </div>
+          <div id='tableRow'>
+            <b>Storage Used:</b> {diskUsed}
+          </div>
+          <div id='tableRow'>
+            <b>Storage Used Percentage:</b> {diskUsagePercent}%
+          </div>
+        </div>
         <div
           style={{ padding: '10px', display: 'flex', justifyContent: 'center' }}
         >

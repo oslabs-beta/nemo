@@ -1,24 +1,36 @@
-h1 {
-  color: red;
-}
-
-h2 {
-  color: #b3b3b3;
-}
-
-table {
-  // border: #ffffff;
+h1,
+h2,
+h3 {
+  color: #cc6d3d;
 }
 
 body {
-  background-color: #121212;
+  background-color: #022e51;
 }
 
 div {
-  color: rgb(221, 221, 221);
-  border: #ffffff;
+  color: #a3b4c8;
+  border: #cc6d3d;
 }
 
 button {
   border-radius: 10px;
+}
+
+#tableRow {
+  margin: 5px;
+}
+
+#table {
+  border: solid #cc6d3d 1px;
+  border-radius: 15px;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  padding-left: 1em;
+}
+
+#nodeCardContainer {
+  display: flex;
+  justify-content: center;
 }
