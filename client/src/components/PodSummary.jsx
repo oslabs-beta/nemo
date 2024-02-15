@@ -46,7 +46,7 @@ const PodSummary = () => {
       alignItems: 'flex-start',
     },
     podItem: {
-      border: 'solid black 1px',
+      border: 'solid white 1px',
       borderRadius: '15px',
       padding: '10px',
       margin: '10px',
@@ -64,8 +64,6 @@ const PodSummary = () => {
   };
 
   const pods = podsData.map((pod, index) => {
-    // console.log(totalUsage.totalCpu);
-    // console.log(totalUsage.totalMemory);
     const cpuPercentage = (
       (parseFloat(pod['CPU(cores)']) / totalUsage.totalCpu) *
       100
@@ -84,7 +82,8 @@ const PodSummary = () => {
             <tr>Pod ID: {pod.ID}</tr>
             <tr>Pod Container Count: {pod['CONTAINER COUNT']}</tr>
             <tr>
-              Pod CPU Usage: {pod['CPU(cores)']} cores {cpuPercentage}%
+              Pod CPU Usage: {pod['CPU(cores)'].toFixed(3)} cores{' '}
+              {cpuPercentage}%
             </tr>
             <tr>
               Pod Memory Usage: {pod['MEMORY(bytes)']} bytes {memoryPercentage}%
