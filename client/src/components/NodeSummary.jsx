@@ -108,6 +108,7 @@ const NodeSummary = () => {
           setDiskUsagePercent(data.DISK_UsagePercent.toFixed(2));
         });
     };
+    fetchData();
     const interval = setInterval(fetchData, 2000);
     return () => clearInterval(interval);
   }, []);
