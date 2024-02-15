@@ -6,7 +6,7 @@ const nodeExporterController = {};
 const NODE_EXPORTER_URL = 'http://localhost:9100/metrics';
 
 nodeExporterController.getMetrics = async (req, res, next) => {
-  console.log('--- ENTERING GET METRICS CONTROLLER ---');
+  //console.log('--- ENTERING GET METRICS CONTROLLER ---');
   try {
     const response = await fetch(NODE_EXPORTER_URL);
     if (!response.ok) {

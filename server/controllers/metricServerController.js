@@ -111,12 +111,19 @@ metricServerController.getDeployments = async (req, res, next) => {
 metricServerController.getPodMem = async (req, res, next) => {
   try {
     const data = await k8s.topPods(k8sApi, metricsClient, '');
+    //console.log(data);
     const podsColumns = data.map((pod) => {
+      // console.log(
+      //   `${pod.Pod.metadata.name}: container count: `,
+      //   pod.Containers.length
+      // );
       return {
         POD: pod.Pod.metadata.name,
+        ID: pod.Pod.metadata.uid,
         'CPU(cores)': pod.CPU.CurrentUsage,
         // number is provided as bigInt by api
         'MEMORY(bytes)': Number(pod.Memory.CurrentUsage),
+        'CONTAINER COUNT': pod.Containers.length,
       };
     });
     res.locals.podMem = podsColumns;
