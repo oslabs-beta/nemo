@@ -42,7 +42,7 @@ const PodSummary = () => {
     { totalCpu: 0, totalMemory: 0 }
   );
 
-  const styles = {
+  const podStyles = {
     podSummaryContainer: {
       display: 'flex',
       flexWrap: 'wrap',
@@ -50,22 +50,43 @@ const PodSummary = () => {
       alignItems: 'flex-start',
       marginLeft: '250px', // Adjusted for the sidebar width
       padding: '20px', // Added padding to create space for the sidebar
+      fontFamily: '"Roboto", sans-serif',
     },
     podItem: {
-      border: 'solid white 1px',
+      //border: '1px solid #ecf1fc',
       borderRadius: '15px',
       padding: '10px',
       margin: '10px',
       width: '300px',
+      fontFamily: '"Roboto", sans-serif',
+      backgroundColor: '#1B384A',
     },
     podContent: {
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
+      color: '#ECF1FC',
+      fontFamily: '"Roboto", sans-serif',
     },
     buttonContainer: {
       padding: '10px',
       display: 'flex',
+      justifyContent: 'space-around',
+      fontFamily: '"Roboto", sans-serif',
+    },
+    buttonStyle: {
+      padding: '5px 10px',
+      textAlign: 'left',
+      //color: 'grey', // Set default text color to grey
+      color: '#E3F1FC',
+      border: 'none',
+      //backgroundColor: '#274C77',
+      backgroundColor: '#141F27',
+      textTransform: 'uppercase',
+      cursor: 'pointer', // Add cursor pointer to indicate clickability
+      transition: 'color 0.3s ease', // Add transition for smooth color change
+      fontFamily: '"Roboto", sans-serif', // Specify the font family
+      fontWeight: '900', // Specify the font weight for Roboto Medium
     },
   };
 
@@ -80,8 +101,8 @@ const PodSummary = () => {
     ).toFixed(3);
 
     return (
-      <div key={index} style={styles.podItem}>
-        <div style={styles.podContent}>
+      <div key={index} style={podStyles.podItem}>
+        <div style={podStyles.podContent}>
           <table>
             <thead>
               <tr>
@@ -113,14 +134,14 @@ const PodSummary = () => {
             </tbody>
           </table>
         </div>
-        <div style={styles.buttonContainer}>
-          <button>Visualize</button>
+        <div style={podStyles.buttonContainer}>
+          <button style={podStyles.buttonStyle}>Visualize</button>
         </div>
       </div>
     );
   });
 
-  return <div style={styles.podSummaryContainer}>{pods}</div>;
+  return <div style={podStyles.podSummaryContainer}>{pods}</div>;
 };
 
 export default PodSummary;
