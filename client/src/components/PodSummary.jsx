@@ -28,6 +28,7 @@ const PodSummary = () => {
           console.error('Error fetching pod data: ', error);
         });
     };
+    fetchData();
     const interval = setInterval(fetchData, 2000);
     return () => clearInterval(interval);
   }, []);
