@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 const PodSummary = () => {
   const [podsData, setPodsData] = useState([]);
+  const [hoverIndex, setHoverIndex] = useState(null);
 
   // useEffect(() => {
   //   fetch('http://localhost:3000/metricserver/pods')
@@ -33,6 +34,14 @@ const PodSummary = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const handleMouseEnter = (index) => {
+    setHoverIndex(index);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverIndex(null);
+  };
+
   const totalUsage = podsData.reduce(
     (acc, pod) => {
       acc.totalCpu += parseFloat(pod['CPU(cores)']);
@@ -48,16 +57,16 @@ const PodSummary = () => {
       flexWrap: 'wrap',
       justifyContent: 'space-between',
       alignItems: 'flex-start',
-      marginLeft: '250px', // Adjusted for the sidebar width
-      padding: '20px', // Added padding to create space for the sidebar
+      marginLeft: '250px',
+      padding: '20px',
       fontFamily: '"Roboto", sans-serif',
     },
     podItem: {
-      //border: '1px solid #ecf1fc',
       borderRadius: '15px',
       padding: '10px',
       margin: '10px',
       width: '300px',
+      minWidth: '200px',
       fontFamily: '"Roboto", sans-serif',
       backgroundColor: '#1B384A',
     },
@@ -77,16 +86,18 @@ const PodSummary = () => {
     buttonStyle: {
       padding: '5px 10px',
       textAlign: 'left',
-      //color: 'grey', // Set default text color to grey
       color: '#E3F1FC',
       border: 'none',
-      //backgroundColor: '#274C77',
+      borderRadius: '10px',
       backgroundColor: '#141F27',
       textTransform: 'uppercase',
-      cursor: 'pointer', // Add cursor pointer to indicate clickability
-      transition: 'color 0.3s ease', // Add transition for smooth color change
-      fontFamily: '"Roboto", sans-serif', // Specify the font family
-      fontWeight: '900', // Specify the font weight for Roboto Medium
+      cursor: 'pointer',
+      transition: 'color 0.3s ease',
+      fontFamily: '"Roboto", sans-serif',
+      fontWeight: '900',
+    },
+    hoverButtonStyle: {
+      color: '#FF743E',
     },
   };
 
@@ -100,42 +111,69 @@ const PodSummary = () => {
       100
     ).toFixed(3);
 
+    const hoverButtonStyle =
+      hoverIndex === index
+        ? { ...podStyles.buttonStyle, ...podStyles.hoverButtonStyle }
+        : podStyles.buttonStyle;
+
     return (
       <div key={index} style={podStyles.podItem}>
         <div style={podStyles.podContent}>
           <table>
             <thead>
               <tr>
-                <th>Pod {index + 1} Summary</th>
+                <th>
+                  <h3>POD {index + 1} SUMMARY</h3>
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>Pod Name: {pod.POD}</td>
-              </tr>
-              <tr>
-                <td>Pod ID: {pod.ID}</td>
-              </tr>
-              <tr>
-                <td>Pod Container Count: {pod['CONTAINER COUNT']}</td>
-              </tr>
-              <tr>
                 <td>
-                  Pod CPU Usage: {pod['CPU(cores)'].toFixed(3)} cores{' '}
-                  {cpuPercentage}%
+                  <b>Pod Name:</b> {pod.POD}
                 </td>
               </tr>
               <tr>
                 <td>
-                  Pod Memory Usage: {pod['MEMORY(bytes)']} bytes{' '}
-                  {memoryPercentage}%
+                  <b>Pod ID:</b> {pod.ID}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Pod Container Count:</b> {pod['CONTAINER COUNT']}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Pod CPU Usage:</b> {pod['CPU(cores)'].toFixed(3)} cores
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Pod CPU Usage Percentage:</b> {cpuPercentage}%
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Pod Memory Usage:</b> {pod['MEMORY(bytes)']} bytes
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Pod Memory Usage Percentage:</b> {memoryPercentage}%
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
         <div style={podStyles.buttonContainer}>
-          <button style={podStyles.buttonStyle}>Visualize</button>
+          <button
+            style={hoverButtonStyle}
+            onMouseEnter={() => handleMouseEnter(index)}
+            onMouseLeave={handleMouseLeave}
+          >
+            Visualize
+          </button>
         </div>
       </div>
     );

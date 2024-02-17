@@ -6,7 +6,6 @@ const sidebarStyle = {
   position: 'fixed',
   left: 0,
   top: 0,
-  //backgroundColor: '#274C77',
   backgroundColor: '#1B384A',
   paddingTop: '20px',
   display: 'flex',
@@ -16,32 +15,24 @@ const sidebarStyle = {
 const buttonStyle = {
   padding: '10px 15px',
   textAlign: 'left',
-  //color: 'grey', // Set default text color to grey
   color: '#E3F1FC',
   border: 'none',
-  //backgroundColor: '#274C77',
+  borderRadius: '10px',
   backgroundColor: '#1B384A',
   width: '100%',
   textTransform: 'uppercase',
   marginBottom: '5px',
-  cursor: 'pointer', // Add cursor pointer to indicate clickability
-  transition: 'color 0.3s ease', // Add transition for smooth color change
-  fontFamily: '"Roboto", sans-serif', // Specify the font family
-  fontWeight: '900', // Specify the font weight for Roboto Medium
+  cursor: 'pointer',
+  transition: 'color 0.3s ease',
+  fontFamily: '"Roboto", sans-serif',
+  fontWeight: '900',
 };
 
 const activeButtonStyle = {
   ...buttonStyle,
-  //backgroundColor: '#1F3A57',
-  backgroundColor: '#141F27', // Background color for active state
-  // color: 'white', // Change text color to white for active button
+  backgroundColor: '#141F27',
   color: '#FF743E',
 };
-
-// const hoverButtonStyle = {
-//   ...buttonStyle,
-//   color: 'white', // Change text color to white on hover
-// };
 
 const Navbar = ({ setActiveButton }) => {
   const [hoveredButton, setHoveredButton] = useState(null);
