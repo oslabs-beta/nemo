@@ -237,7 +237,7 @@ const NodeSummary = () => {
       width: '450px',
       minWidth: '300px',
       fontFamily: '"Roboto", sans-serif',
-      backgroundColor: '#0c1428',
+      backgroundColor: '#0E162C',
     },
     nodeContent: {
       display: 'flex',

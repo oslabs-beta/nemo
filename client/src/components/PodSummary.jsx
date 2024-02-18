@@ -68,7 +68,7 @@ const PodSummary = () => {
       width: '300px',
       minWidth: '200px',
       fontFamily: '"Roboto", sans-serif',
-      backgroundColor: '#0c1428',
+      backgroundColor: '#0E162C',
     },
     podContent: {
       display: 'flex',
