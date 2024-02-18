@@ -10,7 +10,7 @@ const App = () => {
   }, []);
 
   return (
-    <div style={{ backgroundColor: '#141f27', minHeight: '100vh' }}>
+    <div style={{ backgroundColor: '#081020', minHeight: '100vh' }}>
       <Navbar setActiveButton={setActiveButton} />
       <MainContainer activeButton={activeButton} />
     </div>

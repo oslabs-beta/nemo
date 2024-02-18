@@ -6,7 +6,7 @@ const sidebarStyle = {
   position: 'fixed',
   left: 0,
   top: 0,
-  backgroundColor: '#1B384A',
+  backgroundColor: '#0C1428',
   paddingTop: '20px',
   display: 'flex',
   flexDirection: 'column',
@@ -18,7 +18,7 @@ const buttonStyle = {
   color: '#E3F1FC',
   border: 'none',
   borderRadius: '10px',
-  backgroundColor: '#1B384A',
+  backgroundColor: '#0C1428',
   width: '100%',
   textTransform: 'uppercase',
   marginBottom: '5px',
@@ -30,7 +30,7 @@ const buttonStyle = {
 
 const activeButtonStyle = {
   ...buttonStyle,
-  backgroundColor: '#141F27',
+  backgroundColor: '#081020',
   color: '#FF743E',
 };
 
