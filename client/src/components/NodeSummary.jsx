@@ -396,7 +396,7 @@ const NodeSummary = () => {
           </table>
         </div>
         {/* <div style={nodeStyles.buttonContainer}> */}
-        <div className="flex justify-around p-2">
+        <div className="mt-auto flex justify-around p-2">
           <button
             // style={
             //   hoveredButton === "clusternodes"
@@ -533,7 +533,7 @@ const NodeSummary = () => {
           </table>
         </div>
         {/* <div style={nodeStyles.buttonContainer}> */}
-        <div className="flex justify-around p-2">
+        <div className="mt-auto flex justify-around p-2">
           <button
             // style={
             //   hoveredButton === "nodepods"
