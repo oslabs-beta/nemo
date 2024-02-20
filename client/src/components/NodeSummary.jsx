@@ -220,55 +220,55 @@ const NodeSummary = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const nodeStyles = {
-    nodeSummaryContainer: {
-      display: "flex",
-      flexWrap: "wrap",
-      justifyContent: "space-bewteen",
-      alignItems: "flex-start",
-      marginLeft: "250px",
-      padding: "20px",
-      fontFamily: '"Roboto", sans-serif',
-    },
-    nodeItem: {
-      borderRadius: "15px",
-      padding: "10px",
-      margin: "10px",
-      width: "450px",
-      minWidth: "300px",
-      fontFamily: '"Roboto", sans-serif',
-      backgroundColor: "#0E162C",
-    },
-    nodeContent: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      color: "#ECF1FC",
-      fontFamily: '"Roboto", sans-serif',
-    },
-    buttonContainer: {
-      padding: "10px",
-      display: "flex",
-      justifyContent: "space-around",
-      fontFamily: '"Roboto", sans-serif',
-    },
-    buttonStyle: {
-      padding: "5px 10px",
-      textAlign: "left",
-      color: "#E3F1FC",
-      border: "none",
-      borderRadius: "10px",
-      backgroundColor: "#081020",
-      textTransform: "uppercase",
-      cursor: "pointer",
-      transition: "color 0.3s ease",
-      fontFamily: '"Roboto", sans-serif',
-      fontWeight: "900",
-    },
-    hoverButtonStyle: {
-      color: "#FF743E",
-    },
-  };
+  // const nodeStyles = {
+  //   nodeSummaryContainer: {
+  //     display: "flex",
+  //     flexWrap: "wrap",
+  //     justifyContent: "space-bewteen",
+  //     alignItems: "flex-start",
+  //     marginLeft: "250px",
+  //     padding: "20px",
+  //     fontFamily: '"Roboto", sans-serif',
+  //   },
+  //   nodeItem: {
+  //     borderRadius: "15px",
+  //     padding: "10px",
+  //     margin: "10px",
+  //     width: "450px",
+  //     minWidth: "300px",
+  //     fontFamily: '"Roboto", sans-serif',
+  //     backgroundColor: "#0E162C",
+  //   },
+  //   nodeContent: {
+  //     display: "flex",
+  //     flexDirection: "column",
+  //     alignItems: "center",
+  //     color: "#ECF1FC",
+  //     fontFamily: '"Roboto", sans-serif',
+  //   },
+  //   buttonContainer: {
+  //     padding: "10px",
+  //     display: "flex",
+  //     justifyContent: "space-around",
+  //     fontFamily: '"Roboto", sans-serif',
+  //   },
+  //   buttonStyle: {
+  //     padding: "5px 10px",
+  //     textAlign: "left",
+  //     color: "#E3F1FC",
+  //     border: "none",
+  //     borderRadius: "10px",
+  //     backgroundColor: "#081020",
+  //     textTransform: "uppercase",
+  //     cursor: "pointer",
+  //     transition: "color 0.3s ease",
+  //     fontFamily: '"Roboto", sans-serif',
+  //     fontWeight: "900",
+  //   },
+  //   hoverButtonStyle: {
+  //     color: "#FF743E",
+  //   },
+  // };
 
   const handleMouseEnter = (identifier) => setHoveredButton(identifier);
   const handleMouseLeave = () => setHoveredButton(null);
