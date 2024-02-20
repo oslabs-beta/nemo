@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 const NodeSummary = () => {
   // const [clusterInfo, setClusterInfo] = useState({
@@ -34,35 +34,35 @@ const NodeSummary = () => {
   // });
   const [hoveredButton, setHoveredButton] = useState(null);
 
-  const [UID, setUID] = useState('');
-  const [extIp, setExtIp] = useState('');
-  const [intIp, setIntIp] = useState('');
-  const [clusterCPU, setClusterCPU] = useState('');
-  const [clusterEphStorage, setClusterEphStorage] = useState('');
-  const [clusterMemory, setClusterMemory] = useState('');
-  const [clusterPods, setClusterPods] = useState('');
-  const [clusterCPUAlloc, setClusterCPUAlloc] = useState('');
-  const [clusterEphStorageAlloc, setClusterEphStorageAlloc] = useState('');
-  const [clusterMemoryAlloc, setClusterMemoryAlloc] = useState('');
-  const [clusterPodsAlloc, setClusterPodsAlloc] = useState('');
-  const [nodeMemoryTotal, setNodeMemoryTotal] = useState('');
-  const [nodeMemoryAvail, setNodeMemoryAvail] = useState('');
-  const [nodeMemoryPercUsed, setNodeMemoryPercUsed] = useState('');
-  const [architecture, setArchitecture] = useState('');
-  const [bootID, setBootID] = useState('');
-  const [containerRunTime, setContainerRunTime] = useState('');
-  const [kernelVersion, setKernelVersion] = useState('');
-  const [kubeProxyVersion, setKubeProxyVersion] = useState('');
-  const [kubeletVersion, setKubeletVersion] = useState('');
-  const [machineID, setMachineID] = useState('');
-  const [os, setOs] = useState('');
-  const [osImage, setOsImage] = useState('');
-  const [systemUUID, setSystemUUID] = useState('');
-  const [CPUUsage1, setCPUUsage1] = useState('');
-  const [CPUUsage2, setCPUUsage2] = useState('');
-  const [diskUsed, setDiskUsed] = useState('');
-  const [diskCapacity, setDiskCapacity] = useState('');
-  const [diskUsagePercent, setDiskUsagePercent] = useState('');
+  const [UID, setUID] = useState("");
+  const [extIp, setExtIp] = useState("");
+  const [intIp, setIntIp] = useState("");
+  const [clusterCPU, setClusterCPU] = useState("");
+  const [clusterEphStorage, setClusterEphStorage] = useState("");
+  const [clusterMemory, setClusterMemory] = useState("");
+  const [clusterPods, setClusterPods] = useState("");
+  const [clusterCPUAlloc, setClusterCPUAlloc] = useState("");
+  const [clusterEphStorageAlloc, setClusterEphStorageAlloc] = useState("");
+  const [clusterMemoryAlloc, setClusterMemoryAlloc] = useState("");
+  const [clusterPodsAlloc, setClusterPodsAlloc] = useState("");
+  const [nodeMemoryTotal, setNodeMemoryTotal] = useState("");
+  const [nodeMemoryAvail, setNodeMemoryAvail] = useState("");
+  const [nodeMemoryPercUsed, setNodeMemoryPercUsed] = useState("");
+  const [architecture, setArchitecture] = useState("");
+  const [bootID, setBootID] = useState("");
+  const [containerRunTime, setContainerRunTime] = useState("");
+  const [kernelVersion, setKernelVersion] = useState("");
+  const [kubeProxyVersion, setKubeProxyVersion] = useState("");
+  const [kubeletVersion, setKubeletVersion] = useState("");
+  const [machineID, setMachineID] = useState("");
+  const [os, setOs] = useState("");
+  const [osImage, setOsImage] = useState("");
+  const [systemUUID, setSystemUUID] = useState("");
+  const [CPUUsage1, setCPUUsage1] = useState("");
+  const [CPUUsage2, setCPUUsage2] = useState("");
+  const [diskUsed, setDiskUsed] = useState("");
+  const [diskCapacity, setDiskCapacity] = useState("");
+  const [diskUsagePercent, setDiskUsagePercent] = useState("");
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -140,7 +140,7 @@ const NodeSummary = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetch('http://localhost:3000/metricserver/nodes', {})
+      await fetch("http://localhost:3000/metricserver/nodes", {})
         .then((data) => data.json())
         .then((data) => {
           setUID(data[0].metadata.uid); // Node ID
@@ -150,26 +150,26 @@ const NodeSummary = () => {
           setClusterEphStorage(
             (
               Number(
-                data[0].status.capacity['ephemeral-storage'].slice(0, -2)
+                data[0].status.capacity["ephemeral-storage"].slice(0, -2),
               ) / 976562.5
-            ).toFixed(2)
+            ).toFixed(2),
           );
           setClusterMemory(
             Number(
-              data[0].status.capacity.memory.slice(0, -2) / 976562.5
-            ).toFixed(2)
+              data[0].status.capacity.memory.slice(0, -2) / 976562.5,
+            ).toFixed(2),
           ); // Cluster Memory
           // setClusterPods(data[0].status.capacity.pods); // Cluster Pods
           setClusterCPUAlloc(
-            Number(data[0].status.allocatable.cpu.slice(0, -1)) / 1000
+            Number(data[0].status.allocatable.cpu.slice(0, -1)) / 1000,
           ); // Cluster CPU
           setClusterEphStorageAlloc(
-            data[0].status.allocatable['ephemeral-storage']
+            data[0].status.allocatable["ephemeral-storage"],
           );
           setClusterMemoryAlloc(
             Number(
-              data[0].status.allocatable.memory.slice(0, -2) / 976562.5
-            ).toFixed(2)
+              data[0].status.allocatable.memory.slice(0, -2) / 976562.5,
+            ).toFixed(2),
           ); // Cluster Memory
           // setClusterPodsAlloc(data[0].status.allocatable.pods); // Cluster Pods
           setArchitecture(data[0].status.nodeInfo.architecture);
@@ -189,7 +189,7 @@ const NodeSummary = () => {
           // console.log('data: ', data[0]);
         });
 
-      await fetch('http://localhost:3000/nodeExporter/memory', {})
+      await fetch("http://localhost:3000/nodeExporter/memory", {})
         .then((data) => data.json())
         .then((data) => {
           // console.log('Node Exporter Memory: ', data);
@@ -198,7 +198,7 @@ const NodeSummary = () => {
           setNodeMemoryPercUsed(data.perUsed.toFixed(3));
         });
 
-      await fetch('http://localhost:3000/nodeExporter/CPU', {})
+      await fetch("http://localhost:3000/nodeExporter/CPU", {})
         .then((data) => data.json())
         .then((data) => {
           // console.log('Node Exporter CPU: ', data);
@@ -206,10 +206,10 @@ const NodeSummary = () => {
           setCPUUsage2(data[1].CPU_UsagePercent.toFixed(2));
         });
 
-      await fetch('http://localhost:3000/nodeExporter/disk', {})
+      await fetch("http://localhost:3000/nodeExporter/disk", {})
         .then((data) => data.json())
         .then((data) => {
-          console.log('Node Exporter Disk: ', data);
+          console.log("Node Exporter Disk: ", data);
           setDiskUsed((data.DISK_Used / 1000000000).toFixed(2));
           setDiskCapacity((data.DISK_Total / 1000000000).toFixed(2));
           setDiskUsagePercent(data.DISK_UsagePercent.toFixed(2));
@@ -222,51 +222,51 @@ const NodeSummary = () => {
 
   const nodeStyles = {
     nodeSummaryContainer: {
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'space-bewteen',
-      alignItems: 'flex-start',
-      marginLeft: '250px',
-      padding: '20px',
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "space-bewteen",
+      alignItems: "flex-start",
+      marginLeft: "250px",
+      padding: "20px",
       fontFamily: '"Roboto", sans-serif',
     },
     nodeItem: {
-      borderRadius: '15px',
-      padding: '10px',
-      margin: '10px',
-      width: '450px',
-      minWidth: '300px',
+      borderRadius: "15px",
+      padding: "10px",
+      margin: "10px",
+      width: "450px",
+      minWidth: "300px",
       fontFamily: '"Roboto", sans-serif',
-      backgroundColor: '#0E162C',
+      backgroundColor: "#0E162C",
     },
     nodeContent: {
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      color: '#ECF1FC',
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      color: "#ECF1FC",
       fontFamily: '"Roboto", sans-serif',
     },
     buttonContainer: {
-      padding: '10px',
-      display: 'flex',
-      justifyContent: 'space-around',
+      padding: "10px",
+      display: "flex",
+      justifyContent: "space-around",
       fontFamily: '"Roboto", sans-serif',
     },
     buttonStyle: {
-      padding: '5px 10px',
-      textAlign: 'left',
-      color: '#E3F1FC',
-      border: 'none',
-      borderRadius: '10px',
-      backgroundColor: '#081020',
-      textTransform: 'uppercase',
-      cursor: 'pointer',
-      transition: 'color 0.3s ease',
+      padding: "5px 10px",
+      textAlign: "left",
+      color: "#E3F1FC",
+      border: "none",
+      borderRadius: "10px",
+      backgroundColor: "#081020",
+      textTransform: "uppercase",
+      cursor: "pointer",
+      transition: "color 0.3s ease",
       fontFamily: '"Roboto", sans-serif',
-      fontWeight: '900',
+      fontWeight: "900",
     },
     hoverButtonStyle: {
-      color: '#FF743E',
+      color: "#FF743E",
     },
   };
 
@@ -274,9 +274,12 @@ const NodeSummary = () => {
   const handleMouseLeave = () => setHoveredButton(null);
 
   return (
-    <div style={nodeStyles.nodeSummaryContainer}>
-      <div style={nodeStyles.nodeItem}>
-        <div style={nodeStyles.nodeContent}>
+    // <div style={nodeStyles.nodeSummaryContainer}>
+    <div className="ml-64 flex p-5">
+      {/* <div style={nodeStyles.nodeItem}> */}
+      <div className="bg-nemo-blue-900 text-nemo-blue-200 m-3 flex w-96 min-w-72 flex-col rounded-lg p-3">
+        {/* <div style={nodeStyles.nodeContent}> */}
+        <div className="flex flex-col items-center">
           <table>
             <thead>
               <tr>
@@ -392,33 +395,38 @@ const NodeSummary = () => {
             </tbody>
           </table>
         </div>
-        <div style={nodeStyles.buttonContainer}>
+        {/* <div style={nodeStyles.buttonContainer}> */}
+        <div className="flex justify-around p-2">
           <button
-            style={
-              hoveredButton === 'clusternodes'
-                ? { ...nodeStyles.buttonStyle, ...nodeStyles.hoverButtonStyle }
-                : nodeStyles.buttonStyle
-            }
-            onMouseEnter={() => handleMouseEnter('clusternodes')}
+            // style={
+            //   hoveredButton === "clusternodes"
+            //     ? { ...nodeStyles.buttonStyle, ...nodeStyles.hoverButtonStyle }
+            //     : nodeStyles.buttonStyle
+            // }
+            className={`w-28 cursor-pointer p-2 text-center font-bold uppercase transition-colors duration-300 ease-in-out ${hoveredButton === "clusternodes" ? "hover:text-nemo-orange-950" : ""} bg-nemo-blue-950 rounded-lg`}
+            onMouseEnter={() => handleMouseEnter("clusternodes")}
             onMouseLeave={handleMouseLeave}
           >
             Nodes
           </button>
           <button
-            style={
-              hoveredButton === 'clusterpods'
-                ? { ...nodeStyles.buttonStyle, ...nodeStyles.hoverButtonStyle }
-                : nodeStyles.buttonStyle
-            }
-            onMouseEnter={() => handleMouseEnter('clusterpods')}
+            // style={
+            //   hoveredButton === "clusterpods"
+            //     ? { ...nodeStyles.buttonStyle, ...nodeStyles.hoverButtonStyle }
+            //     : nodeStyles.buttonStyle
+            // }
+            className={`w-28 cursor-pointer p-2 text-center font-bold uppercase transition-colors duration-300 ease-in-out ${hoveredButton === "clusterpods" ? "hover:text-nemo-orange-950" : ""} bg-nemo-blue-950 rounded-lg`}
+            onMouseEnter={() => handleMouseEnter("clusterpods")}
             onMouseLeave={handleMouseLeave}
           >
             Pods
           </button>
         </div>
       </div>
-      <div style={nodeStyles.nodeItem}>
-        <div style={nodeStyles.nodeContent}>
+      {/* <div style={nodeStyles.nodeItem}> */}
+      <div className="bg-nemo-blue-900 text-nemo-blue-200 m-3 flex w-96 min-w-72 flex-col rounded-lg p-3">
+        {/* <div style={nodeStyles.nodeContent}> */}
+        <div className="flex flex-col items-center">
           <table>
             <thead>
               <tr>
@@ -524,25 +532,28 @@ const NodeSummary = () => {
             </tbody>
           </table>
         </div>
-        <div style={nodeStyles.buttonContainer}>
+        {/* <div style={nodeStyles.buttonContainer}> */}
+        <div className="flex justify-around p-2">
           <button
-            style={
-              hoveredButton === 'nodepods'
-                ? { ...nodeStyles.buttonStyle, ...nodeStyles.hoverButtonStyle }
-                : nodeStyles.buttonStyle
-            }
-            onMouseEnter={() => handleMouseEnter('nodepods')}
+            // style={
+            //   hoveredButton === "nodepods"
+            //     ? { ...nodeStyles.buttonStyle, ...nodeStyles.hoverButtonStyle }
+            //     : nodeStyles.buttonStyle
+            // }
+            className={`w-28 cursor-pointer p-2 text-center font-bold uppercase transition-colors duration-300 ease-in-out ${hoveredButton === "nodepods" ? "hover:text-nemo-orange-950" : ""} bg-nemo-blue-950 rounded-lg`}
+            onMouseEnter={() => handleMouseEnter("nodepods")}
             onMouseLeave={handleMouseLeave}
           >
             Pods
           </button>
           <button
-            style={
-              hoveredButton === 'nodeservices'
-                ? { ...nodeStyles.buttonStyle, ...nodeStyles.hoverButtonStyle }
-                : nodeStyles.buttonStyle
-            }
-            onMouseEnter={() => handleMouseEnter('nodeservices')}
+            // style={
+            //   hoveredButton === "nodeservices"
+            //     ? { ...nodeStyles.buttonStyle, ...nodeStyles.hoverButtonStyle }
+            //     : nodeStyles.buttonStyle
+            // }
+            className={`w-28 cursor-pointer p-2 text-center font-bold uppercase transition-colors duration-300 ease-in-out ${hoveredButton === "nodeservices" ? "hover:text-nemo-orange-950" : ""} bg-nemo-blue-950 rounded-lg`}
+            onMouseEnter={() => handleMouseEnter("nodeservices")}
             onMouseLeave={handleMouseLeave}
           >
             Services
