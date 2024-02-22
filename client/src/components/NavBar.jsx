@@ -48,7 +48,7 @@ const Navbar = ({ setActiveButton }) => {
   return (
     <div className="flex">
       {/* <div style={sidebarStyle}> */}
-      <div className="bg-nemo-blue-900 fixed left-0 top-0 flex h-screen w-64 flex-col pt-5">
+      <div className="fixed left-0 top-0 flex h-screen w-64 flex-col bg-nemo-blue-900 pt-5">
         {buttonLabels.map((label, i) => (
           <button
             key={i}
