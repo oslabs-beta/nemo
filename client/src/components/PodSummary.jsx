@@ -19,7 +19,7 @@ const PodSummary = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await fetch("http://localhost:3000/metricserver/podMem")
+      await fetch('http://localhost:3000/metricserver/topPods')
         .then((data) => data.json())
         .then((data) => {
           console.log(data);
