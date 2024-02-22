@@ -1,36 +1,41 @@
-h1,
-h2,
-h3 {
-  color: #cc6d3d;
-}
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-body {
-  background-color: #022e51;
-}
+// h1,
+// h2,
+// h3 {
+//   color: #cc6d3d;
+// }
 
-div {
-  color: #a3b4c8;
-  border: #cc6d3d;
-}
+// body {
+//   //background-color: #022e51;
+//   background-color: #141f27;
+// }
 
-button {
-  border-radius: 10px;
-}
+// div {
+//   color: #a3b4c8;
+//   border: #cc6d3d;
+// }
 
-#tableRow {
-  margin: 5px;
-}
+// button {
+//   border-radius: 10px;
+// }
 
-#table {
-  border: solid #cc6d3d 1px;
-  border-radius: 15px;
-  width: 400px;
-  display: flex;
-  flex-direction: column;
-  padding-left: 1em;
-}
+// #tableRow {
+//   margin: 5px;
+// }
 
-#nodeCardContainer {
-  display: flex;
-  justify-content: center;
-}
+// #table {
+//   border: solid #cc6d3d 1px;
+//   border-radius: 15px;
+//   width: 400px;
+//   display: flex;
+//   flex-direction: column;
+//   padding-left: 1em;
+// }
+
+// #nodeCardContainer {
+//   display: flex;
+//   justify-content: center;
+// }

@@ -4,7 +4,7 @@ import PodSummary from './PodSummary.jsx';
 const PodContainer = () => {
   return (
     <div>
-      <h2>Pods!</h2>
+      {/* <h2>Pods!</h2> */}
       <PodSummary />
     </div>
   );
