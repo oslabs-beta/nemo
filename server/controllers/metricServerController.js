@@ -111,7 +111,7 @@ metricServerController.getDeployments = async (req, res, next) => {
 metricServerController.getTopPods = async (req, res, next) => {
   try {
     const data = await k8s.topPods(k8sApi, metricsClient, '');
-    console.log(data[2].Containers);
+    //console.log(data[2].Containers);
     const topPods = data.map((pod) => {
       return {
         NODE_NAME: pod.Pod.spec.nodeName,
