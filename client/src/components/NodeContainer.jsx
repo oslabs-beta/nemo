@@ -56,7 +56,7 @@ const NodeContainer = () => {
 
   //console.log(nodeSummaries);
   return (
-    <div>
+    <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
       {/* <h2>Nodes!</h2> */}
       {nodeSummaries}
     </div>

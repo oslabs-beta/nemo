@@ -274,8 +274,8 @@ const NodeSummary = (props) => {
   const handleMouseLeave = () => setHoveredButton(null);
 
   return (
-    // <div style={nodeStyles.nodeSummaryContainer}>
-    <div className="ml-64 flex p-5">
+    // {/* <div style={nodeStyles.nodeSummaryContainer}> */}
+    <div className="flex p-5">
       {/* <div style={nodeStyles.nodeItem}>
       <div className="bg-nemo-blue-900 text-nemo-blue-200 m-3 flex w-96 min-w-72 flex-col rounded-lg p-3">
         <div style={nodeStyles.nodeContent}>
