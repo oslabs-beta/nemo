@@ -7,25 +7,18 @@ import path from 'path';
 import portObj from './portForward.js';
 import dotenv from 'dotenv';
 dotenv.config();
-import mongoose from 'mongoose';
+// import mongoose from 'mongoose';
 import runDb from './runDb.js';
 import databaseRouter from './routes/databaseRouter.js';
-
-// setInterval(() => console.log('hello there!'), 1000);
-
-mongoose
-  .connect(process.env.MONGO_URI, {
-    dbName: 'Nemo',
-  })
-  .then(() => console.log('Connected to Mongo DB.'))
-  .catch((err) => console.log(err));
 
 const app = express();
 const PORT = 3000;
 
-// establish port forwarding for node-exporter
+// This starts data fetching and posting to database
 runDb.postData();
-portObj.pForward();
+
+// establish port forwarding for node-exporter; currently deprecated
+// portObj.pForward();
 
 app.use(cors());
 /**
@@ -41,6 +34,8 @@ app.use(express.urlencoded({ extended: true }));
 /**
  * use route handlers
  */
+// database endpoint both fetches metric data and ultimately
+// posts to MongoDB
 app.use('/database', databaseRouter);
 app.use('/metricserver', metricServerRouter);
 app.use('/nodeExporter', nodeExporter);

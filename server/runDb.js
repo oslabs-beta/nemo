@@ -1,42 +1,17 @@
 const dbFuncs = {};
 
+// This function initiates a call to /database endpoint which
+// begins fetching data, and starts posting to MongoDB throug
+// middleware. setInterval will continue the process at a given
+// interval in ms.
 dbFuncs.postData = async function () {
-  // HELPER FUNC
-  // fetch (get) request to get data
-  // const dbObj = {};
-  // functionality for timestamp
-
-  // dbObj.cpu1 = await fetch;
   const intervalFunc = async () => {
-    console.log('inside interval func');
-    await fetch('/database')
-      .then((data) => data.json())
-      .then((data) => {
-        console.log('Sent fetch to database');
-      });
+    await fetch('http://localhost:3000/database').then(
+      console.log('Data posted to DB')
+    );
   };
-  // fetch (post)
-  //fetch database/post
-  // server.js
-  // router
-  // controller - > MongoDB
 
-  // fetch request to pull metric server data
-  // router for metric server
-  // controller for metric server
-
-  // fetch request to post data to db
-  // router for db
-  // controller for db
-
-  //interval 5000
-  // fetch request for database
-  // router
-  // controller metric server, res locals
-  // controller database
-  // sends to Mongo
-
-  setInterval(intervalFunc, 1000);
+  setInterval(intervalFunc, 5000);
 };
 
 export default dbFuncs;
