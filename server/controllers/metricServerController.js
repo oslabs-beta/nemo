@@ -175,6 +175,7 @@ metricServerController.getContainers = async (req, res, next) => {
 metricServerController.getTopNodes = async (req, res, next) => {
   try {
     const data = await k8s.topNodes(k8sApi);
+    //console.log(data);
     const topNodes = data.map((node) => {
       return {
         NODE_NAME: node.Node.metadata.name,
@@ -185,6 +186,12 @@ metricServerController.getTopNodes = async (req, res, next) => {
         ALLOCATABLE_RESOURCES: node.Node.status.allocatable,
         NODE_INFO: node.Node.status.nodeInfo,
         CONDITIONS: node.Node.status.conditions,
+        CPU_CAPACITY: node.CPU.Capacity,
+        CPU_REQUEST_TOTAL: node.CPU.RequestTotal,
+        CPU_LIMIT_TOTAL: node.CPU.LimitTotal,
+        MEMORY_CAPACITY: Number(node.Memory.Capacity),
+        MEMORY_REQUEST_TOTAL: Number(node.Memory.RequestTotal),
+        MEMORY_LIMIT_TOTAL: Number(node.Memory.LimitTotal),
       };
     });
     res.locals.topNodes = topNodes;

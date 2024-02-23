@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const NodeSummary = () => {
+const NodeSummary = (props) => {
   // const [clusterInfo, setClusterInfo] = useState({
   //   UID: '',
   //   extIP: '',
@@ -34,35 +34,35 @@ const NodeSummary = () => {
   // });
   const [hoveredButton, setHoveredButton] = useState(null);
 
-  const [UID, setUID] = useState("");
-  const [extIp, setExtIp] = useState("");
-  const [intIp, setIntIp] = useState("");
-  const [clusterCPU, setClusterCPU] = useState("");
-  const [clusterEphStorage, setClusterEphStorage] = useState("");
-  const [clusterMemory, setClusterMemory] = useState("");
-  const [clusterPods, setClusterPods] = useState("");
-  const [clusterCPUAlloc, setClusterCPUAlloc] = useState("");
-  const [clusterEphStorageAlloc, setClusterEphStorageAlloc] = useState("");
-  const [clusterMemoryAlloc, setClusterMemoryAlloc] = useState("");
-  const [clusterPodsAlloc, setClusterPodsAlloc] = useState("");
-  const [nodeMemoryTotal, setNodeMemoryTotal] = useState("");
-  const [nodeMemoryAvail, setNodeMemoryAvail] = useState("");
-  const [nodeMemoryPercUsed, setNodeMemoryPercUsed] = useState("");
-  const [architecture, setArchitecture] = useState("");
-  const [bootID, setBootID] = useState("");
-  const [containerRunTime, setContainerRunTime] = useState("");
-  const [kernelVersion, setKernelVersion] = useState("");
-  const [kubeProxyVersion, setKubeProxyVersion] = useState("");
-  const [kubeletVersion, setKubeletVersion] = useState("");
-  const [machineID, setMachineID] = useState("");
-  const [os, setOs] = useState("");
-  const [osImage, setOsImage] = useState("");
-  const [systemUUID, setSystemUUID] = useState("");
-  const [CPUUsage1, setCPUUsage1] = useState("");
-  const [CPUUsage2, setCPUUsage2] = useState("");
-  const [diskUsed, setDiskUsed] = useState("");
-  const [diskCapacity, setDiskCapacity] = useState("");
-  const [diskUsagePercent, setDiskUsagePercent] = useState("");
+  // const [UID, setUID] = useState("");
+  // const [extIp, setExtIp] = useState("");
+  // const [intIp, setIntIp] = useState("");
+  // const [clusterCPU, setClusterCPU] = useState("");
+  // const [clusterEphStorage, setClusterEphStorage] = useState("");
+  // const [clusterMemory, setClusterMemory] = useState("");
+  // const [clusterPods, setClusterPods] = useState("");
+  // const [clusterCPUAlloc, setClusterCPUAlloc] = useState("");
+  // const [clusterEphStorageAlloc, setClusterEphStorageAlloc] = useState("");
+  // const [clusterMemoryAlloc, setClusterMemoryAlloc] = useState("");
+  // const [clusterPodsAlloc, setClusterPodsAlloc] = useState("");
+  // const [nodeMemoryTotal, setNodeMemoryTotal] = useState("");
+  // const [nodeMemoryAvail, setNodeMemoryAvail] = useState("");
+  // const [nodeMemoryPercUsed, setNodeMemoryPercUsed] = useState("");
+  // const [architecture, setArchitecture] = useState("");
+  // const [bootID, setBootID] = useState("");
+  // const [containerRunTime, setContainerRunTime] = useState("");
+  // const [kernelVersion, setKernelVersion] = useState("");
+  // const [kubeProxyVersion, setKubeProxyVersion] = useState("");
+  // const [kubeletVersion, setKubeletVersion] = useState("");
+  // const [machineID, setMachineID] = useState("");
+  // const [os, setOs] = useState("");
+  // const [osImage, setOsImage] = useState("");
+  // const [systemUUID, setSystemUUID] = useState("");
+  // const [CPUUsage1, setCPUUsage1] = useState("");
+  // const [CPUUsage2, setCPUUsage2] = useState("");
+  // const [diskUsed, setDiskUsed] = useState("");
+  // const [diskCapacity, setDiskCapacity] = useState("");
+  // const [diskUsagePercent, setDiskUsagePercent] = useState("");
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -138,87 +138,87 @@ const NodeSummary = () => {
   //   });
   // };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await fetch("http://localhost:3000/metricserver/nodes", {})
-        .then((data) => data.json())
-        .then((data) => {
-          setUID(data[0].metadata.uid); // Node ID
-          setIntIp(data[0].status.addresses[0].address); // Internal IP
-          setExtIp(data[0].status.addresses[1].address); // External IP
-          setClusterCPU(data[0].status.capacity.cpu); // Cluster CPU
-          setClusterEphStorage(
-            (
-              Number(
-                data[0].status.capacity["ephemeral-storage"].slice(0, -2),
-              ) / 976562.5
-            ).toFixed(2),
-          );
-          setClusterMemory(
-            Number(
-              data[0].status.capacity.memory.slice(0, -2) / 976562.5,
-            ).toFixed(2),
-          ); // Cluster Memory
-          // setClusterPods(data[0].status.capacity.pods); // Cluster Pods
-          setClusterCPUAlloc(
-            Number(data[0].status.allocatable.cpu.slice(0, -1)) / 1000,
-          ); // Cluster CPU
-          setClusterEphStorageAlloc(
-            data[0].status.allocatable["ephemeral-storage"],
-          );
-          setClusterMemoryAlloc(
-            Number(
-              data[0].status.allocatable.memory.slice(0, -2) / 976562.5,
-            ).toFixed(2),
-          ); // Cluster Memory
-          // setClusterPodsAlloc(data[0].status.allocatable.pods); // Cluster Pods
-          setArchitecture(data[0].status.nodeInfo.architecture);
-          setBootID(data[0].status.nodeInfo.bootID);
-          setContainerRunTime(data[0].status.nodeInfo.containerRuntimeVersion);
-          setKernelVersion(data[0].status.nodeInfo.kernelVersion);
-          setKubeProxyVersion(data[0].status.nodeInfo.kubeProxyVersion);
-          setKubeletVersion(data[0].status.nodeInfo.kubeletVersion);
-          setMachineID(data[0].status.nodeInfo.machineID);
-          setOs(data[0].status.nodeInfo.operatingSystem);
-          setOsImage(data[0].status.nodeInfo.osImage);
-          setSystemUUID(data[0].status.nodeInfo.systemUUID);
-          // console.log('Node Info: ', data[0].status.nodeInfo);
-          // console.log('allocatable: ', data[0].status.allocatable);
-          // console.log('table 3: ', data[0].status.images);
-          // console.table('table 4: ', data[0].metadata.managedFields);
-          // console.log('data: ', data[0]);
-        });
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     await fetch("http://localhost:3000/metricserver/nodes", {})
+  //       .then((data) => data.json())
+  //       .then((data) => {
+  //         setUID(data[0].metadata.uid); // Node ID
+  //         setIntIp(data[0].status.addresses[0].address); // Internal IP
+  //         setExtIp(data[0].status.addresses[1].address); // External IP
+  //         setClusterCPU(data[0].status.capacity.cpu); // Cluster CPU
+  //         setClusterEphStorage(
+  //           (
+  //             Number(
+  //               data[0].status.capacity["ephemeral-storage"].slice(0, -2),
+  //             ) / 976562.5
+  //           ).toFixed(2),
+  //         );
+  //         setClusterMemory(
+  //           Number(
+  //             data[0].status.capacity.memory.slice(0, -2) / 976562.5,
+  //           ).toFixed(2),
+  //         ); // Cluster Memory
+  //         // setClusterPods(data[0].status.capacity.pods); // Cluster Pods
+  //         setClusterCPUAlloc(
+  //           Number(data[0].status.allocatable.cpu.slice(0, -1)) / 1000,
+  //         ); // Cluster CPU
+  //         setClusterEphStorageAlloc(
+  //           data[0].status.allocatable["ephemeral-storage"],
+  //         );
+  //         setClusterMemoryAlloc(
+  //           Number(
+  //             data[0].status.allocatable.memory.slice(0, -2) / 976562.5,
+  //           ).toFixed(2),
+  //         ); // Cluster Memory
+  //         // setClusterPodsAlloc(data[0].status.allocatable.pods); // Cluster Pods
+  //         setArchitecture(data[0].status.nodeInfo.architecture);
+  //         setBootID(data[0].status.nodeInfo.bootID);
+  //         setContainerRunTime(data[0].status.nodeInfo.containerRuntimeVersion);
+  //         setKernelVersion(data[0].status.nodeInfo.kernelVersion);
+  //         setKubeProxyVersion(data[0].status.nodeInfo.kubeProxyVersion);
+  //         setKubeletVersion(data[0].status.nodeInfo.kubeletVersion);
+  //         setMachineID(data[0].status.nodeInfo.machineID);
+  //         setOs(data[0].status.nodeInfo.operatingSystem);
+  //         setOsImage(data[0].status.nodeInfo.osImage);
+  //         setSystemUUID(data[0].status.nodeInfo.systemUUID);
+  //         // console.log('Node Info: ', data[0].status.nodeInfo);
+  //         // console.log('allocatable: ', data[0].status.allocatable);
+  //         // console.log('table 3: ', data[0].status.images);
+  //         // console.table('table 4: ', data[0].metadata.managedFields);
+  //         // console.log('data: ', data[0]);
+  //       });
 
-      await fetch("http://localhost:3000/nodeExporter/memory", {})
-        .then((data) => data.json())
-        .then((data) => {
-          // console.log('Node Exporter Memory: ', data);
-          setNodeMemoryTotal((data.total / 1000000000).toFixed(2));
-          setNodeMemoryAvail((data.avail / 1000000000).toFixed(2));
-          setNodeMemoryPercUsed(data.perUsed.toFixed(3));
-        });
+  //     await fetch("http://localhost:3000/nodeExporter/memory", {})
+  //       .then((data) => data.json())
+  //       .then((data) => {
+  //         // console.log('Node Exporter Memory: ', data);
+  //         setNodeMemoryTotal((data.total / 1000000000).toFixed(2));
+  //         setNodeMemoryAvail((data.avail / 1000000000).toFixed(2));
+  //         setNodeMemoryPercUsed(data.perUsed.toFixed(3));
+  //       });
 
-      await fetch("http://localhost:3000/nodeExporter/CPU", {})
-        .then((data) => data.json())
-        .then((data) => {
-          // console.log('Node Exporter CPU: ', data);
-          setCPUUsage1(data[0].CPU_UsagePercent.toFixed(2));
-          setCPUUsage2(data[1].CPU_UsagePercent.toFixed(2));
-        });
+  //     await fetch("http://localhost:3000/nodeExporter/CPU", {})
+  //       .then((data) => data.json())
+  //       .then((data) => {
+  //         // console.log('Node Exporter CPU: ', data);
+  //         setCPUUsage1(data[0].CPU_UsagePercent.toFixed(2));
+  //         setCPUUsage2(data[1].CPU_UsagePercent.toFixed(2));
+  //       });
 
-      await fetch("http://localhost:3000/nodeExporter/disk", {})
-        .then((data) => data.json())
-        .then((data) => {
-          console.log("Node Exporter Disk: ", data);
-          setDiskUsed((data.DISK_Used / 1000000000).toFixed(2));
-          setDiskCapacity((data.DISK_Total / 1000000000).toFixed(2));
-          setDiskUsagePercent(data.DISK_UsagePercent.toFixed(2));
-        });
-    };
-    fetchData();
-    const interval = setInterval(fetchData, 2000);
-    return () => clearInterval(interval);
-  }, []);
+  //     await fetch("http://localhost:3000/nodeExporter/disk", {})
+  //       .then((data) => data.json())
+  //       .then((data) => {
+  //         console.log("Node Exporter Disk: ", data);
+  //         setDiskUsed((data.DISK_Used / 1000000000).toFixed(2));
+  //         setDiskCapacity((data.DISK_Total / 1000000000).toFixed(2));
+  //         setDiskUsagePercent(data.DISK_UsagePercent.toFixed(2));
+  //       });
+  //   };
+  //   fetchData();
+  //   const interval = setInterval(fetchData, 2000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   // const nodeStyles = {
   //   nodeSummaryContainer: {
@@ -274,11 +274,11 @@ const NodeSummary = () => {
   const handleMouseLeave = () => setHoveredButton(null);
 
   return (
-    // <div style={nodeStyles.nodeSummaryContainer}>
-    <div className="ml-64 flex p-5">
-      {/* <div style={nodeStyles.nodeItem}> */}
+    // {/* <div style={nodeStyles.nodeSummaryContainer}> */}
+    <div className="flex p-5">
+      {/* <div style={nodeStyles.nodeItem}>
       <div className="bg-nemo-blue-900 text-nemo-blue-200 m-3 flex w-96 min-w-72 flex-col rounded-lg p-3">
-        {/* <div style={nodeStyles.nodeContent}> */}
+        <div style={nodeStyles.nodeContent}>
         <div className="flex flex-col items-center">
           <table>
             <thead>
@@ -292,61 +292,61 @@ const NodeSummary = () => {
               <tr>
                 <td>
                   <b>Architecture:</b> {architecture}
-                  {/* <b>Architecture:</b> {clusterInfo.architecture} */}
+                  <b>Architecture:</b> {clusterInfo.architecture}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Boot ID:</b> {bootID}
-                  {/* <b>Boot ID:</b> {clusterInfo.bootID} */}
+                  <b>Boot ID:</b> {clusterInfo.bootID}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Container Run Time:</b> {containerRunTime}
-                  {/* <b>Container Run Time:</b> {clusterInfo.containerRunTime} */}
+                  <b>Container Run Time:</b> {clusterInfo.containerRunTime}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Kernel Version:</b> {kernelVersion}
-                  {/* <b>Kernel Version:</b> {clusterInfo.kernelVersion} */}
+                  <b>Kernel Version:</b> {clusterInfo.kernelVersion}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Kube Proxy Version:</b> {kubeProxyVersion}
-                  {/* <b>Kube Proxy Version:</b> {clusterInfo.kubeProxyVersion} */}
+                  <b>Kube Proxy Version:</b> {clusterInfo.kubeProxyVersion}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Kubelet Version:</b> {kubeletVersion}
-                  {/* <b>Kubelet Version:</b> {clusterInfo.kubeletVersion} */}
+                  <b>Kubelet Version:</b> {clusterInfo.kubeletVersion}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Machine ID:</b> {machineID}
-                  {/* <b>Machine ID:</b> {clusterInfo.machineID} */}
+                  <b>Machine ID:</b> {clusterInfo.machineID}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Operating System:</b> {os}
-                  {/* <b>Operating System:</b> {clusterInfo.os} */}
+                  <b>Operating System:</b> {clusterInfo.os}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>OS Image:</b> {osImage}
-                  {/* <b>OS Image:</b> {clusterInfo.osImage} */}
+                  <b>OS Image:</b> {clusterInfo.osImage}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>System UUID:</b> {systemUUID}
-                  {/* <b>System UUID:</b> {clusterInfo.systemUUID} */}
+                  <b>System UUID:</b> {clusterInfo.systemUUID}
                 </td>
               </tr>
               <tr>
@@ -357,52 +357,52 @@ const NodeSummary = () => {
               <tr>
                 <td>
                   <b>CPU Capacity:</b> {clusterCPU}
-                  {/* <b>CPU Capacity:</b> {clusterInfo.clusterCPU} */}
+                  <b>CPU Capacity:</b> {clusterInfo.clusterCPU}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>CPU Allocatable:</b> {clusterCPUAlloc}
-                  {/* <b>CPU Allocatable:</b> {clusterInfo.clusterCPUAlloc} */}
+                  <b>CPU Allocatable:</b> {clusterInfo.clusterCPUAlloc}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Ephemeral Storage Capacity:</b> {clusterEphStorage} GB
-                  {/* <b>Ephemeral Storage Capacity:</b>{' '}
-                  {clusterInfo.clusterEphStorage} GB */}
+                  <b>Ephemeral Storage Capacity:</b>{' '}
+                  {clusterInfo.clusterEphStorage} GB
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Ephemeral Storage Allocatable:</b> {clusterEphStorageAlloc}
-                  {/* <b>Ephemeral Storage Allocatable:</b>{' '}
-                  {clusterInfo.clusterEphStorageAlloc} */}
+                  <b>Ephemeral Storage Allocatable:</b>{' '}
+                  {clusterInfo.clusterEphStorageAlloc}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Memory Capacity:</b> {clusterMemory} GB
-                  {/* <b>Memory Capacity:</b> {clusterInfo.clusterMemory} GB */}
+                  <b>Memory Capacity:</b> {clusterInfo.clusterMemory} GB
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Memory Allocatable:</b> {clusterMemoryAlloc} GB
-                  {/* <b>Memory Allocatable:</b> {clusterInfo.clusterMemoryAlloc} GB */}
+                  <b>Memory Allocatable:</b> {clusterInfo.clusterMemoryAlloc} GB
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-        {/* <div style={nodeStyles.buttonContainer}> */}
+        <div style={nodeStyles.buttonContainer}>
         <div className="mt-auto flex justify-around p-2">
           <button
-            // style={
-            //   hoveredButton === "clusternodes"
-            //     ? { ...nodeStyles.buttonStyle, ...nodeStyles.hoverButtonStyle }
-            //     : nodeStyles.buttonStyle
-            // }
+            style={
+              hoveredButton === "clusternodes"
+                ? { ...nodeStyles.buttonStyle, ...nodeStyles.hoverButtonStyle }
+                : nodeStyles.buttonStyle
+            }
             className={`w-28 cursor-pointer p-2 text-center font-bold uppercase transition-colors duration-300 ease-in-out ${hoveredButton === "clusternodes" ? "hover:text-nemo-orange-950" : ""} bg-nemo-blue-950 rounded-lg`}
             onMouseEnter={() => handleMouseEnter("clusternodes")}
             onMouseLeave={handleMouseLeave}
@@ -410,11 +410,11 @@ const NodeSummary = () => {
             Nodes
           </button>
           <button
-            // style={
-            //   hoveredButton === "clusterpods"
-            //     ? { ...nodeStyles.buttonStyle, ...nodeStyles.hoverButtonStyle }
-            //     : nodeStyles.buttonStyle
-            // }
+            style={
+              hoveredButton === "clusterpods"
+                ? { ...nodeStyles.buttonStyle, ...nodeStyles.hoverButtonStyle }
+                : nodeStyles.buttonStyle
+            }
             className={`w-28 cursor-pointer p-2 text-center font-bold uppercase transition-colors duration-300 ease-in-out ${hoveredButton === "clusterpods" ? "hover:text-nemo-orange-950" : ""} bg-nemo-blue-950 rounded-lg`}
             onMouseEnter={() => handleMouseEnter("clusterpods")}
             onMouseLeave={handleMouseLeave}
@@ -422,9 +422,9 @@ const NodeSummary = () => {
             Pods
           </button>
         </div>
-      </div>
+      </div> */}
       {/* <div style={nodeStyles.nodeItem}> */}
-      <div className="bg-nemo-blue-900 text-nemo-blue-200 m-3 flex w-96 min-w-72 flex-col rounded-lg p-3">
+      <div className="m-3 flex w-96 min-w-72 flex-col rounded-lg bg-nemo-blue-900 p-3 text-nemo-blue-200">
         {/* <div style={nodeStyles.nodeContent}> */}
         <div className="flex flex-col items-center">
           <table>
@@ -445,19 +445,25 @@ const NodeSummary = () => {
             <tbody>
               <tr>
                 <td>
-                  <b>Internal IP:</b> {intIp}
+                  <b>Name:</b> {props.name}
                   {/* <b>Internal IP:</b> {clusterInfo.intIP} */}
                 </td>
               </tr>
               <tr>
                 <td>
-                  <b>External IP:</b> {extIp}
+                  <b>Internal IP:</b> {props.internalIP}
+                  {/* <b>Internal IP:</b> {clusterInfo.intIP} */}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>External IP:</b> {props.externalIP}
                   {/* <b>External IP:</b> {clusterInfo.extIP} */}
                 </td>
               </tr>
               <tr>
                 <td>
-                  <b>Node ID:</b> {UID}
+                  <b>Node ID:</b> {props.id}
                   {/* <b>Node ID:</b> {clusterInfo.UID} */}
                 </td>
               </tr>
@@ -472,19 +478,25 @@ const NodeSummary = () => {
             <tbody>
               <tr>
                 <td>
-                  <b>Node Memory Total:</b> {nodeMemoryTotal} GB
+                  <b>Node Memory Total:</b>{" "}
+                  {(props.memCapacity / 1000000000).toFixed(2)} GB
                   {/* <b>Node Memory Total:</b> {nodeMetrics.nodeMemoryTotal} GB */}
                 </td>
               </tr>
               <tr>
                 <td>
-                  <b>Node Memory Available:</b> {nodeMemoryAvail} GB
+                  <b>Node Memory Available:</b>{" "}
+                  {((props.memCapacity - props.memUsage) / 1000000000).toFixed(
+                    2,
+                  )}{" "}
+                  GB
                   {/* <b>Node Memory Available:</b> {nodeMetrics.nodeMemoryAvail} GB */}
                 </td>
               </tr>
               <tr>
                 <td>
-                  <b>Node Memory Percent Used:</b> {nodeMemoryPercUsed}%
+                  <b>Node Memory Percent Used:</b>{" "}
+                  {((props.memUsage / props.memCapacity) * 100).toFixed(2)}%
                   {/* <b>Node Memory Percent Used:</b>{' '}
                   {nodeMetrics.nodeMemoryPercUsed}% */}
                 </td>
@@ -500,35 +512,50 @@ const NodeSummary = () => {
             <tbody>
               <tr>
                 <td>
-                  <b>CPU 1 Usage:</b> {CPUUsage1}%
-                  {/* <b>CPU 1 Usage:</b> {nodeMetrics.CPUUsage1}% */}
+                  <b>Node CPU Total:</b> {props.cpuCapacity} GB
+                  {/* <b>Node Memory Total:</b> {nodeMetrics.nodeMemoryTotal} GB */}
                 </td>
               </tr>
               <tr>
                 <td>
+                  <b>Node CPU Available:</b>{" "}
+                  {(props.cpuCapacity - props.cpuUsage).toFixed(2)} GB
+                  {/* <b>Node Memory Available:</b> {nodeMetrics.nodeMemoryAvail} GB */}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Node CPU Percent Used:</b>{" "}
+                  {((props.cpuUsage / props.cpuCapacity) * 100).toFixed(2)}%
+                  {/* <b>Node Memory Percent Used:</b>{' '}
+                  {nodeMetrics.nodeMemoryPercUsed}% */}
+                </td>
+              </tr>
+              {/* <tr>
+                <td>
                   <b>CPU 2 Usage:</b> {CPUUsage2}%
-                  {/* <b>CPU 2 Usage:</b> {nodeMetrics.CPUUsage2}% */}
+                  <b>CPU 2 Usage:</b> {nodeMetrics.CPUUsage2}%
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Storage Capacity:</b> {diskCapacity}
-                  {/* <b>Storage Capacity:</b> {nodeMetrics.diskCapacity} */}
+                  <b>Storage Capacity:</b> {nodeMetrics.diskCapacity}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Storage Used:</b> {diskUsed}
-                  {/* <b>Storage Used:</b> {nodeMetrics.diskUsed} */}
+                  <b>Storage Used:</b> {nodeMetrics.diskUsed}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Storage Used Percentage:</b> {diskUsagePercent}%
-                  {/* <b>Storage Used Percentage:</b> {nodeMetrics.diskUsagePercent}
-                  % */}
+                  <b>Storage Used Percentage:</b> {nodeMetrics.diskUsagePercent}
+                  %
                 </td>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
         </div>
@@ -540,7 +567,7 @@ const NodeSummary = () => {
             //     ? { ...nodeStyles.buttonStyle, ...nodeStyles.hoverButtonStyle }
             //     : nodeStyles.buttonStyle
             // }
-            className={`w-28 cursor-pointer p-2 text-center font-bold uppercase transition-colors duration-300 ease-in-out ${hoveredButton === "nodepods" ? "hover:text-nemo-orange-950" : ""} bg-nemo-blue-950 rounded-lg`}
+            className={`w-28 cursor-pointer p-2 text-center font-bold uppercase transition-colors duration-300 ease-in-out ${hoveredButton === "nodepods" ? "hover:text-nemo-orange-950" : ""} rounded-lg bg-nemo-blue-950`}
             onMouseEnter={() => handleMouseEnter("nodepods")}
             onMouseLeave={handleMouseLeave}
           >
@@ -552,7 +579,7 @@ const NodeSummary = () => {
             //     ? { ...nodeStyles.buttonStyle, ...nodeStyles.hoverButtonStyle }
             //     : nodeStyles.buttonStyle
             // }
-            className={`w-28 cursor-pointer p-2 text-center font-bold uppercase transition-colors duration-300 ease-in-out ${hoveredButton === "nodeservices" ? "hover:text-nemo-orange-950" : ""} bg-nemo-blue-950 rounded-lg`}
+            className={`w-28 cursor-pointer p-2 text-center font-bold uppercase transition-colors duration-300 ease-in-out ${hoveredButton === "nodeservices" ? "hover:text-nemo-orange-950" : ""} rounded-lg bg-nemo-blue-950`}
             onMouseEnter={() => handleMouseEnter("nodeservices")}
             onMouseLeave={handleMouseLeave}
           >
