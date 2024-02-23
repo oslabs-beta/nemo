@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const NodeSummary = () => {
+const NodeSummary = (props) => {
   // const [clusterInfo, setClusterInfo] = useState({
   //   UID: '',
   //   extIP: '',
@@ -34,35 +34,35 @@ const NodeSummary = () => {
   // });
   const [hoveredButton, setHoveredButton] = useState(null);
 
-  const [UID, setUID] = useState("");
-  const [extIp, setExtIp] = useState("");
-  const [intIp, setIntIp] = useState("");
-  const [clusterCPU, setClusterCPU] = useState("");
-  const [clusterEphStorage, setClusterEphStorage] = useState("");
-  const [clusterMemory, setClusterMemory] = useState("");
-  const [clusterPods, setClusterPods] = useState("");
-  const [clusterCPUAlloc, setClusterCPUAlloc] = useState("");
-  const [clusterEphStorageAlloc, setClusterEphStorageAlloc] = useState("");
-  const [clusterMemoryAlloc, setClusterMemoryAlloc] = useState("");
-  const [clusterPodsAlloc, setClusterPodsAlloc] = useState("");
-  const [nodeMemoryTotal, setNodeMemoryTotal] = useState("");
-  const [nodeMemoryAvail, setNodeMemoryAvail] = useState("");
-  const [nodeMemoryPercUsed, setNodeMemoryPercUsed] = useState("");
-  const [architecture, setArchitecture] = useState("");
-  const [bootID, setBootID] = useState("");
-  const [containerRunTime, setContainerRunTime] = useState("");
-  const [kernelVersion, setKernelVersion] = useState("");
-  const [kubeProxyVersion, setKubeProxyVersion] = useState("");
-  const [kubeletVersion, setKubeletVersion] = useState("");
-  const [machineID, setMachineID] = useState("");
-  const [os, setOs] = useState("");
-  const [osImage, setOsImage] = useState("");
-  const [systemUUID, setSystemUUID] = useState("");
-  const [CPUUsage1, setCPUUsage1] = useState("");
-  const [CPUUsage2, setCPUUsage2] = useState("");
-  const [diskUsed, setDiskUsed] = useState("");
-  const [diskCapacity, setDiskCapacity] = useState("");
-  const [diskUsagePercent, setDiskUsagePercent] = useState("");
+  // const [UID, setUID] = useState("");
+  // const [extIp, setExtIp] = useState("");
+  // const [intIp, setIntIp] = useState("");
+  // const [clusterCPU, setClusterCPU] = useState("");
+  // const [clusterEphStorage, setClusterEphStorage] = useState("");
+  // const [clusterMemory, setClusterMemory] = useState("");
+  // const [clusterPods, setClusterPods] = useState("");
+  // const [clusterCPUAlloc, setClusterCPUAlloc] = useState("");
+  // const [clusterEphStorageAlloc, setClusterEphStorageAlloc] = useState("");
+  // const [clusterMemoryAlloc, setClusterMemoryAlloc] = useState("");
+  // const [clusterPodsAlloc, setClusterPodsAlloc] = useState("");
+  // const [nodeMemoryTotal, setNodeMemoryTotal] = useState("");
+  // const [nodeMemoryAvail, setNodeMemoryAvail] = useState("");
+  // const [nodeMemoryPercUsed, setNodeMemoryPercUsed] = useState("");
+  // const [architecture, setArchitecture] = useState("");
+  // const [bootID, setBootID] = useState("");
+  // const [containerRunTime, setContainerRunTime] = useState("");
+  // const [kernelVersion, setKernelVersion] = useState("");
+  // const [kubeProxyVersion, setKubeProxyVersion] = useState("");
+  // const [kubeletVersion, setKubeletVersion] = useState("");
+  // const [machineID, setMachineID] = useState("");
+  // const [os, setOs] = useState("");
+  // const [osImage, setOsImage] = useState("");
+  // const [systemUUID, setSystemUUID] = useState("");
+  // const [CPUUsage1, setCPUUsage1] = useState("");
+  // const [CPUUsage2, setCPUUsage2] = useState("");
+  // const [diskUsed, setDiskUsed] = useState("");
+  // const [diskCapacity, setDiskCapacity] = useState("");
+  // const [diskUsagePercent, setDiskUsagePercent] = useState("");
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -478,19 +478,25 @@ const NodeSummary = () => {
             <tbody>
               <tr>
                 <td>
-                  <b>Node Memory Total:</b> {nodeMemoryTotal} GB
+                  <b>Node Memory Total:</b>{" "}
+                  {(props.memCapacity / 1000000000).toFixed(2)} GB
                   {/* <b>Node Memory Total:</b> {nodeMetrics.nodeMemoryTotal} GB */}
                 </td>
               </tr>
               <tr>
                 <td>
-                  <b>Node Memory Available:</b> {nodeMemoryAvail} GB
+                  <b>Node Memory Available:</b>{" "}
+                  {((props.memCapacity - props.memUsage) / 1000000000).toFixed(
+                    2,
+                  )}{" "}
+                  GB
                   {/* <b>Node Memory Available:</b> {nodeMetrics.nodeMemoryAvail} GB */}
                 </td>
               </tr>
               <tr>
                 <td>
-                  <b>Node Memory Percent Used:</b> {nodeMemoryPercUsed}%
+                  <b>Node Memory Percent Used:</b>{" "}
+                  {((props.memUsage / props.memCapacity) * 100).toFixed(2)}%
                   {/* <b>Node Memory Percent Used:</b>{' '}
                   {nodeMetrics.nodeMemoryPercUsed}% */}
                 </td>
@@ -506,35 +512,50 @@ const NodeSummary = () => {
             <tbody>
               <tr>
                 <td>
-                  <b>CPU 1 Usage:</b> {CPUUsage1}%
-                  {/* <b>CPU 1 Usage:</b> {nodeMetrics.CPUUsage1}% */}
+                  <b>Node CPU Total:</b> {props.cpuCapacity} GB
+                  {/* <b>Node Memory Total:</b> {nodeMetrics.nodeMemoryTotal} GB */}
                 </td>
               </tr>
               <tr>
                 <td>
+                  <b>Node CPU Available:</b>{" "}
+                  {(props.cpuCapacity - props.cpuUsage).toFixed(2)} GB
+                  {/* <b>Node Memory Available:</b> {nodeMetrics.nodeMemoryAvail} GB */}
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <b>Node CPU Percent Used:</b>{" "}
+                  {((props.cpuUsage / props.cpuCapacity) * 100).toFixed(2)}%
+                  {/* <b>Node Memory Percent Used:</b>{' '}
+                  {nodeMetrics.nodeMemoryPercUsed}% */}
+                </td>
+              </tr>
+              {/* <tr>
+                <td>
                   <b>CPU 2 Usage:</b> {CPUUsage2}%
-                  {/* <b>CPU 2 Usage:</b> {nodeMetrics.CPUUsage2}% */}
+                  <b>CPU 2 Usage:</b> {nodeMetrics.CPUUsage2}%
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Storage Capacity:</b> {diskCapacity}
-                  {/* <b>Storage Capacity:</b> {nodeMetrics.diskCapacity} */}
+                  <b>Storage Capacity:</b> {nodeMetrics.diskCapacity}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Storage Used:</b> {diskUsed}
-                  {/* <b>Storage Used:</b> {nodeMetrics.diskUsed} */}
+                  <b>Storage Used:</b> {nodeMetrics.diskUsed}
                 </td>
               </tr>
               <tr>
                 <td>
                   <b>Storage Used Percentage:</b> {diskUsagePercent}%
-                  {/* <b>Storage Used Percentage:</b> {nodeMetrics.diskUsagePercent}
-                  % */}
+                  <b>Storage Used Percentage:</b> {nodeMetrics.diskUsagePercent}
+                  %
                 </td>
-              </tr>
+              </tr> */}
             </tbody>
           </table>
         </div>
