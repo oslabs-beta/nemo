@@ -1,7 +1,7 @@
 import express from 'express';
 //import metricServerController from './controllers/metricServerController.js';
 import metricServerRouter from './routes/metricServerRouter.js';
-import nodeExporter from './routes/nodeExporterRoute.js';
+// import nodeExporter from './routes/nodeExporterRoute.js';
 import cors from 'cors';
 import path from 'path';
 import portObj from './portForward.js';
@@ -38,7 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 // posts to MongoDB
 app.use('/database', databaseRouter);
 app.use('/metricserver', metricServerRouter);
-app.use('/nodeExporter', nodeExporter);
+// app.use('/nodeExporter', nodeExporter);
 
 /**
  * handle requests to the root

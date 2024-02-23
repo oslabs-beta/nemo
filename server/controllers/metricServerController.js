@@ -141,7 +141,7 @@ metricServerController.getTopPods = async (req, res, next) => {
 metricServerController.getContainers = async (req, res, next) => {
   try {
     const data = await k8s.topPods(k8sApi, metricsClient, '');
-    console.log(data[2].Containers);
+    // console.log(data[2].Containers);
     const containers = data.flatMap((pod) => {
       return pod.Containers.map((container) => {
         return {
@@ -158,7 +158,7 @@ metricServerController.getContainers = async (req, res, next) => {
       });
     });
     //console.table(containers);
-    console.log(containers);
+    // console.log(containers);
     res.locals.containers = containers;
     return next();
   } catch (err) {
