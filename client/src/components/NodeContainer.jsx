@@ -1,7 +1,7 @@
 import React, { Component, useEffect, useState } from "react";
 import NodeSummary from "./NodeSummary.jsx";
 
-const NodeContainer = () => {
+const NodeContainer = ({ nodeData }) => {
   // NODE_NAME: node.Node.metadata.name,
   //       UID: node.Node.metadata.uid,
   //       CREATED_AT: node.Node.metadata.creationTimestamp,
@@ -16,23 +16,10 @@ const NodeContainer = () => {
   // MEMORY_CAPACITY: Number(node.Memory.Capacity),
   // MEMORY_REQUEST_TOTAL: Number(node.Memory.RequestTotal),
   // MEMORY_LIMIT_TOTAL: Number(node.Memory.LimitTotal),
-  const [nodes, setNodes] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      await fetch("http://localhost:3000/metricserver/topNodes")
-        .then((data) => data.json())
-        .then((data) => {
-          setNodes(data);
-        });
-    };
-    fetchData();
-    const interval = setInterval(fetchData, 2000);
-    return () => clearInterval(interval);
-  }, []);
 
   //console.log(nodes);
 
-  const nodeSummaries = nodes.map((node) => {
+  const nodeSummaries = nodeData.map((node) => {
     console.log(node);
     return (
       <NodeSummary
