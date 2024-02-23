@@ -3,7 +3,7 @@ import metrics from '../models/metricServerModel.js';
 const dbControl = {};
 
 dbControl.postData = async function (req, res, next) {
-  const nodeArray = res.locals.topPods;
+  const podArray = res.locals.topPods;
   try {
     // HELPER FUNCTION TO GET TIME INFO
     // STILL NEED TO FIX THIS TO ACCOUNT FOR CHANGE FROM ONE DAY TO NEXT
@@ -32,7 +32,7 @@ dbControl.postData = async function (req, res, next) {
     // Post new entry to database
     const newDBEntry = await metrics.create({
       time: getTime(),
-      NODE_ARRAY: nodeArray,
+      POD_ARRAY: podArray,
     });
     res.locals.newItem = newDBEntry;
     return next();

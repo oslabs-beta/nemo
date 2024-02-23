@@ -25,7 +25,7 @@ mongoConnect();
 const Schema = mongoose.Schema;
 const dbObj = new Schema({
   time: { type: String, required: true },
-  NODE_ARRAY: { type: Array, required: true },
+  POD_ARRAY: { type: Array, required: true },
   // NODE_NAME: { type: String, required: true },
   // POD_NAME: { type: String, required: true },
   // UID: { type: Number, required: true },
