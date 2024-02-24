@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import NodeSummary from "./NodeSummary.jsx";
+import NodeCharts from "./NodeCharts.jsx";
 
 const NodeContainer = ({ nodeData }) => {
   // NODE_NAME: node.Node.metadata.name,
@@ -18,6 +19,11 @@ const NodeContainer = ({ nodeData }) => {
   // MEMORY_LIMIT_TOTAL: Number(node.Memory.LimitTotal),
 
   //console.log(nodes);
+  const memUsageArray = nodeData.map((node) =>
+    (node.MEMORY_REQUEST_TOTAL / 1000000000).toFixed(2),
+  );
+
+  const nodeNames = nodeData.map((node) => node.NODE_NAME);
 
   const nodeSummaries = nodeData.map((node) => {
     console.log(node);
@@ -43,9 +49,15 @@ const NodeContainer = ({ nodeData }) => {
 
   //console.log(nodeSummaries);
   return (
-    <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
-      {/* <h2>Nodes!</h2> */}
-      {nodeSummaries}
+    <div>
+      <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
+        {/* <h2>Nodes!</h2> */}
+        <NodeCharts memUsages={memUsageArray} nodeNames={nodeNames} />
+      </div>
+      <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
+        {/* <h2>Nodes!</h2> */}
+        {nodeSummaries}
+      </div>
     </div>
   );
 };
