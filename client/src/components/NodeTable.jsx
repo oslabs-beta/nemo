@@ -8,30 +8,15 @@ const nodeTable = (props) => {
 
   const [table, setTable] = useState(nodeData);
 
-  const nodeSort = (dataPoint) => {
-    if (!ascending) {
-      ascending = true;
-      nodeData.sort((a, b) => {
-        if (a.dataPoint < b.dataPoint) {
-          return -1;
-        }
-        if (a.dataPoint > b.dataPoint) {
-          return 1;
-        }
-        return 0;
-      });
-    } else {
-      ascending = false;
-      nodeData.sort((a, b) => {
-        if (a.dataPoint > b.dataPoint) {
-          return -1;
-        }
-        if (a.dataPoint < b.dataPoint) {
-          return 1;
-        }
-        return 0;
-      });
-    }
+  const tableSort = (data) => {
+    ascending = !ascending;
+    nodeData.sort((a, b) => {
+      if (ascending) {
+        return a[data] < b[data] ? -1 : a[data] > b[data] ? 1 : 0;
+      } else {
+        return a[data] > b[data] ? -1 : a[data] < b[data] ? 1 : 0;
+      }
+    });
     setTable(nodeData);
   };
 
@@ -47,27 +32,35 @@ const nodeTable = (props) => {
       <thead>
         <tr>
           <td id="headers">
-            <button onClick={() => nodeSort(nodeData.NODE_NAME)}>
-              Node Name
-            </button>
+            <button onClick={() => tableSort("NODE_NAME")}>Node Name</button>
           </td>
           <td id="headers">Node ID</td>
           <td id="headers">
-            <button>Time Created</button>
+            <button onClick={() => tableSort("CREATED_AT")}>
+              Time Created
+            </button>
           </td>
           <td id="headers">Internal IP</td>
           <td id="headers">External IP</td>
           <td id="headers">
-            <button>CPU Capacity</button>
+            <button onClick={() => tableSort("CPU_CAPACITY")}>
+              CPU Capacity
+            </button>
           </td>
           <td id="headers">
-            <button>CPU Usage</button>
+            <button onClick={() => tableSort("CPU_REQUEST_TOTAL")}>
+              CPU Usage
+            </button>
           </td>
           <td id="headers">
-            <button>Memory Capacity</button>
+            <button onClick={() => tableSort("MEMORY_CAPACITY")}>
+              Memory Capacity
+            </button>
           </td>
           <td id="headers">
-            <button>Memory Usage</button>
+            <button onClick={() => tableSort("MEMORY_REQUEST_TOTAL")}>
+              Memory Usage
+            </button>
           </td>
         </tr>
       </thead>
@@ -76,13 +69,15 @@ const nodeTable = (props) => {
           <tr key={node.UID}>
             <td>{node.NODE_NAME}</td>
             <td>{node.UID}</td>
-            <td>{node.CREATED_AT}</td>
+            <td>{node.CREATED_AT.slice(0, 10)}</td>
             <td>{node.IP_ADDRESSES[0].address}</td>
             <td>{node.IP_ADDRESSES[1].address}</td>
-            <td>{node.CPU_CAPACITY}</td>
-            <td>{node.CPU_REQUEST_TOTAL}</td>
-            <td>{node.MEMORY_CAPACITY}</td>
-            <td>{node.MEMORY_REQUEST_TOTAL}</td>
+            <td>{node.CPU_CAPACITY + " Core(s)"}</td>
+            <td>{node.CPU_REQUEST_TOTAL.toFixed(2) + " Core(s)"}</td>
+            <td>{(node.MEMORY_CAPACITY / 1000000000).toFixed(2) + "GB"}</td>
+            <td>
+              {(node.MEMORY_REQUEST_TOTAL / 1000000000).toFixed(2) + "GB"}
+            </td>
           </tr>
         ))}
       </tbody>

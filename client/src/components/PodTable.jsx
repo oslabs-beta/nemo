@@ -49,7 +49,7 @@ const podsTable = (props) => {
           <td id="headers">Pod ID</td>
           <td id="headers">
             <button onClick={() => tableSort("CONTAINER_COUNT")}>
-              Container Count
+              Container(s)
             </button>
           </td>
           <td>
@@ -92,19 +92,20 @@ const podsTable = (props) => {
             <td style={{ display: "flex", justifyContent: "center" }}>
               {pod.CONTAINER_COUNT}
             </td>
-            <td>{pod.CPU_USAGE_CORES.toFixed(3)}</td>
+            <td>{pod.CPU_USAGE_CORES.toFixed(3) + " Core(s)"}</td>
             <td>
               {(
                 (parseFloat(pod.CPU_USAGE_CORES) / totalUsage.totalCpu) *
                 100
-              ).toFixed(3)}
+              ).toFixed(2)}
+              %
             </td>
-            <td>{pod.MEMORY_USAGE_BYTES}</td>
+            <td>{(pod.MEMORY_USAGE_BYTES / 1000000).toFixed(2) + "MB"}</td>
             <td>
               {(
                 (parseFloat(pod.MEMORY_USAGE_BYTES) / totalUsage.totalMemory) *
                 100
-              ).toFixed(3)}
+              ).toFixed(2) + "%"}
             </td>
           </tr>
         ))}
