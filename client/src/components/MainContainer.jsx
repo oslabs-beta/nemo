@@ -39,6 +39,7 @@ const MainContainer = ({ activeButton }) => {
         });
     };
     fetchData();
+    console.log(nodes);
     const interval = setInterval(fetchData, 2000);
     return () => clearInterval(interval);
   }, []);
@@ -64,10 +65,9 @@ const MainContainer = ({ activeButton }) => {
   return (
     <div>
       {activeButton === 1 && null}
-      {activeButton === 2 && <NodeContainer nodeData={nodes} />}
+      {activeButton === 2 && <ChartComponent nodeData={nodes} podsData={podsData} />}
       {activeButton === 3 && <NodeContainer nodeData={nodes} />}
       {activeButton === 4 && <PodContainer podsData={podsData} />}
-      {activeButton === 5 && <ChartComponent podsData={podsData} />}
     </div>
   );
 };
