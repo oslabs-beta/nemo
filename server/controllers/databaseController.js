@@ -83,4 +83,19 @@ dbControl.postData = async function (req, res, next) {
   }
 };
 
+dbControl.pullData = async function (req, res, next) {
+  try {
+    const data = await metrics.find({});
+    res.locals.pullData = data;
+    return next();
+  } catch (err) {
+    const errObj = {
+      log: 'Error in pullData middleware',
+      status: 500,
+      message: { err: `Error occurred in pullData middleware: ${err}` },
+    };
+    return next(errObj);
+  }
+};
+
 export default dbControl;

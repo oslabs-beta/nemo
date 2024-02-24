@@ -4,6 +4,11 @@ import databaseController from '../controllers/databaseController.js';
 const router = express.Router();
 
 
+
+router.get('/pull', databaseController.pullData, (req, res) =>{
+  return res.status(200).json(res.locals.pullData);
+});
+
 router.get(
   '/',
   metricServerController.getTopPods,
