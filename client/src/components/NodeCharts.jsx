@@ -4,7 +4,7 @@ import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const NodeChart = ({ memUsages, nodeNames }) => {
+const NodeChart = ({ memUsages, cpuUsages, nodeNames }) => {
   ChartJS.register(ArcElement, Tooltip, Legend);
 
   const arrBorder = Array(memUsages.length).fill("#081020");
@@ -29,7 +29,7 @@ const NodeChart = ({ memUsages, nodeNames }) => {
     orangeBG.fill("#FEF0DC", orangeBG.length);
   }
 
-  const data = {
+  const memData = {
     labels: nodeNames,
     datasets: [
       {
@@ -42,7 +42,7 @@ const NodeChart = ({ memUsages, nodeNames }) => {
     ],
   };
 
-  const options = {
+  const memOptions = {
     plugins: {
       tooltip: {
         callbacks: {
@@ -59,22 +59,52 @@ const NodeChart = ({ memUsages, nodeNames }) => {
       },
     },
   };
+
+  const cpuData = {
+    labels: nodeNames,
+    datasets: [
+      {
+        label: "CPU Usage (GB)",
+        data: cpuUsages,
+        backgroundColor: orangeBG,
+        borderColor: arrBorder,
+        borderWidth: 5,
+      },
+    ],
+  };
+
+  const cpuOptions = {
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            const labelIndex = context.dataIndex;
+            const labelValue = context.dataset.data[labelIndex];
+            return `CPU Usage: ${labelValue} GB`;
+          },
+        },
+      },
+
+      legend: {
+        display: false,
+      },
+    },
+  };
+
   return (
     <div className="font-roboto flex w-screen justify-around p-5 text-2xl font-bold">
-      <div className="w-1/3 p-2 text-nemo-blue-200">
-        <h3 className="flex justify-center ">
-          Node Memory Usage
-        </h3>
-        <Doughnut data={data} options={options} />
+      <div className="w-96 p-2 text-nemo-blue-200">
+        <h3 className="flex justify-center ">Node Memory Usage</h3>
+        <Doughnut data={memData} options={memOptions} />
       </div>
-      <div className="w-1/3 p-2 text-nemo-blue-200">
+      <div className="w-96 p-2 text-nemo-blue-200">
+        <h3 className="flex justify-center ">Node CPU Usage</h3>
+        <Doughnut data={cpuData} options={cpuOptions} />
+      </div>
+      {/* <div className="w-1/3  p-2 text-nemo-blue-200">
         <h3 className="flex justify-center ">Node Memory Usage</h3>
         <Doughnut data={data} options={options} />
-      </div>
-      <div className="w-1/3  p-2 text-nemo-blue-200">
-        <h3 className="flex justify-center ">Node Memory Usage</h3>
-        <Doughnut data={data} options={options} />
-      </div>
+      </div> */}
     </div>
   );
 };

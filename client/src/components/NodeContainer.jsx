@@ -23,6 +23,10 @@ const NodeContainer = ({ nodeData }) => {
     (node.MEMORY_REQUEST_TOTAL / 1000000000).toFixed(2),
   );
 
+  const cpuUsageArray = nodeData.map((node) =>
+    node.CPU_REQUEST_TOTAL.toFixed(2),
+  );
+
   const nodeNames = nodeData.map((node) => node.NODE_NAME);
 
   const nodeSummaries = nodeData.map((node) => {
@@ -52,7 +56,11 @@ const NodeContainer = ({ nodeData }) => {
     <div>
       <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
         {/* <h2>Nodes!</h2> */}
-        <NodeCharts memUsages={memUsageArray} nodeNames={nodeNames} />
+        <NodeCharts
+          memUsages={memUsageArray}
+          cpuUsages={cpuUsageArray}
+          nodeNames={nodeNames}
+        />
       </div>
       <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
         {/* <h2>Nodes!</h2> */}
