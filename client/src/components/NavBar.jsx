@@ -43,7 +43,7 @@ const Navbar = ({ setActiveButton }) => {
     setActiveButtonLocally(buttonNumber);
   };
 
-  const buttonLabels = ["WELCOME", "CLUSTER", "NODES", "PODS", "STRUCTURE"];
+  const buttonLabels = ["WELCOME", "CLUSTER", "NODES", "PODS"];
 
   return (
     <div className="flex">
