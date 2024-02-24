@@ -3,6 +3,7 @@ import "../style.scss";
 
 let ascending = true;
 const podsTable = (props) => {
+  let count = 1;
   const { podsData } = props;
 
   const [table, setTable] = useState(podsData);
@@ -15,7 +16,7 @@ const podsTable = (props) => {
     },
     { totalCpu: 0, totalMemory: 0 },
   );
-
+  console.log(podsData);
   // Table sort takes in the variable needed and sorts the table ascending or descending
   const tableSort = (data) => {
     ascending = !ascending;
@@ -40,6 +41,7 @@ const podsTable = (props) => {
     >
       <thead>
         <tr>
+          <td id="headers">#</td>
           <td id="headers">
             <button onClick={() => tableSort("POD_NAME")}>Pod Name</button>
           </td>
@@ -84,6 +86,7 @@ const podsTable = (props) => {
         {/* {podsData.map((pod) => ( */}
         {table.map((pod) => (
           <tr key={pod.id}>
+            <td>{count++}</td>
             <td>{pod.POD_NAME}</td>
             <td style={{ paddingRight: "15px", paddingLeft: "15px" }}>
               {pod.NODE_NAME}

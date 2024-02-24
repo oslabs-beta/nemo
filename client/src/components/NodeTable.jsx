@@ -4,6 +4,7 @@ import "../style.scss";
 let ascending = true;
 
 const nodeTable = (props) => {
+  let count = 1;
   const { nodeData } = props;
 
   const [table, setTable] = useState(nodeData);
@@ -31,6 +32,7 @@ const nodeTable = (props) => {
     >
       <thead>
         <tr>
+          <td id="headers">#</td>
           <td id="headers">
             <button onClick={() => tableSort("NODE_NAME")}>Node Name</button>
           </td>
@@ -67,6 +69,7 @@ const nodeTable = (props) => {
       <tbody>
         {table.map((node) => (
           <tr key={node.UID}>
+            <td>{count++}</td>
             <td>{node.NODE_NAME}</td>
             <td>{node.UID}</td>
             <td>{node.CREATED_AT.slice(0, 10)}</td>
