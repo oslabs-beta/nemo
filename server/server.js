@@ -1,15 +1,24 @@
 import express from 'express';
 //import metricServerController from './controllers/metricServerController.js';
 import metricServerRouter from './routes/metricServerRouter.js';
-import nodeExporter from './routes/nodeExporterRoute.js';
+// import nodeExporter from './routes/nodeExporterRoute.js';
 import cors from 'cors';
+import path from 'path';
 import portObj from './portForward.js';
+import dotenv from 'dotenv';
+dotenv.config();
+// import mongoose from 'mongoose';
+import runDb from './runDb.js';
+import databaseRouter from './routes/databaseRouter.js';
 
 const app = express();
 const PORT = 3000;
 
-// establish port forwarding for node-exporter
-portObj.pForward();
+// This starts data fetching and posting to database
+runDb.postData();
+
+// establish port forwarding for node-exporter; currently deprecated
+// portObj.pForward();
 
 app.use(cors());
 /**
@@ -25,8 +34,11 @@ app.use(express.urlencoded({ extended: true }));
 /**
  * use route handlers
  */
+// database endpoint both fetches metric data and ultimately
+// posts to MongoDB
+app.use('/database', databaseRouter);
 app.use('/metricserver', metricServerRouter);
-app.use('/nodeExporter', nodeExporter);
+// app.use('/nodeExporter', nodeExporter);
 
 /**
  * handle requests to the root
