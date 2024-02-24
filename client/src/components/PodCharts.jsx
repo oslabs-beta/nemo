@@ -4,27 +4,23 @@ import { Doughnut } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const NodeChart = ({ memUsages, cpuUsages, cpuNodeNames, memNodeNames }) => {
+const PodCharts = ({ memUsages, cpuUsages, memPodNames, cpuPodNames }) => {
   ChartJS.register(ArcElement, Tooltip, Legend);
 
   const arrBorder = Array(memUsages.length).fill("#081020");
 
-  // update color array to adjust dynamically based on number of nodes
-  // with less nodes (e.g. less than 3) the orange shades are not distinct enough
-  // const orangeBG = [
-  //   "#D24E02",
-  //   "#DC6802",
-  //   "#E27602",
-  //   "#E88504",
-  //   "#EC9006",
-  //   "#EE9F28",
-  //   "#F2B04C",
-  //   "#F6C87E",
-  //   "#FADEB2",
-  //   "#FEF0DC",
-  // ];
-
-  const orangeBG = ["#D24E02", "#EE9F28", "#FEF0DC"];
+  const orangeBG = [
+    "#D24E02",
+    "#DC6802",
+    "#E27602",
+    "#E88504",
+    "#EC9006",
+    "#EE9F28",
+    "#F2B04C",
+    "#F6C87E",
+    "#FADEB2",
+    "#FEF0DC",
+  ];
 
   const memUsagesLength = memUsages.length;
 
@@ -33,18 +29,17 @@ const NodeChart = ({ memUsages, cpuUsages, cpuNodeNames, memNodeNames }) => {
     orangeBG.fill("#FEF0DC", orangeBG.length);
   }
 
-  //orangeBG.fill("#FEF0DC", 10);
-  orangeBG.fill("#FEF0DC", 3);
+  orangeBG.fill("#FEF0DC",10);
 
   const memData = {
-    labels: memNodeNames,
+    labels: memPodNames,
     datasets: [
       {
         label: "Memory Usage (GB)",
         data: memUsages,
         backgroundColor: orangeBG,
         borderColor: arrBorder,
-        borderWidth: 5,
+        borderWidth: 2,
       },
     ],
   };
@@ -68,14 +63,14 @@ const NodeChart = ({ memUsages, cpuUsages, cpuNodeNames, memNodeNames }) => {
   };
 
   const cpuData = {
-    labels: cpuNodeNames,
+    labels: cpuPodNames,
     datasets: [
       {
         label: "CPU Usage (GB)",
         data: cpuUsages,
         backgroundColor: orangeBG,
         borderColor: arrBorder,
-        borderWidth: 5,
+        borderWidth: 2,
       },
     ],
   };
@@ -101,11 +96,11 @@ const NodeChart = ({ memUsages, cpuUsages, cpuNodeNames, memNodeNames }) => {
   return (
     <div className="font-roboto flex w-screen justify-around p-5 text-2xl font-bold">
       <div className="w-96 text-nemo-blue-200">
-        <h3 className="flex justify-center p-5">Node Memory Usage</h3>
+        <h3 className="flex justify-center p-5">Pod Memory Usage</h3>
         <Doughnut data={memData} options={memOptions} />
       </div>
       <div className="w-96 text-nemo-blue-200">
-        <h3 className="flex justify-center p-5">Node CPU Usage</h3>
+        <h3 className="flex justify-center p-5">Pod CPU Usage</h3>
         <Doughnut data={cpuData} options={cpuOptions} />
       </div>
       {/* <div className="w-1/3  p-2 text-nemo-blue-200">
@@ -116,4 +111,4 @@ const NodeChart = ({ memUsages, cpuUsages, cpuNodeNames, memNodeNames }) => {
   );
 };
 
-export default NodeChart;
+export default PodCharts;

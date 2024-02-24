@@ -19,15 +19,28 @@ const NodeContainer = ({ nodeData }) => {
   // MEMORY_LIMIT_TOTAL: Number(node.Memory.LimitTotal),
 
   //console.log(nodes);
-  const memUsageArray = nodeData.map((node) =>
-    (node.MEMORY_REQUEST_TOTAL / 1000000000).toFixed(2),
+
+  const nodeDataByMem = nodeData.sort(
+    (a, b) => b.MEMORY_REQUEST_TOTAL - a.MEMORY_REQUEST_TOTAL,
   );
 
-  const cpuUsageArray = nodeData.map((node) =>
-    node.CPU_REQUEST_TOTAL.toFixed(2),
+  const memUsageArray = nodeDataByMem.map(
+    (node) => node.MEMORY_REQUEST_TOTAL / 1000000000,
   );
 
-  const nodeNames = nodeData.map((node) => node.NODE_NAME);
+  const memNodeNames = nodeDataByMem.map((node) => {
+    return node.NODE_NAME;
+  });
+
+  const nodeDataByCpu = nodeData.sort(
+    (a, b) => b.CPU_REQUEST_TOTAL - a.CPU_REQUEST_TOTAL,
+  );
+
+  const cpuUsageArray = nodeDataByCpu.map((node) => node.CPU_REQUEST_TOTAL);
+
+  const cpuNodeNames = nodeDataByCpu.map((node) => {
+    return node.NODE_NAME;
+  });
 
   const nodeSummaries = nodeData.map((node) => {
     console.log(node);
@@ -55,15 +68,14 @@ const NodeContainer = ({ nodeData }) => {
   return (
     <div>
       <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
-        {/* <h2>Nodes!</h2> */}
         <NodeCharts
           memUsages={memUsageArray}
           cpuUsages={cpuUsageArray}
-          nodeNames={nodeNames}
+          cpuNodeNames={cpuNodeNames}
+          memNodeNames={memNodeNames}
         />
       </div>
       <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
-        {/* <h2>Nodes!</h2> */}
         {nodeSummaries}
       </div>
     </div>

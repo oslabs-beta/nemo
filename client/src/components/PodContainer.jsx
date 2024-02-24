@@ -1,11 +1,43 @@
-import React, { Component } from 'react';
-import PodSummary from './PodSummary.jsx';
+import React, { Component } from "react";
+import PodSummary from "./PodSummary.jsx";
+import PodCharts from "./PodCharts.jsx";
 
 const PodContainer = ({ podsData }) => {
+  const podsDataByMem = podsData.sort(
+    (a, b) => b.MEMORY_USAGE_BYTES - a.MEMORY_USAGE_BYTES,
+  );
+
+  const memUsageArray = podsDataByMem.map(
+    (pod) => pod.MEMORY_USAGE_BYTES / 1000000000,
+  );
+
+  const memPodNames = podsDataByMem.map((pod) => {
+    return pod.POD_NAME;
+  });
+
+  const podsDataByCpu = podsData.sort(
+    (a, b) => b.CPU_USAGE_CORES - a.CPU_USAGE_CORES,
+  );
+
+  const cpuUsageArray = podsDataByCpu.map((pod) => pod.CPU_USAGE_CORES);
+
+  const cpuPodNames = podsDataByCpu.map((pod) => {
+    return pod.POD_NAME;
+  });
+
   return (
-    <div>
-      {/* <h2>Pods!</h2> */}
-      <PodSummary podsData={podsData}/>
+    <div className="ml-64">
+      <div className="font-roboto flex flex-wrap items-start justify-around p-5">
+        <PodCharts
+          memUsages={memUsageArray}
+          cpuUsages={cpuUsageArray}
+          cpuPodNames={cpuPodNames}
+          memPodNames={memPodNames}
+        />
+      </div>
+      <div className="font-roboto flex flex-wrap items-start justify-around p-5">
+        <PodSummary podsData={podsData} />
+      </div>
     </div>
   );
 };

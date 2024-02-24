@@ -313,7 +313,7 @@ const PodSummary = ({ podsData }) => {
   });
 
   return (
-    <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
+    <div className="font-roboto flex flex-wrap items-start justify-around p-5">
       {pods}
     </div>
   );
