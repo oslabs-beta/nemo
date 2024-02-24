@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "../style.scss";
 
 let ascending = true;
-function podsTable(props) {
+const podsTable = (props) => {
   const { podsData } = props;
 
   const [table, setTable] = useState(podsData);
@@ -16,138 +16,16 @@ function podsTable(props) {
     { totalCpu: 0, totalMemory: 0 },
   );
 
-  const podSort = () => {
-    if (!ascending) {
-      ascending = true;
-      podsData.sort((a, b) => {
-        if (a.POD_NAME < b.POD_NAME) {
-          return -1;
-        }
-        if (a.POD_NAME > b.POD_NAME) {
-          return 1;
-        }
-        return 0;
-      });
-    } else {
-      ascending = false;
-      podsData.sort((a, b) => {
-        if (a.POD_NAME > b.POD_NAME) {
-          return -1;
-        }
-        if (a.POD_NAME < b.POD_NAME) {
-          return 1;
-        }
-        return 0;
-      });
-    }
-    setTable(podsData);
-  };
-
-  const nodeSort = () => {
-    if (!ascending) {
-      ascending = true;
-      podsData.sort((a, b) => {
-        if (a.NODE_NAME < b.NODE_NAME) {
-          return -1;
-        }
-        if (a.NODE_NAME > b.NODE_NAME) {
-          return 1;
-        }
-        return 0;
-      });
-    } else {
-      ascending = false;
-      podsData.sort((a, b) => {
-        if (a.NODE_NAME > b.NODE_NAME) {
-          return -1;
-        }
-        if (a.NODE_NAME < b.NODE_NAME) {
-          return 1;
-        }
-        return 0;
-      });
-    }
-    setTable(podsData);
-  };
-
-  const cpuSort = () => {
-    if (!ascending) {
-      ascending = true;
-      podsData.sort((a, b) => {
-        if (a.CPU_USAGE_CORES < b.CPU_USAGE_CORES) {
-          return -1;
-        }
-        if (a.CPU_USAGE_CORES > b.CPU_USAGE_CORES) {
-          return 1;
-        }
-        return 0;
-      });
-    } else {
-      ascending = false;
-      podsData.sort((a, b) => {
-        if (a.CPU_USAGE_CORES > b.CPU_USAGE_CORES) {
-          return -1;
-        }
-        if (a.CPU_USAGE_CORES < b.CPU_USAGE_CORES) {
-          return 1;
-        }
-        return 0;
-      });
-    }
-    setTable(podsData);
-  };
-
-  const memorySort = () => {
-    if (!ascending) {
-      ascending = true;
-      podsData.sort((a, b) => {
-        if (a.MEMORY_USAGE_BYTES < b.MEMORY_USAGE_BYTES) {
-          return -1;
-        }
-        if (a.MEMORY_USAGE_BYTES > b.MEMORY_USAGE_BYTES) {
-          return 1;
-        }
-        return 0;
-      });
-    } else {
-      ascending = false;
-      podsData.sort((a, b) => {
-        if (a.MEMORY_USAGE_BYTES > b.MEMORY_USAGE_BYTES) {
-          return -1;
-        }
-        if (a.MEMORY_USAGE_BYTES < b.MEMORY_USAGE_BYTES) {
-          return 1;
-        }
-        return 0;
-      });
-    }
-    setTable(podsData);
-  };
-
-  const containerSort = () => {
-    if (!ascending) {
-      ascending = true;
-      podsData.sort((a, b) => {
-        if (a.CONTAINER_COUNT < b.CONTAINER_COUNT) {
-          return -1;
-        }
-        if (a.CONTAINER_COUNT > b.CONTAINER_COUNT) {
-          return 1;
-        }
-        return 0;
-      });
-    } else {
-      ascending = false;
-      podsData.sort((a, b) => {
-        if (a.CONTAINER_COUNT > b.CONTAINER_COUNT) {
-          return -1;
-        }
-        if (a.CONTAINER_COUNT < b.CONTAINER_COUNT) {
-          return 1;
-        }
-        return 0;
-      });
-    }
+  // Table sort takes in the variable needed and sorts the table ascending or descending
+  const tableSort = (data) => {
+    ascending = !ascending;
+    podsData.sort((a, b) => {
+      if (ascending) {
+        return a[data] < b[data] ? -1 : a[data] > b[data] ? 1 : 0;
+      } else {
+        return a[data] > b[data] ? -1 : a[data] < b[data] ? 1 : 0;
+      }
+    });
     setTable(podsData);
   };
 
@@ -163,32 +41,40 @@ function podsTable(props) {
       <thead>
         <tr>
           <td id="headers">
-            <button onClick={podSort}>Pod Name</button>
+            <button onClick={() => tableSort("POD_NAME")}>Pod Name</button>
           </td>
           <td id="headers">
-            <button onClick={nodeSort}>Node Name</button>
+            <button onClick={() => tableSort("NODE_NAME")}>Node Name</button>
           </td>
           <td id="headers">Pod ID</td>
           <td id="headers">
-            <button onClick={containerSort}>Container Count</button>
+            <button onClick={() => tableSort("CONTAINER_COUNT")}>
+              Container Count
+            </button>
           </td>
           <td>
-            <button id="headers" onClick={cpuSort}>
+            <button id="headers" onClick={() => tableSort("CPU_USAGE_CORES")}>
               CPU Usage
             </button>
           </td>
           <td>
-            <button id="headers" onClick={cpuSort}>
+            <button id="headers" onClick={() => tableSort("CPU_USAGE_CORES")}>
               CPU Usage %
             </button>
           </td>
           <td>
-            <button id="headers" onClick={memorySort}>
+            <button
+              id="headers"
+              onClick={() => tableSort("MEMORY_USAGE_BYTES")}
+            >
               Memory Usage
             </button>
           </td>
           <td>
-            <button id="headers" onClick={memorySort}>
+            <button
+              id="headers"
+              onClick={() => tableSort("MEMORY_USAGE_BYTES")}
+            >
               Memory Usage %
             </button>
           </td>
@@ -225,6 +111,6 @@ function podsTable(props) {
       </tbody>
     </table>
   );
-}
+};
 
 export default podsTable;

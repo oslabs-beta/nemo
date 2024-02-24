@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import NodeSummary from "./NodeSummary.jsx";
+import NodeTable from './NodeTable.jsx';
 
 const NodeContainer = ({ nodeData }) => {
   // NODE_NAME: node.Node.metadata.name,
@@ -45,6 +46,7 @@ const NodeContainer = ({ nodeData }) => {
   return (
     <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
       {/* <h2>Nodes!</h2> */}
+      <NodeTable nodeData={nodeData} />
       {nodeSummaries}
     </div>
   );
