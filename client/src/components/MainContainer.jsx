@@ -1,27 +1,3 @@
-// import React from 'react';
-// import NodeContainer from './NodeContainer.jsx';
-// import NodeDetail from './NodeDetail.jsx';
-// import PodContainer from './PodContainer.jsx';
-// import ChartComponent from './ClusterStructure.jsx';
-
-// const MainContainer = ({ activeButton }) => {
-//   return (
-//     <div>
-//       {activeButton === 1 && null}
-//       {activeButton === 2 && <NodeContainer />}
-//       {activeButton === 3 && <NodeContainer />}
-//       {activeButton === 4 && <PodContainer />}
-//       {activeButton === 5 && <ChartComponent/>}
-//     </div>
-//   );
-// };
-
-// export default MainContainer;
-
-
-
-
-
 import React, { useEffect, useState } from 'react';
 import NodeContainer from './NodeContainer.jsx';
 import NodeDetail from './NodeDetail.jsx';

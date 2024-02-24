@@ -1,9 +1,10 @@
-import React, { useRef, useEffect } from 'react';
-import * as d3 from 'd3';
+import React, { useRef, useEffect } from "react";
+import * as d3 from "d3";
 
 const ForceDirectedGraph = ({ podsData, nodeData }) => {
   // Create a reference to the SVG element
   const svgRef = useRef();
+
   // Keep track of whether the component has been initialized
   const initializedRef = useRef(false);
 
@@ -12,17 +13,23 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
     if (!initializedRef.current && nodeData.length > 0 && podsData.length > 0) {
       initializedRef.current = true; // Mark the component as initialized
 
-      // Create a mapping object to map pod names to node names
-      const podToNodeMap = {};
-      nodeData.forEach(node => {
-        podToNodeMap[node.NODE_NAME] = node.NODE_NAME;
-      });
+      // Calculate total CPU and memory usage for normalization
+      const totalUsage = {
+        totalCpu: podsData.reduce((total, pod) => total + parseFloat(pod.CPU_USAGE_CORES), 0),
+        totalMemory: podsData.reduce((total, pod) => total + parseFloat(pod.MEMORY_USAGE_BYTES), 0),
+      };
 
       // Combine nodes and podsData into a single array for nodes
       const nodes = [
         { id: 'Master Node' },
         ...nodeData.map((node) => ({ id: node.NODE_NAME })),
-        ...podsData.map((pod) => ({ id: pod.POD_NAME, isPod: true, nodeName: pod.NODE_NAME })),
+        ...podsData.map((pod) => ({ 
+          id: pod.POD_NAME, 
+          isPod: true, 
+          nodeName: pod.NODE_NAME, 
+          cpuPercentage: ((parseFloat(pod.CPU_USAGE_CORES) / totalUsage.totalCpu) * 100).toFixed(3), 
+          memoryPercentage: ((parseFloat(pod.MEMORY_USAGE_BYTES) / totalUsage.totalMemory) * 100).toFixed(3) 
+        })),
       ];
 
       // Generate links connecting master node to all nodes
@@ -30,23 +37,25 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
         ...nodeData.map((node) => ({
           source: 'Master Node',
           target: node.NODE_NAME,
+          distance: 30 // shorter link distance
         })),
         ...podsData.map((pod) => ({
           source: pod.POD_NAME,
           target: pod.NODE_NAME,
+          distance: 80 // longer link distance
         })),
       ];
 
-      // D3 force simulation setup...
+      // D3 force simulation setup
       const simulation = d3.forceSimulation(nodes)
-        .force('link', d3.forceLink(links).id(d => d.id).distance(150))
-        .force('charge', d3.forceManyBody().strength(-300))
-        .force('center', d3.forceCenter(500, 300));
+        .force('link', d3.forceLink(links).id(d => d.id).distance(d => d.distance)) // setting links
+        .force('charge', d3.forceManyBody().strength(-350)) // attraction force for pods
+        .force('center', d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2)); // center of the screen
 
       // Create SVG element
       const svg = d3.select(svgRef.current)
-        .attr('width', 1000)
-        .attr('height', 600);
+        .attr('width', window.innerWidth)
+        .attr('height', window.innerHeight);
 
       // Draw links
       const link = svg.append('g')
@@ -69,7 +78,7 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
       node.append('rect')
         .attr('width', d => (d.id === 'Master Node' ? 80 : 40)) // Set width of the rectangle based on the node type
         .attr('height', d => (d.id === 'Master Node' ? 120 : 40)) // Set height of the rectangle based on the node type
-        .attr('fill', d => (d.isPod ? '#D24E02' : 'gray')) // Set fill color based on node type
+        .attr('fill', d => (d.isPod ? getColor(d.cpuPercentage, d.memoryPercentage) : '#D9C7BA')) // Set fill color based on CPU and memory percentages
         .attr('x', d => (d.id === 'Master Node' ? -40 : -20)) // Adjust x position
         .attr('y', d => (d.id === 'Master Node' ? -60 : -20)); // Adjust y position
 
@@ -124,23 +133,50 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
         d.fy = null;
       }
 
-      // Return a cleanup function to stop the simulation when the component unmounts
+      // Function to handle window resize
+      function handleResize() {
+        svg.attr('width', window.innerWidth)
+          .attr('height', window.innerHeight);
+        simulation.force('center', d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2));
+      }
+
+      // Event listener for window resize
+      window.addEventListener('resize', handleResize);
+
+      // Cleanup function to remove event listener and stop the simulation when the component unmounts
       return () => {
+        window.removeEventListener('resize', handleResize);
         simulation.stop();
       };
     }
   }, [podsData, nodeData]);
 
+// Function to determine the fill color of pods based on CPU and memory percentages
+function getColor(cpuPercentage, memoryPercentage) {
+  if (cpuPercentage > 6 || memoryPercentage > 6) {
+    return '#781414'; // Pods with CPU or memory percentages greater are colored red
+  } else {
+    return '#D24E02'; // Default color for other pods
+  }
+}
+
   // Render the SVG element
   return (
-    <svg ref={svgRef} style={{ width: '100%', height: '100%', display: 'block' }}>
-      <rect width="100%" height="100%" fill="none" pointerEvents="all" />
-    </svg>
+    <div style={{ width: '100%', height: '100%', overflow: 'auto' }}>
+      <svg ref={svgRef} style={{ width: '100%', height: '100%', display: 'block' }}>
+        <rect width="100%" height="100%" fill="none" pointerEvents="all" />
+      </svg>
+    </div>
   );
-
 };
 
+
 export default ForceDirectedGraph;
+
+
+
+
+
 
 
 
