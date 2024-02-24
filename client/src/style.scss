@@ -1,6 +1,6 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 
 // h1,
 // h2,
@@ -39,3 +39,9 @@
 //   display: flex;
 //   justify-content: center;
 // }
+
+#headers {
+  padding-right: 30px;
+  padding-bottom: 15px;
+  font-weight: 700;
+}

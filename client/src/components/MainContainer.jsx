@@ -18,15 +18,11 @@
 
 // export default MainContainer;
 
-
-
-
-
-import React, { useEffect, useState } from 'react';
-import NodeContainer from './NodeContainer.jsx';
-import NodeDetail from './NodeDetail.jsx';
-import PodContainer from './PodContainer.jsx';
-import ChartComponent from './ClusterStructure.jsx';
+import React, { useEffect, useState } from "react";
+import NodeContainer from "./NodeContainer.jsx";
+import NodeDetail from "./NodeDetail.jsx";
+import PodContainer from "./PodContainer.jsx";
+import ChartComponent from "./ClusterStructure.jsx";
 
 const MainContainer = ({ activeButton }) => {
   const [nodes, setNodes] = useState([]);
@@ -49,11 +45,13 @@ const MainContainer = ({ activeButton }) => {
   useEffect(() => {
     const fetchPodsData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/metricserver/topPods');
+        const response = await fetch(
+          "http://localhost:3000/metricserver/topPods",
+        );
         const data = await response.json();
         setPodsData(data);
       } catch (error) {
-        console.error('Error fetching pod data: ', error);
+        console.error("Error fetching pod data: ", error);
       }
     };
 
@@ -65,7 +63,9 @@ const MainContainer = ({ activeButton }) => {
   return (
     <div>
       {activeButton === 1 && null}
-      {activeButton === 2 && <ChartComponent nodeData={nodes} podsData={podsData} />}
+      {activeButton === 2 && (
+        <ChartComponent nodeData={nodes} podsData={podsData} />
+      )}
       {activeButton === 3 && <NodeContainer nodeData={nodes} />}
       {activeButton === 4 && <PodContainer podsData={podsData} />}
     </div>
@@ -73,4 +73,3 @@ const MainContainer = ({ activeButton }) => {
 };
 
 export default MainContainer;
-
