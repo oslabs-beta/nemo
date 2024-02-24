@@ -94,7 +94,7 @@ const PodCharts = ({ memUsages, cpuUsages, memPodNames, cpuPodNames }) => {
   };
 
   return (
-    <div className="font-roboto flex w-screen justify-around p-5 text-2xl font-bold">
+    <div className="font-roboto flex w-screen justify-around p-5 text-2xl font-bold flex-wrap">
       <div className="w-96 text-nemo-blue-200">
         <h3 className="flex justify-center p-5">Pod Memory Usage</h3>
         <Doughnut data={memData} options={memOptions} />
