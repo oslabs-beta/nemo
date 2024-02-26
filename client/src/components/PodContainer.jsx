@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PodSummary from "./PodSummary.jsx";
 import PodCharts from "./PodCharts.jsx";
+import PodTable from "./PodTable.jsx";
 
 const PodContainer = ({ podsData }) => {
   const podsDataByMem = podsData.sort(
@@ -35,10 +36,15 @@ const PodContainer = ({ podsData }) => {
           memPodNames={memPodNames}
         />
       </div>
-      <div className="font-roboto flex flex-wrap items-start justify-around p-5">
-        <PodSummary podsData={podsData} />
-      </div>
+//       <div className="font-roboto flex flex-wrap items-start justify-around p-5">
+//         <PodSummary podsData={podsData} />
+//       </div>
+    <div>
+      {/* <h2>Pods!</h2> */}
+      <PodTable podsData={podsData} />
+      {/* <PodSummary podsData={podsData} /> */}
     </div>
+  </div>
   );
 };
 
