@@ -22,7 +22,11 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
       // Combine nodes and podsData into a single array for nodes
       const nodes = [
         { id: 'Master Node' },
-        ...nodeData.map((node) => ({ id: node.NODE_NAME })),
+        ...nodeData.map((node) => ({ 
+          id: node.NODE_NAME,
+          cpuPercentage: ((parseFloat(node.CPU_REQUEST_TOTAL) / node.CPU_CAPACITY) * 100).toFixed(3),
+          memoryPercentage: ((parseFloat(node.MEMORY_REQUEST_TOTAL / 1000000000) / node.MEMORY_CAPACITY / 1000000000) * 100).toFixed(3)
+        })),
         ...podsData.map((pod) => ({ 
           id: pod.POD_NAME, 
           isPod: true, 
@@ -78,7 +82,7 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
       node.append('rect')
         .attr('width', d => (d.id === 'Master Node' ? 80 : 40)) // Set width of the rectangle based on the node type
         .attr('height', d => (d.id === 'Master Node' ? 120 : 40)) // Set height of the rectangle based on the node type
-        .attr('fill', d => (d.isPod ? getColor(d.cpuPercentage, d.memoryPercentage) : '#D9C7BA')) // Set fill color based on CPU and memory percentages
+        .attr('fill', d => (d.id === 'Master Node' ? '#102444' : (d.isPod ? getColorPods(d.cpuPercentage, d.memoryPercentage) : getColorNodes(d.cpuPercentage, d.memoryPercentage)))) // Set fill color based on CPU and memory percentages
         .attr('x', d => (d.id === 'Master Node' ? -40 : -20)) // Adjust x position
         .attr('y', d => (d.id === 'Master Node' ? -60 : -20)); // Adjust y position
 
@@ -152,13 +156,32 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
   }, [podsData, nodeData]);
 
 // Function to determine the fill color of pods based on CPU and memory percentages
-function getColor(cpuPercentage, memoryPercentage) {
-  if (cpuPercentage > 6 || memoryPercentage > 6) {
-    return '#781414'; // Pods with CPU or memory percentages greater are colored red
+function getColorPods(cpuPercentage, memoryPercentage) {
+  if ((cpuPercentage >= 4 && cpuPercentage < 5) || (memoryPercentage >= 4 && memoryPercentage < 5)) {
+    return '#EC9006'; // Pods with CPU or memory percentages between 4 and 5 are colored a light shade
+  } else if ((cpuPercentage >= 5 && cpuPercentage < 6) || (memoryPercentage >= 5 && memoryPercentage < 6)) {
+    return '#D24E02'; // Pods with CPU or memory percentages between 5 and 6 are colored a medium shade
+  } else if ((cpuPercentage > 6 || memoryPercentage > 6)) {
+    return '#b52009'; // Pods with CPU or memory percentages between 6 and 7 are colored a darker shade
   } else {
-    return '#D24E02'; // Default color for other pods
+    return '#FADEB2'; // Default color for other pods
   }
 }
+
+
+// Function to determine the fill color of nodes based on CPU and memory percentages
+function getColorNodes(cpuPercentage, memoryPercentage) {
+  if ((cpuPercentage > 70 && cpuPercentage <= 80) || (memoryPercentage > 70 && memoryPercentage <= 80)) {
+    return '#EC9006'; // Nodes with CPU or memory percentages between 70 and 80 are colored orange
+  } else if ((cpuPercentage > 80 && cpuPercentage <= 90) || (memoryPercentage > 80 && memoryPercentage <= 90)) {
+    return '#D24E02'; // Nodes with CPU or memory percentages between 80 and 90 are colored dark orange
+  } else if ((cpuPercentage > 90 && cpuPercentage <= 100) || (memoryPercentage > 90 && memoryPercentage <= 100)) {
+    return '#b52009'; // Nodes with CPU or memory percentages between 90 and 100 are colored red
+  } else {
+    return '#FADEB2'; // Default color for other nodes
+  }
+}
+
 
   // Render the SVG element
   return (
@@ -172,8 +195,6 @@ function getColor(cpuPercentage, memoryPercentage) {
 
 
 export default ForceDirectedGraph;
-
-
 
 
 
