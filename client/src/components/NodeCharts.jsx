@@ -103,25 +103,15 @@ const NodeChart = ({ memUsages, cpuUsages, cpuNodeNames, memNodeNames }) => {
       <div className="text-nemo-blue-200">
         <h3 className="flex justify-center p-5">Node Memory Usage</h3>
         <div className="flex w-96 flex-auto items-center">
-          <Doughnut
-            data={memData}
-            options={memOptions}
-          />
+          <Doughnut data={memData} options={memOptions} />
         </div>
       </div>
       <div className="text-nemo-blue-200">
         <h3 className="flex justify-center p-5">Node CPU Usage</h3>
         <div className="flex w-96 flex-auto items-center">
-          <Doughnut
-            data={cpuData}
-            options={cpuOptions}
-          />
+          <Doughnut data={cpuData} options={cpuOptions} />
         </div>
       </div>
-      {/* <div className="w-1/3  p-2 text-nemo-blue-200">
-        <h3 className="flex justify-center ">Node Memory Usage</h3>
-        <Doughnut data={data} options={options} />
-      </div> */}
     </div>
   );
 };

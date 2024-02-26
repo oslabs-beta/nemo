@@ -3,23 +3,6 @@ import NodeSummary from "./NodeSummary.jsx";
 import NodeCharts from "./NodeCharts.jsx";
 
 const NodeContainer = ({ nodeData }) => {
-  // NODE_NAME: node.Node.metadata.name,
-  //       UID: node.Node.metadata.uid,
-  //       CREATED_AT: node.Node.metadata.creationTimestamp,
-  //       IP_ADDRESSES: node.Node.status.addresses,
-  //       RESOURCE_CAPACITY: node.Node.status.capacity,
-  //       ALLOCATABLE_RESOURCES: node.Node.status.allocatable,
-  //       NODE_INFO: node.Node.status.nodeInfo,
-  //       CONDITIONS: node.Node.status.conditions,
-  // CPU_CAPACITY: node.CPU.Capacity,
-  // CPU_REQUEST_TOTAL: node.CPU.RequestTotal,
-  // CPU_LIMIT_TOTAL: node.CPU.LimitTotal,
-  // MEMORY_CAPACITY: Number(node.Memory.Capacity),
-  // MEMORY_REQUEST_TOTAL: Number(node.Memory.RequestTotal),
-  // MEMORY_LIMIT_TOTAL: Number(node.Memory.LimitTotal),
-
-  //console.log(nodes);
-
   const nodeDataByMem = nodeData.sort(
     (a, b) => b.MEMORY_REQUEST_TOTAL - a.MEMORY_REQUEST_TOTAL,
   );
@@ -64,7 +47,6 @@ const NodeContainer = ({ nodeData }) => {
     );
   });
 
-  //console.log(nodeSummaries);
   return (
     <div>
       <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
