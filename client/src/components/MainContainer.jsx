@@ -25,11 +25,13 @@ const MainContainer = ({ activeButton }) => {
   useEffect(() => {
     const fetchPodsData = async () => {
       try {
-        const response = await fetch('http://localhost:3000/metricserver/topPods');
+        const response = await fetch(
+          "http://localhost:3000/metricserver/topPods",
+        );
         const data = await response.json();
         setPodsData(data);
       } catch (error) {
-        console.error('Error fetching pod data: ', error);
+        console.error("Error fetching pod data: ", error);
       }
     };
 
@@ -41,7 +43,9 @@ const MainContainer = ({ activeButton }) => {
   return (
     <div>
       {activeButton === 1 && null}
-      {activeButton === 2 && <ChartComponent nodeData={nodes} podsData={podsData} />}
+      {activeButton === 2 && (
+        <ChartComponent nodeData={nodes} podsData={podsData} />
+      )}
       {activeButton === 3 && <NodeContainer nodeData={nodes} />}
       {activeButton === 4 && <PodContainer podsData={podsData} />}
     </div>
@@ -49,4 +53,3 @@ const MainContainer = ({ activeButton }) => {
 };
 
 export default MainContainer;
-
