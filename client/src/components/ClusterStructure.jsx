@@ -96,7 +96,7 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
 
       // Add mouseover and mouseout event listeners to show/hide text on hover
       node.on('mouseover', function () {
-        d3.select(this).select('text').style('visibility', 'visible');
+        d3.select(this).select('text').style('visibility', 'visible').style('fill', '#8CBEFA');
       }).on('mouseout', function () {
         d3.select(this).select('text').style('visibility', 'hidden');
       });
