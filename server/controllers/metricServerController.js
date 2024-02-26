@@ -112,6 +112,14 @@ metricServerController.getTopPods = async (req, res, next) => {
   try {
     const data = await k8s.topPods(k8sApi, metricsClient, '');
     //console.log(data[2].Containers);
+    const totalUsage = data.reduce(
+      (acc, pod) => {
+        acc.totalCpu += parseFloat(pod.CPU.CurrentUsage);
+        acc.totalMemory += parseFloat(Number(pod.Memory.CurrentUsage));
+        return acc;
+      },
+      { totalCpu: 0, totalMemory: 0 }
+    );
     const topPods = data.map((pod) => {
       return {
         NODE_NAME: pod.Pod.spec.nodeName,
@@ -119,8 +127,17 @@ metricServerController.getTopPods = async (req, res, next) => {
         UID: pod.Pod.metadata.uid,
         CREATED_AT: pod.Pod.metadata.creationTimestamp,
         CPU_USAGE_CORES: pod.CPU.CurrentUsage,
+        CPU_PERCENTAGE: (
+          (parseFloat(pod.CPU.CurrentUsage) / totalUsage.totalCpu) *
+          100
+        ).toFixed(3),
         // number is provided as bigInt by api
         MEMORY_USAGE_BYTES: Number(pod.Memory.CurrentUsage),
+        MEMORY_PERCENTAGE: (
+          (parseFloat(Number(pod.Memory.CurrentUsage)) /
+            totalUsage.totalMemory) *
+          100
+        ).toFixed(3),
         CONTAINER_COUNT: pod.Containers.length,
         CONDITIONS: pod.Pod.status.conditions,
       };

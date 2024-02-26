@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../style.scss";
 
 let ascending = true;
@@ -8,24 +8,49 @@ const nodeTable = (props) => {
   const { nodeData } = props;
 
   const [table, setTable] = useState(nodeData);
-
   const [activeButton, setActiveButton] = useState(null);
+  const [sortCriteria, setSortCriteria] = useState({
+    field: null,
+    ascending: true,
+  });
 
-  const handleButtonClick = (buttonNumber) => {
-    setActiveButton(buttonNumber);
+  useEffect(() => {
+    sortData(nodeData, sortCriteria.field, sortCriteria.ascending);
+  }, [nodeData]);
+
+  const handleButtonClick = (field) => {
+    //setActiveButton(buttonNumber);
+    const isAscending =
+      sortCriteria.field === field ? !sortCriteria.ascending : true;
+    setSortCriteria({ field, ascending: isAscending });
+    sortData(table, field, isAscending);
   };
 
-  const tableSort = (data) => {
-    ascending = !ascending;
-    nodeData.sort((a, b) => {
+  const sortData = (data, field, ascending) => {
+    if (!field) return;
+
+    const sortedData = [...data].sort((a, b) => {
       if (ascending) {
-        return a[data] < b[data] ? -1 : a[data] > b[data] ? 1 : 0;
+        return a[field] < b[field] ? -1 : a[field] > b[field] ? 1 : 0;
       } else {
-        return a[data] > b[data] ? -1 : a[data] < b[data] ? 1 : 0;
+        return a[field] > b[field] ? -1 : a[field] < b[field] ? 1 : 0;
       }
     });
-    setTable(nodeData);
+    setTable(sortedData);
+    setActiveButton(field);
   };
+
+  // const tableSort = (data) => {
+  //   ascending = !ascending;
+  //   nodeData.sort((a, b) => {
+  //     if (ascending) {
+  //       return a[data] < b[data] ? -1 : a[data] > b[data] ? 1 : 0;
+  //     } else {
+  //       return a[data] > b[data] ? -1 : a[data] < b[data] ? 1 : 0;
+  //     }
+  //   });
+  //   setTable(nodeData);
+  // };
 
   return (
     <div className="flex w-screen justify-center">
@@ -37,7 +62,7 @@ const nodeTable = (props) => {
             </th>
             <th
               className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
-                activeButton === 0
+                activeButton === "NODE_NAME"
                   ? "text-nemo-orange-700"
                   : "text-nemo-blue-200"
               }`}
@@ -46,8 +71,8 @@ const nodeTable = (props) => {
                 Node Name
                 <button
                   onClick={() => {
-                    handleButtonClick(0);
-                    tableSort("NODE_NAME");
+                    handleButtonClick("NODE_NAME");
+                    //tableSort("NODE_NAME");
                   }}
                 >
                   <svg
@@ -72,7 +97,7 @@ const nodeTable = (props) => {
             </th>
             <th
               className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
-                activeButton === 1
+                activeButton === "CREATED_AT"
                   ? "text-nemo-orange-700"
                   : "text-nemo-blue-200"
               }`}
@@ -81,8 +106,8 @@ const nodeTable = (props) => {
                 Created
                 <button
                   onClick={() => {
-                    handleButtonClick(1);
-                    tableSort("CREATED_AT");
+                    handleButtonClick("CREATED_AT");
+                    //tableSort("CREATED_AT");
                   }}
                 >
                   <svg
@@ -110,7 +135,7 @@ const nodeTable = (props) => {
             </th>
             <th
               className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
-                activeButton === 2
+                activeButton === "CPU_CAPACITY"
                   ? "text-nemo-orange-700"
                   : "text-nemo-blue-200"
               }`}
@@ -119,8 +144,8 @@ const nodeTable = (props) => {
                 CPU Capacity
                 <button
                   onClick={() => {
-                    handleButtonClick(2);
-                    tableSort("CPU_CAPACITY");
+                    handleButtonClick("CPU_CAPACITY");
+                    //tableSort("CPU_CAPACITY");
                   }}
                 >
                   <svg
@@ -142,7 +167,7 @@ const nodeTable = (props) => {
             </th>
             <th
               className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
-                activeButton === 3
+                activeButton === "CPU_REQUEST_TOTAL"
                   ? "text-nemo-orange-700"
                   : "text-nemo-blue-200"
               }`}
@@ -151,8 +176,8 @@ const nodeTable = (props) => {
                 CPU Usage
                 <button
                   onClick={() => {
-                    handleButtonClick(3);
-                    tableSort("CPU_REQUEST_TOTAL");
+                    handleButtonClick("CPU_REQUEST_TOTAL");
+                    //tableSort("CPU_REQUEST_TOTAL");
                   }}
                 >
                   <svg
@@ -174,7 +199,7 @@ const nodeTable = (props) => {
             </th>
             <th
               className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
-                activeButton === 4
+                activeButton === "MEMORY_CAPACITY"
                   ? "text-nemo-orange-700"
                   : "text-nemo-blue-200"
               }`}
@@ -183,8 +208,8 @@ const nodeTable = (props) => {
                 Memory Capacity
                 <button
                   onClick={() => {
-                    handleButtonClick(4);
-                    tableSort("MEMORY_CAPACITY");
+                    handleButtonClick("MEMORY_CAPACITY");
+                    //tableSort("MEMORY_CAPACITY");
                   }}
                 >
                   <svg
@@ -206,7 +231,7 @@ const nodeTable = (props) => {
             </th>
             <th
               className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
-                activeButton === 5
+                activeButton === "MEMORY_REQUEST_TOTAL"
                   ? "text-nemo-orange-700"
                   : "text-nemo-blue-200"
               }`}
@@ -215,8 +240,8 @@ const nodeTable = (props) => {
                 Memory Usage
                 <button
                   onClick={() => {
-                    handleButtonClick(5);
-                    tableSort("MEMORY_REQUEST_TOTAL");
+                    handleButtonClick("MEMORY_REQUEST_TOTAL");
+                    //tableSort("MEMORY_REQUEST_TOTAL");
                   }}
                 >
                   <svg
