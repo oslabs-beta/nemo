@@ -11,7 +11,7 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
   useEffect(() => {
     // Check if the component is not yet initialized and if both nodeData and podsData arrays have elements
     if (!initializedRef.current && nodeData.length > 0 && podsData.length > 0) {
-      initializedRef.current = true; // Mark the component as initialized
+      initializedRef.current = true;
 
       // Calculate total CPU and memory usage for normalization
       const totalUsage = {
@@ -37,12 +37,12 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
         ...nodeData.map((node) => ({
           source: 'Master Node',
           target: node.NODE_NAME,
-          distance: 30 // shorter link distance
+          distance: 30 
         })),
         ...podsData.map((pod) => ({
           source: pod.POD_NAME,
           target: pod.NODE_NAME,
-          distance: 80 // longer link distance
+          distance: 80
         })),
       ];
 
