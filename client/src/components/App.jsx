@@ -3,7 +3,7 @@ import Navbar from './NavBar.jsx';
 import MainContainer from './MainContainer.jsx';
 
 const App = () => {
-  const [activeButton, setActiveButton] = useState(null);
+  const [activeButton, setActiveButton] = useState(1);
 
   useEffect(() => {
     document.body.style.margin = '0';

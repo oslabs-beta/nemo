@@ -3,9 +3,12 @@ import NodeContainer from './NodeContainer.jsx';
 import NodeDetail from './NodeDetail.jsx';
 import PodContainer from './PodContainer.jsx';
 import ChartComponent from './ClusterStructure.jsx';
+import Welcome from './Welcome.jsx'
 
 const MainContainer = ({ activeButton }) => {
+
   const [nodes, setNodes] = useState([]);
+
   useEffect(() => {
     const fetchData = async () => {
       await fetch("http://localhost:3000/metricserver/topNodes")
@@ -42,10 +45,9 @@ const MainContainer = ({ activeButton }) => {
 
   return (
     <div>
-      {activeButton === 1 && null}
-      {activeButton === 2 && (
-        <ChartComponent nodeData={nodes} podsData={podsData} />
-      )}
+
+      {activeButton === 1 && <Welcome />}
+      {activeButton === 2 && <ChartComponent nodeData={nodes} podsData={podsData} />}
       {activeButton === 3 && <NodeContainer nodeData={nodes} />}
       {activeButton === 4 && <PodContainer podsData={podsData} />}
     </div>
