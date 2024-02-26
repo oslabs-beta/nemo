@@ -52,9 +52,9 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
 
       // D3 force simulation setup
       const simulation = d3.forceSimulation(nodes)
-        .force('link', d3.forceLink(links).id(d => d.id).distance(d => d.distance)) // setting links
+        .force('link', d3.forceLink(links).id(d => d.id).distance(d => d.distance))
         .force('charge', d3.forceManyBody().strength(-350)) // attraction force for pods
-        .force('center', d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2)); // center of the screen
+        .force('center', d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2));
 
       // Create SVG element
       const svg = d3.select(svgRef.current)
@@ -80,11 +80,11 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
 
       // Differentiate appearance of nodes and master node from pods
       node.append('rect')
-        .attr('width', d => (d.id === 'Master Node' ? 80 : 40)) // Set width of the rectangle based on the node type
-        .attr('height', d => (d.id === 'Master Node' ? 120 : 40)) // Set height of the rectangle based on the node type
+        .attr('width', d => (d.id === 'Master Node' ? 80 : 40)) 
+        .attr('height', d => (d.id === 'Master Node' ? 120 : 40)) 
         .attr('fill', d => (d.id === 'Master Node' ? '#102444' : (d.isPod ? getColorPods(d.cpuPercentage, d.memoryPercentage) : getColorNodes(d.cpuPercentage, d.memoryPercentage)))) // Set fill color based on CPU and memory percentages
-        .attr('x', d => (d.id === 'Master Node' ? -40 : -20)) // Adjust x position
-        .attr('y', d => (d.id === 'Master Node' ? -60 : -20)); // Adjust y position
+        .attr('x', d => (d.id === 'Master Node' ? -40 : -20))
+        .attr('y', d => (d.id === 'Master Node' ? -60 : -20)); 
 
       // Append text to nodes for displaying node id
       const text = node.append('text')
@@ -94,14 +94,14 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
         .text(d => d.id) // Display node id as text
         .style('visibility', 'hidden'); // Initially hide text
 
-      // Add mouseover and mouseout event listeners to show/hide text on hover
+      // Mouseover and mouseout event listeners to show/hide text on hover
       node.on('mouseover', function () {
         d3.select(this).select('text').style('visibility', 'visible').style('fill', '#8CBEFA');
       }).on('mouseout', function () {
         d3.select(this).select('text').style('visibility', 'hidden');
       });
 
-      // Add drag behavior to nodes
+      // Drag behavior to nodes
       node.call(d3.drag()
         .on('start', dragstarted)
         .on('drag', dragged)
@@ -158,13 +158,13 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
 // Function to determine the fill color of pods based on CPU and memory percentages
 function getColorPods(cpuPercentage, memoryPercentage) {
   if ((cpuPercentage >= 4 && cpuPercentage < 5) || (memoryPercentage >= 4 && memoryPercentage < 5)) {
-    return '#EC9006'; // Pods with CPU or memory percentages between 4 and 5 are colored a light shade
+    return '#EC9006';
   } else if ((cpuPercentage >= 5 && cpuPercentage < 6) || (memoryPercentage >= 5 && memoryPercentage < 6)) {
-    return '#D24E02'; // Pods with CPU or memory percentages between 5 and 6 are colored a medium shade
+    return '#D24E02';
   } else if ((cpuPercentage > 6 || memoryPercentage > 6)) {
-    return '#b52009'; // Pods with CPU or memory percentages between 6 and 7 are colored a darker shade
+    return '#b52009';
   } else {
-    return '#FADEB2'; // Default color for other pods
+    return '#FADEB2';
   }
 }
 
@@ -172,13 +172,13 @@ function getColorPods(cpuPercentage, memoryPercentage) {
 // Function to determine the fill color of nodes based on CPU and memory percentages
 function getColorNodes(cpuPercentage, memoryPercentage) {
   if ((cpuPercentage > 70 && cpuPercentage <= 80) || (memoryPercentage > 70 && memoryPercentage <= 80)) {
-    return '#EC9006'; // Nodes with CPU or memory percentages between 70 and 80 are colored orange
+    return '#EC9006';
   } else if ((cpuPercentage > 80 && cpuPercentage <= 90) || (memoryPercentage > 80 && memoryPercentage <= 90)) {
-    return '#D24E02'; // Nodes with CPU or memory percentages between 80 and 90 are colored dark orange
+    return '#D24E02';
   } else if ((cpuPercentage > 90 && cpuPercentage <= 100) || (memoryPercentage > 90 && memoryPercentage <= 100)) {
-    return '#b52009'; // Nodes with CPU or memory percentages between 90 and 100 are colored red
+    return '#b52009';
   } else {
-    return '#FADEB2'; // Default color for other nodes
+    return '#FADEB2';
   }
 }
 
