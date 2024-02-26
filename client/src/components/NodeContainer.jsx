@@ -62,9 +62,7 @@ const NodeContainer = ({ nodeData }) => {
          {nodeSummaries}
        </div> */}
       <div className="font-roboto flex flex-wrap items-start justify-around p-5">
-        {/* <h2>Nodes!</h2> */}
         <NodeTable nodeData={nodeData} />
-        {/* {nodeSummaries} */}
       </div>
     </div>
   );
