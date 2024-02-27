@@ -22,22 +22,29 @@
 Nemo provides Kubernetes cluster monitoring and data visualization in a simple and easy to understand user interface.<br/>Find out more at <a href="" target="_blank"></a>!
 </p>
 
+<details>
+  <summary><strong>Table of Contents</strong></summary>
+  <ul>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#demo">Demo</a></li>
+    <li><a href="#getting-started">Getting Started</a></li>
+    <li><a href="#how-to-contribute">How to Contribute</a></li>
+    <li><a href="#meet-the-team">Meet the Team</a></li>
+  </ul>
+</details>
+
 ## Features
 
-- GKE Support
-- Cluster Information
-- Node and Pod Metrics
+- Health monitoring solution focusing on CPU and memory consumption
+- Delivers insights in accesible formats, such as tables and graphs
+- Provides real-time data from the cluster
+- Includes a visualization of cluster structure with color-coded severity indicators
 
 ## Demo
 
-### Welcome Page
-- Insert ScreenShot
-### Clusture Structure
-- Insert GIF
-### Nodes and Pods
-- Insert GIF
+- Insert Gif
   
-## Nemo Setup
+## Getting Started
 
 - [ ] Step 1
 - [ ] Step 2
@@ -45,24 +52,22 @@ Nemo provides Kubernetes cluster monitoring and data visualization in a simple a
 - [ ] Step 4
 - [ ] Step 5
   
-## Notes, Future Features
+## How To Contribute
 
-- Metric Visualisations
-- Cluster Visualisations
+- Compatability with clusters hosted on AWS and Azure is not yet available
 - Cost Analysis
 
 ## Meet the Team
 
 ## Meet the Creators
 
-[Ari Benkov](https://github.com/aribenkov) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/aribenkov) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/aribenkov)
+| Name              | GitHub                                                       | LinkedIn                                                     |
+|-------------------|--------------------------------------------------------------|--------------------------------------------------------------|
+| Ari Benkov        | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/aribenkov) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/aribenkov) |
+| Paul Burger       | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/paulburger) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/paulburger) |
+| Anthony Chaiditya | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/anthonychaiditya) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/anthonychaiditya) |
+| Trevor Hilz       | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/trevorhilz) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/trevorhilz) |
+| Callum Miles      | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/callummiles) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/callummiles) |
 
-[Paul Burger](https://github.com/paulburger) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/paulburger) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/paulburger)
-
-[Anthony Chaiditya](https://github.com/anthonychaiditya) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/anthonychaiditya) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/anthonychaiditya)
-
-[Trevor Hilz](https://github.com/trevorhilz) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/trevorhilz) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/trevorhilz)
-
-[Callum Miles](https://github.com/callummiles) [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/callummiles) [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/callummiles)
 
 
