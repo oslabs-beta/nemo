@@ -37,7 +37,7 @@ Nemo provides Kubernetes cluster monitoring and data visualization in a simple a
 
 - Health monitoring solution focusing on CPU and memory consumption
 - Delivers insights in accesible formats, such as tables and graphs
-- Provides real-time data from the cluster
+- Provides real-time data from the GKE hosted cluster
 - Includes a visualization of cluster structure with color-coded severity indicators
 
 ## Demo
