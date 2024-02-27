@@ -1,119 +1,300 @@
-import React, { useState } from "react";
-import "../style.scss";
+import React, { useState, useEffect } from 'react';
+import '../style.scss';
 
-let ascending = true;
 const podsTable = (props) => {
   let count = 1;
   const { podsData } = props;
 
   const [table, setTable] = useState(podsData);
+  const [activeButton, setActiveButton] = useState(null);
+  const [sortCriteria, setSortCriteria] = useState({
+    field: null,
+    ascending: true,
+  });
 
-  const totalUsage = podsData.reduce(
-    (acc, pod) => {
-      acc.totalCpu += parseFloat(pod.CPU_USAGE_CORES);
-      acc.totalMemory += parseFloat(pod.MEMORY_USAGE_BYTES);
-      return acc;
-    },
-    { totalCpu: 0, totalMemory: 0 },
-  );
-  //console.log(podsData);
-  // Table sort takes in the variable needed and sorts the table ascending or descending
-  const tableSort = (data) => {
-    ascending = !ascending;
-    podsData.sort((a, b) => {
+  useEffect(() => {
+    sortData(podsData, sortCriteria.field, sortCriteria.ascending);
+  }, [podsData]);
+
+  const handleButtonClick = (field) => {
+    const isAscending =
+      sortCriteria.field === field ? !sortCriteria.ascending : true;
+    setSortCriteria({ field, ascending: isAscending });
+    sortData(table, field, isAscending);
+  };
+
+  const sortData = (data, field, ascending) => {
+    if (!field) return;
+
+    const sortedData = [...data].sort((a, b) => {
       if (ascending) {
-        return a[data] < b[data] ? -1 : a[data] > b[data] ? 1 : 0;
+        return a[field] < b[field] ? -1 : a[field] > b[field] ? 1 : 0;
       } else {
-        return a[data] > b[data] ? -1 : a[data] < b[data] ? 1 : 0;
+        return a[field] > b[field] ? -1 : a[field] < b[field] ? 1 : 0;
       }
     });
-    setTable(podsData);
+    setTable(sortedData);
+    setActiveButton(field);
   };
 
   return (
-    <table
-      style={{
-        color: "white",
-        overflow: "wrap",
-        margin: "auto",
-        marginTop: "15px",
-      }}
-    >
-      <thead>
-        <tr>
-          <td id="headers">#</td>
-          <td id="headers">
-            <button onClick={() => tableSort("POD_NAME")}>Pod Name</button>
-          </td>
-          <td id="headers">
-            <button onClick={() => tableSort("NODE_NAME")}>Node Name</button>
-          </td>
-          <td id="headers">Pod ID</td>
-          <td id="headers">
-            <button onClick={() => tableSort("CONTAINER_COUNT")}>
-              Container(s)
-            </button>
-          </td>
-          <td>
-            <button id="headers" onClick={() => tableSort("CPU_USAGE_CORES")}>
-              CPU Usage
-            </button>
-          </td>
-          <td>
-            <button id="headers" onClick={() => tableSort("CPU_USAGE_CORES")}>
-              CPU Usage %
-            </button>
-          </td>
-          <td>
-            <button
-              id="headers"
-              onClick={() => tableSort("MEMORY_USAGE_BYTES")}
+    <div className="flex w-screen justify-center">
+      <table className="mt-5 border-separate border-spacing-2 overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-900 text-nemo-blue-200">
+        <thead>
+          <tr>
+            <th className="overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2">
+              #
+            </th>
+            <th
+              className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
+                activeButton === 'POD_NAME'
+                  ? 'text-nemo-orange-700'
+                  : 'text-nemo-blue-200'
+              }`}
             >
-              Memory Usage
-            </button>
-          </td>
-          <td>
-            <button
-              id="headers"
-              onClick={() => tableSort("MEMORY_USAGE_BYTES")}
+              <div className="flex items-center">
+                Pod Name
+                <button
+                  onClick={() => {
+                    handleButtonClick('POD_NAME');
+                    //tableSort("POD_NAME");
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </th>
+            <th
+              className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
+                activeButton === 'NODE_NAME'
+                  ? 'text-nemo-orange-700'
+                  : 'text-nemo-blue-200'
+              }`}
             >
-              Memory Usage %
-            </button>
-          </td>
-        </tr>
-      </thead>
-      <tbody>
-        {/* {podsData.map((pod) => ( */}
-        {table.map((pod) => (
-          <tr key={pod.id}>
-            <td>{count++}</td>
-            <td>{pod.POD_NAME}</td>
-            <td style={{ paddingRight: "15px", paddingLeft: "15px" }}>
-              {pod.NODE_NAME}
-            </td>
-            <td>{pod.UID}</td>
-            <td style={{ display: "flex", justifyContent: "center" }}>
-              {pod.CONTAINER_COUNT}
-            </td>
-            <td>{pod.CPU_USAGE_CORES.toFixed(3) + " Core(s)"}</td>
-            <td>
-              {(
-                (parseFloat(pod.CPU_USAGE_CORES) / totalUsage.totalCpu) *
-                100
-              ).toFixed(2)}
-              %
-            </td>
-            <td>{(pod.MEMORY_USAGE_BYTES / 1000000).toFixed(2) + "MB"}</td>
-            <td>
-              {(
-                (parseFloat(pod.MEMORY_USAGE_BYTES) / totalUsage.totalMemory) *
-                100
-              ).toFixed(2) + "%"}
-            </td>
+              <div className="flex items-center">
+                Node Name
+                <button
+                  onClick={() => {
+                    handleButtonClick('NODE_NAME');
+                    //tableSort("NODE_NAME");
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </th>
+            <th className="overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2">
+              Pod ID
+            </th>
+            <th
+              className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
+                activeButton === 'CONTAINER_COUNT'
+                  ? 'text-nemo-orange-700'
+                  : 'text-nemo-blue-200'
+              }`}
+            >
+              <div className="flex items-center">
+                Container(s)
+                <button
+                  onClick={() => {
+                    handleButtonClick('CONTAINER_COUNT');
+                    //tableSort("CONTAINER_COUNT");
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </th>
+            <th
+              className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
+                activeButton === 'CPU_USAGE_CORES'
+                  ? 'text-nemo-orange-700'
+                  : 'text-nemo-blue-200'
+              }`}
+            >
+              <div className="flex items-center">
+                CPU Usage
+                <button
+                  onClick={() => {
+                    handleButtonClick('CPU_USAGE_CORES');
+                    //tableSort("CPU_USAGE_CORES");
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </th>
+            <th
+              className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
+                activeButton === 'CPU_PERCENTAGE'
+                  ? 'text-nemo-orange-700'
+                  : 'text-nemo-blue-200'
+              }`}
+            >
+              <div className="flex items-center">
+                CPU Usage %
+                <button
+                  onClick={() => {
+                    handleButtonClick('CPU_PERCENTAGE');
+                    //tableSort("CPU_USAGE_CORES");
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </th>
+            <th
+              className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
+                activeButton === 'MEMORY_USAGE_BYTES'
+                  ? 'text-nemo-orange-700'
+                  : 'text-nemo-blue-200'
+              }`}
+            >
+              <div className="flex items-center">
+                Memory Usage
+                <button
+                  onClick={() => {
+                    handleButtonClick('MEMORY_USAGE_BYTES');
+                    //tableSort("MEMORY_USAGE_BYTES");
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </th>
+            <th
+              className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
+                activeButton === 'MEMORY_PERCENTAGE'
+                  ? 'text-nemo-orange-700'
+                  : 'text-nemo-blue-200'
+              }`}
+            >
+              <div className="flex items-center">
+                Memory Usage %
+                <button
+                  onClick={() => {
+                    handleButtonClick('MEMORY_PERCENTAGE');
+                    //tableSort("MEMORY_USAGE_BYTES");
+                  }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="h-6 w-6"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {table.map((pod) => (
+            <tr key={pod.UID}>
+              <td className="p-2">{count++}</td>
+              <td className="p-2">{pod.POD_NAME}</td>
+              <td className="p-2">{pod.NODE_NAME}</td>
+              <td className="p-2">{pod.UID}</td>
+              <td className="p-2">{pod.CONTAINER_COUNT}</td>
+              <td className="p-2">
+                {pod.CPU_USAGE_CORES.toFixed(3) + ' Core(s)'}
+              </td>
+              <td className="p-2">{pod.CPU_PERCENTAGE}%</td>
+              <td className="p-2">
+                {(pod.MEMORY_USAGE_BYTES / 1000000).toFixed(2) + 'MB'}
+              </td>
+              <td className="p-2">{pod.MEMORY_PERCENTAGE}%</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 

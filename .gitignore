@@ -7,4 +7,5 @@ node_modules/
 # Ignore dist folder if appropriate
 dist/
 
-
+# Ignore ds store
+**/.DS_Store

@@ -1,15 +1,15 @@
-import React, { Component, useEffect, useState } from "react";
-import NodeSummary from "./NodeSummary.jsx";
-import NodeCharts from "./NodeCharts.jsx";
-import NodeTable from "./NodeTable.jsx";
+import React, { Component, useEffect, useState } from 'react';
+import NodeSummary from './NodeSummary.jsx';
+import NodeCharts from './NodeCharts.jsx';
+import NodeTable from './NodeTable.jsx';
 
 const NodeContainer = ({ nodeData }) => {
   const nodeDataByMem = nodeData.sort(
-    (a, b) => b.MEMORY_REQUEST_TOTAL - a.MEMORY_REQUEST_TOTAL,
+    (a, b) => b.MEMORY_REQUEST_TOTAL - a.MEMORY_REQUEST_TOTAL
   );
 
   const memUsageArray = nodeDataByMem.map(
-    (node) => node.MEMORY_REQUEST_TOTAL / 1000000000,
+    (node) => node.MEMORY_REQUEST_TOTAL / 1000000000
   );
 
   const memNodeNames = nodeDataByMem.map((node) => {
@@ -17,7 +17,7 @@ const NodeContainer = ({ nodeData }) => {
   });
 
   const nodeDataByCpu = nodeData.sort(
-    (a, b) => b.CPU_REQUEST_TOTAL - a.CPU_REQUEST_TOTAL,
+    (a, b) => b.CPU_REQUEST_TOTAL - a.CPU_REQUEST_TOTAL
   );
 
   const cpuUsageArray = nodeDataByCpu.map((node) => node.CPU_REQUEST_TOTAL);
@@ -49,8 +49,8 @@ const NodeContainer = ({ nodeData }) => {
   // });
 
   return (
-    <div>
-      <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
+    <div className="ml-64">
+      <div className="font-roboto flex flex-wrap items-start justify-around p-5">
         <NodeCharts
           memUsages={memUsageArray}
           cpuUsages={cpuUsageArray}
@@ -58,9 +58,6 @@ const NodeContainer = ({ nodeData }) => {
           memNodeNames={memNodeNames}
         />
       </div>
-      {/* //       <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
-//         {nodeSummaries}
-//       </div> */}
       <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
         {/* <h2>Nodes!</h2> */}
         <NodeTable nodeData={nodeData} />
