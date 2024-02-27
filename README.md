@@ -1,4 +1,4 @@
-![Logo](src/client/assets/smallerPodzLogo.png)
+![Logo](src/client/assets/)
 
 <div align='center'>
 
@@ -20,7 +20,7 @@
 </div>
 
 <p align="center">
-Nemo provides Kubernetes cluster monitoring and data visualization in a simple and easy to understand user interface.<br/>Find out more at <a href="" target="_blank"></a>!
+Nemo provides Kubernetes cluster monitoring and data visualization in a simple and easy to understand user interface.<br/>Find out more at <a href="">Insert Website Here</a>!
 </p>
 
 <details>
