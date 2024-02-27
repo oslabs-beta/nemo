@@ -15,7 +15,7 @@ const app = express();
 const PORT = 3000;
 
 // This starts data fetching and posting to database
-runDb.postData();
+//runDb.postData();
 
 // establish port forwarding for node-exporter; currently deprecated
 // portObj.pForward();

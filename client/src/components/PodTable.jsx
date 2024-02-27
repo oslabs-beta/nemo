@@ -17,7 +17,6 @@ const podsTable = (props) => {
   }, [podsData]);
 
   const handleButtonClick = (field) => {
-    //setActiveButton(field);
     const isAscending =
       sortCriteria.field === field ? !sortCriteria.ascending : true;
     setSortCriteria({ field, ascending: isAscending });
@@ -37,28 +36,6 @@ const podsTable = (props) => {
     setTable(sortedData);
     setActiveButton(field);
   };
-
-  // const totalUsage = podsData.reduce(
-  //   (acc, pod) => {
-  //     acc.totalCpu += parseFloat(pod.CPU_USAGE_CORES);
-  //     acc.totalMemory += parseFloat(pod.MEMORY_USAGE_BYTES);
-  //     return acc;
-  //   },
-  //   { totalCpu: 0, totalMemory: 0 },
-  // );
-  //console.log(podsData);
-  // Table sort takes in the variable needed and sorts the table ascending or descending
-  // const tableSort = (data) => {
-  //   ascending = !ascending;
-  //   podsData.sort((a, b) => {
-  //     if (ascending) {
-  //       return a[data] < b[data] ? -1 : a[data] > b[data] ? 1 : 0;
-  //     } else {
-  //       return a[data] > b[data] ? -1 : a[data] < b[data] ? 1 : 0;
-  //     }
-  //   });
-  //   setTable(podsData);
-  // };
 
   return (
     <div className="flex w-screen justify-center">

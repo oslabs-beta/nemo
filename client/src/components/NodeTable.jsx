@@ -19,7 +19,6 @@ const nodeTable = (props) => {
   }, [nodeData]);
 
   const handleButtonClick = (field) => {
-    //setActiveButton(buttonNumber);
     const isAscending =
       sortCriteria.field === field ? !sortCriteria.ascending : true;
     setSortCriteria({ field, ascending: isAscending });
@@ -39,18 +38,6 @@ const nodeTable = (props) => {
     setTable(sortedData);
     setActiveButton(field);
   };
-
-  // const tableSort = (data) => {
-  //   ascending = !ascending;
-  //   nodeData.sort((a, b) => {
-  //     if (ascending) {
-  //       return a[data] < b[data] ? -1 : a[data] > b[data] ? 1 : 0;
-  //     } else {
-  //       return a[data] > b[data] ? -1 : a[data] < b[data] ? 1 : 0;
-  //     }
-  //   });
-  //   setTable(nodeData);
-  // };
 
   return (
     <div className="flex w-screen justify-center">
