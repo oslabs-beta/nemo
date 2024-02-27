@@ -8,5 +8,4 @@ node_modules/
 dist/
 
 # Ignore ds store
-.DS_Store
-client/.DS_Store
+**/.DS_Store
