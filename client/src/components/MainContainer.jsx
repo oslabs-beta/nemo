@@ -47,7 +47,7 @@ const MainContainer = ({ activeButton }) => {
     </div>
   );
 
-  const showLoadSpinner =
+  const showLoadingSpinner =
     (activeButton === 2 && (isLoadingNodes || isLoadingPods)) ||
     (activeButton === 3 && isLoadingNodes) ||
     (activeButton === 4 && isLoadingPods);
@@ -57,7 +57,7 @@ const MainContainer = ({ activeButton }) => {
 
   return (
     <div>
-      {showLoadSpinner ? (
+      {showLoadingSpinner ? (
         <Spinner />
       ) : (
         <div>
