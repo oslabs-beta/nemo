@@ -17,25 +17,25 @@ const PodSummary = ({ podsData }) => {
     return null; // Return null if podsData is undefined
   }
 
-  const totalUsage = podsData.reduce(
-    (acc, pod) => {
-      acc.totalCpu += parseFloat(pod.CPU_USAGE_CORES);
-      acc.totalMemory += parseFloat(pod.MEMORY_USAGE_BYTES);
-      return acc;
-    },
-    { totalCpu: 0, totalMemory: 0 }
-  );
+  // const totalUsage = podsData.reduce(
+  //   (acc, pod) => {
+  //     acc.totalCpu += parseFloat(pod.CPU_USAGE_CORES);
+  //     acc.totalMemory += parseFloat(pod.MEMORY_USAGE_BYTES);
+  //     return acc;
+  //   },
+  //   { totalCpu: 0, totalMemory: 0 }
+  // );
 
   const pods = podsData.map((pod, index) => {
-    const cpuPercentage =
-      ((parseFloat(pod.CPU_USAGE_CORES) / totalUsage.totalCpu) * 100).toFixed(
-        3
-      );
-    const memoryPercentage =
-      (
-        (parseFloat(pod.MEMORY_USAGE_BYTES) / totalUsage.totalMemory) *
-        100
-      ).toFixed(3);
+    // const cpuPercentage =
+    //   ((parseFloat(pod.CPU_USAGE_CORES) / totalUsage.totalCpu) * 100).toFixed(
+    //     3
+    //   );
+    // const memoryPercentage =
+    //   (
+    //     (parseFloat(pod.MEMORY_USAGE_BYTES) / totalUsage.totalMemory) *
+    //     100
+    //   ).toFixed(3);
 
     return (
       <div
@@ -74,7 +74,7 @@ const PodSummary = ({ podsData }) => {
               </tr>
               <tr>
                 <td>
-                  <b>Pod CPU Usage Percentage:</b> {cpuPercentage}%
+                  <b>Pod CPU Usage Percentage:</b> {pod.CPU_PERCENTAGE}%
                 </td>
               </tr>
               <tr>
@@ -84,7 +84,7 @@ const PodSummary = ({ podsData }) => {
               </tr>
               <tr>
                 <td>
-                  <b>Pod Memory Usage Percentage:</b> {memoryPercentage}%
+                  <b>Pod Memory Usage Percentage:</b> {pod.MEMORY_PERCENTAGE}%
                 </td>
               </tr>
             </tbody>
@@ -92,8 +92,11 @@ const PodSummary = ({ podsData }) => {
         </div>
         <div className="mt-auto flex justify-around">
           <button
-            className={`w-28 cursor-pointer p-2 text-center font-bold uppercase transition-colors duration-300 ease-in-out ${hoverIndex === index ? "text-nemo-orange-950" : "text-nemo-blue-200"
-              } rounded-lg bg-nemo-blue-950`}
+            className={`w-28 cursor-pointer p-2 text-center font-bold uppercase transition-colors duration-300 ease-in-out ${
+              hoverIndex === index
+                ? "text-nemo-orange-950"
+                : "text-nemo-blue-200"
+            } rounded-lg bg-nemo-blue-950`}
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={handleMouseLeave}
           >
@@ -112,5 +115,3 @@ const PodSummary = ({ podsData }) => {
 };
 
 export default PodSummary;
-
-

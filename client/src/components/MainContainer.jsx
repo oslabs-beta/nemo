@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import NodeContainer from './NodeContainer.jsx';
-import NodeDetail from './NodeDetail.jsx';
-import PodContainer from './PodContainer.jsx';
-import ChartComponent from './ClusterStructure.jsx';
-import Welcome from './Welcome.jsx'
+import React, { useEffect, useState } from "react";
+import NodeContainer from "./NodeContainer.jsx";
+import NodeDetail from "./NodeDetail.jsx";
+import PodContainer from "./PodContainer.jsx";
+import ChartComponent from "./ClusterStructure.jsx";
+import Welcome from "./Welcome.jsx";
 
 const MainContainer = ({ activeButton }) => {
-
   const [nodes, setNodes] = useState([]);
 
   useEffect(() => {
@@ -18,7 +17,6 @@ const MainContainer = ({ activeButton }) => {
         });
     };
     fetchData();
-    console.log(nodes);
     const interval = setInterval(fetchData, 2000);
     return () => clearInterval(interval);
   }, []);
@@ -45,9 +43,10 @@ const MainContainer = ({ activeButton }) => {
 
   return (
     <div>
-
       {activeButton === 1 && <Welcome />}
-      {activeButton === 2 && <ChartComponent nodeData={nodes} podsData={podsData} />}
+      {activeButton === 2 && (
+        <ChartComponent nodeData={nodes} podsData={podsData} />
+      )}
       {activeButton === 3 && <NodeContainer nodeData={nodes} />}
       {activeButton === 4 && <PodContainer podsData={podsData} />}
     </div>
