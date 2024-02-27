@@ -16,7 +16,7 @@ const podsTable = (props) => {
     },
     { totalCpu: 0, totalMemory: 0 },
   );
-  console.log(podsData);
+  //console.log(podsData);
   // Table sort takes in the variable needed and sorts the table ascending or descending
   const tableSort = (data) => {
     ascending = !ascending;
