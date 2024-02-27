@@ -9,4 +9,4 @@ dist/
 
 # Ignore ds store
 .DS_Store
-
+client/.DS_Store
