@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import "../style.scss";
+import React, { useState, useEffect } from 'react';
+import '../style.scss';
 
 const podsTable = (props) => {
   let count = 1;
@@ -47,16 +47,16 @@ const podsTable = (props) => {
             </th>
             <th
               className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
-                activeButton === "POD_NAME"
-                  ? "text-nemo-orange-700"
-                  : "text-nemo-blue-200"
+                activeButton === 'POD_NAME'
+                  ? 'text-nemo-orange-700'
+                  : 'text-nemo-blue-200'
               }`}
             >
               <div className="flex items-center">
                 Pod Name
                 <button
                   onClick={() => {
-                    handleButtonClick("POD_NAME");
+                    handleButtonClick('POD_NAME');
                     //tableSort("POD_NAME");
                   }}
                 >
@@ -79,16 +79,16 @@ const podsTable = (props) => {
             </th>
             <th
               className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
-                activeButton === "NODE_NAME"
-                  ? "text-nemo-orange-700"
-                  : "text-nemo-blue-200"
+                activeButton === 'NODE_NAME'
+                  ? 'text-nemo-orange-700'
+                  : 'text-nemo-blue-200'
               }`}
             >
               <div className="flex items-center">
                 Node Name
                 <button
                   onClick={() => {
-                    handleButtonClick("NODE_NAME");
+                    handleButtonClick('NODE_NAME');
                     //tableSort("NODE_NAME");
                   }}
                 >
@@ -114,16 +114,16 @@ const podsTable = (props) => {
             </th>
             <th
               className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
-                activeButton === "CONTAINER_COUNT"
-                  ? "text-nemo-orange-700"
-                  : "text-nemo-blue-200"
+                activeButton === 'CONTAINER_COUNT'
+                  ? 'text-nemo-orange-700'
+                  : 'text-nemo-blue-200'
               }`}
             >
               <div className="flex items-center">
                 Container(s)
                 <button
                   onClick={() => {
-                    handleButtonClick("CONTAINER_COUNT");
+                    handleButtonClick('CONTAINER_COUNT');
                     //tableSort("CONTAINER_COUNT");
                   }}
                 >
@@ -146,16 +146,16 @@ const podsTable = (props) => {
             </th>
             <th
               className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
-                activeButton === "CPU_USAGE_CORES"
-                  ? "text-nemo-orange-700"
-                  : "text-nemo-blue-200"
+                activeButton === 'CPU_USAGE_CORES'
+                  ? 'text-nemo-orange-700'
+                  : 'text-nemo-blue-200'
               }`}
             >
               <div className="flex items-center">
                 CPU Usage
                 <button
                   onClick={() => {
-                    handleButtonClick("CPU_USAGE_CORES");
+                    handleButtonClick('CPU_USAGE_CORES');
                     //tableSort("CPU_USAGE_CORES");
                   }}
                 >
@@ -178,16 +178,16 @@ const podsTable = (props) => {
             </th>
             <th
               className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
-                activeButton === "CPU_PERCENTAGE"
-                  ? "text-nemo-orange-700"
-                  : "text-nemo-blue-200"
+                activeButton === 'CPU_PERCENTAGE'
+                  ? 'text-nemo-orange-700'
+                  : 'text-nemo-blue-200'
               }`}
             >
               <div className="flex items-center">
                 CPU Usage %
                 <button
                   onClick={() => {
-                    handleButtonClick("CPU_PERCENTAGE");
+                    handleButtonClick('CPU_PERCENTAGE');
                     //tableSort("CPU_USAGE_CORES");
                   }}
                 >
@@ -210,16 +210,16 @@ const podsTable = (props) => {
             </th>
             <th
               className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
-                activeButton === "MEMORY_USAGE_BYTES"
-                  ? "text-nemo-orange-700"
-                  : "text-nemo-blue-200"
+                activeButton === 'MEMORY_USAGE_BYTES'
+                  ? 'text-nemo-orange-700'
+                  : 'text-nemo-blue-200'
               }`}
             >
               <div className="flex items-center">
                 Memory Usage
                 <button
                   onClick={() => {
-                    handleButtonClick("MEMORY_USAGE_BYTES");
+                    handleButtonClick('MEMORY_USAGE_BYTES');
                     //tableSort("MEMORY_USAGE_BYTES");
                   }}
                 >
@@ -242,16 +242,16 @@ const podsTable = (props) => {
             </th>
             <th
               className={`overflow-hidden rounded-xl border-2 border-nemo-blue-200 bg-nemo-blue-800 p-2 ${
-                activeButton === "MEMORY_PERCENTAGE"
-                  ? "text-nemo-orange-700"
-                  : "text-nemo-blue-200"
+                activeButton === 'MEMORY_PERCENTAGE'
+                  ? 'text-nemo-orange-700'
+                  : 'text-nemo-blue-200'
               }`}
             >
               <div className="flex items-center">
                 Memory Usage %
                 <button
                   onClick={() => {
-                    handleButtonClick("MEMORY_PERCENTAGE");
+                    handleButtonClick('MEMORY_PERCENTAGE');
                     //tableSort("MEMORY_USAGE_BYTES");
                   }}
                 >
@@ -283,11 +283,11 @@ const podsTable = (props) => {
               <td className="p-2">{pod.UID}</td>
               <td className="p-2">{pod.CONTAINER_COUNT}</td>
               <td className="p-2">
-                {pod.CPU_USAGE_CORES.toFixed(3) + " Core(s)"}
+                {pod.CPU_USAGE_CORES.toFixed(3) + ' Core(s)'}
               </td>
               <td className="p-2">{pod.CPU_PERCENTAGE}%</td>
               <td className="p-2">
-                {(pod.MEMORY_USAGE_BYTES / 1000000).toFixed(2) + "MB"}
+                {(pod.MEMORY_USAGE_BYTES / 1000000).toFixed(2) + 'MB'}
               </td>
               <td className="p-2">{pod.MEMORY_PERCENTAGE}%</td>
             </tr>
