@@ -4,6 +4,9 @@ import metricServerRouter from './routes/metricServerRouter.js';
 // import nodeExporter from './routes/nodeExporterRoute.js';
 import cors from 'cors';
 import path from 'path';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+const __dirname = dirname(fileURLToPath(import.meta.url));
 import portObj from './portForward.js';
 import dotenv from 'dotenv';
 dotenv.config();
@@ -15,7 +18,7 @@ const app = express();
 const PORT = 3000;
 
 // This starts data fetching and posting to database
-//runDb.postData();
+// runDb.postData();
 
 // establish port forwarding for node-exporter; currently deprecated
 // portObj.pForward();
@@ -34,6 +37,9 @@ app.use(express.urlencoded({ extended: true }));
 /**
  * use route handlers
  */
+// Serve static files
+app.use(express.static(path.join(__dirname, '../client/src/assets')));
+
 // database endpoint both fetches metric data and ultimately
 // posts to MongoDB
 app.use('/database', databaseRouter);
@@ -46,11 +52,6 @@ app.use('/metricserver', metricServerRouter);
 app.get('/', (req, res) => {
   return res.sendStatus(200);
 });
-
-//to be moved into metricserverrouter file
-// app.get('/pods', metricServerController.getPods, (req, res) => {
-//   res.status(200).send(res.locals.pods);
-// });
 
 /**
  * catch requests to unknown routes
@@ -74,6 +75,6 @@ app.use((err, req, res, next) => {
 /**
  * start the server
  */
-app.listen(PORT, () => console.log(`Server listening on port ${PORT}`));
+app.listen(PORT);
 
 export default app;

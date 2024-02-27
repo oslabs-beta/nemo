@@ -58,11 +58,10 @@ const NodeContainer = ({ nodeData }) => {
           memNodeNames={memNodeNames}
         />
       </div>
-      {/* <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
-         {nodeSummaries}
-       </div> */}
-      <div className="font-roboto flex flex-wrap items-start justify-around p-5">
+      <div className="font-roboto ml-64 flex flex-wrap items-start justify-around p-5">
+        {/* <h2>Nodes!</h2> */}
         <NodeTable nodeData={nodeData} />
+        {/* {nodeSummaries} */}
       </div>
     </div>
   );

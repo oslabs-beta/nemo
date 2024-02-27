@@ -22,7 +22,11 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
       // Combine nodes and podsData into a single array for nodes
       const nodes = [
         { id: 'Master Node' },
-        ...nodeData.map((node) => ({ id: node.NODE_NAME })),
+        ...nodeData.map((node) => ({ 
+          id: node.NODE_NAME,
+          cpuPercentage: ((parseFloat(node.CPU_REQUEST_TOTAL) / node.CPU_CAPACITY) * 100).toFixed(3),
+          memoryPercentage: ((parseFloat(node.MEMORY_REQUEST_TOTAL / 1000000000) / node.MEMORY_CAPACITY / 1000000000) * 100).toFixed(3)
+        })),
         ...podsData.map((pod) => ({ 
           id: pod.POD_NAME, 
           isPod: true, 
@@ -48,9 +52,9 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
 
       // D3 force simulation setup
       const simulation = d3.forceSimulation(nodes)
-        .force('link', d3.forceLink(links).id(d => d.id).distance(d => d.distance)) // setting links
-        .force('charge', d3.forceManyBody().strength(-350)) // attraction force for pods
-        .force('center', d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2)); // center of the screen
+        .force('link', d3.forceLink(links).id(d => d.id).distance(d => d.distance))
+        .force('charge', d3.forceManyBody().strength(-350))
+        .force('center', d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2));
 
       // Create SVG element
       const svg = d3.select(svgRef.current)
@@ -63,7 +67,7 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
         .data(links)
         .enter()
         .append('line')
-        .attr('stroke', '#ccc') // Set link color to differentiate from node color
+        .attr('stroke', '#ccc')
         .attr('stroke-width', 1);
 
       // Draw nodes
@@ -76,28 +80,28 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
 
       // Differentiate appearance of nodes and master node from pods
       node.append('rect')
-        .attr('width', d => (d.id === 'Master Node' ? 80 : 40)) // Set width of the rectangle based on the node type
-        .attr('height', d => (d.id === 'Master Node' ? 120 : 40)) // Set height of the rectangle based on the node type
-        .attr('fill', d => (d.isPod ? getColor(d.cpuPercentage, d.memoryPercentage) : '#D9C7BA')) // Set fill color based on CPU and memory percentages
-        .attr('x', d => (d.id === 'Master Node' ? -40 : -20)) // Adjust x position
-        .attr('y', d => (d.id === 'Master Node' ? -60 : -20)); // Adjust y position
+        .attr('width', d => (d.id === 'Master Node' ? 80 : 40)) 
+        .attr('height', d => (d.id === 'Master Node' ? 120 : 40)) 
+        .attr('fill', d => (d.id === 'Master Node' ? '#102444' : (d.isPod ? getColorPods(d.cpuPercentage, d.memoryPercentage) : getColorNodes(d.cpuPercentage, d.memoryPercentage)))) // Set fill color based on CPU and memory percentages
+        .attr('x', d => (d.id === 'Master Node' ? -40 : -20))
+        .attr('y', d => (d.id === 'Master Node' ? -60 : -20)); 
 
       // Append text to nodes for displaying node id
       const text = node.append('text')
         .attr('text-anchor', 'middle')
-        .attr('dy', '0.35em') // Center the text vertically within the node
-        .style('fill', '#fff') // Set text color to white
-        .text(d => d.id) // Display node id as text
-        .style('visibility', 'hidden'); // Initially hide text
+        .attr('dy', '0.35em') 
+        .style('fill', '#fff')
+        .text(d => d.id)
+        .style('visibility', 'hidden');
 
-      // Add mouseover and mouseout event listeners to show/hide text on hover
+      // Mouseover and mouseout event listeners to show/hide text on hover
       node.on('mouseover', function () {
-        d3.select(this).select('text').style('visibility', 'visible');
+        d3.select(this).select('text').style('visibility', 'visible').style('fill', '#8CBEFA');
       }).on('mouseout', function () {
         d3.select(this).select('text').style('visibility', 'hidden');
       });
 
-      // Add drag behavior to nodes
+      // Drag behavior to nodes
       node.call(d3.drag()
         .on('start', dragstarted)
         .on('drag', dragged)
@@ -152,13 +156,32 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
   }, [podsData, nodeData]);
 
 // Function to determine the fill color of pods based on CPU and memory percentages
-function getColor(cpuPercentage, memoryPercentage) {
-  if (cpuPercentage > 6 || memoryPercentage > 6) {
-    return '#781414'; // Pods with CPU or memory percentages greater are colored red
+function getColorPods(cpuPercentage, memoryPercentage) {
+  if ((cpuPercentage >= 4 && cpuPercentage < 5) || (memoryPercentage >= 4 && memoryPercentage < 5)) {
+    return '#EC9006';
+  } else if ((cpuPercentage >= 5 && cpuPercentage < 6) || (memoryPercentage >= 5 && memoryPercentage < 6)) {
+    return '#D24E02';
+  } else if ((cpuPercentage > 6 || memoryPercentage > 6)) {
+    return '#b52009';
   } else {
-    return '#D24E02'; // Default color for other pods
+    return '#FADEB2';
   }
 }
+
+
+// Function to determine the fill color of nodes based on CPU and memory percentages
+function getColorNodes(cpuPercentage, memoryPercentage) {
+  if ((cpuPercentage > 70 && cpuPercentage <= 80) || (memoryPercentage > 70 && memoryPercentage <= 80)) {
+    return '#EC9006';
+  } else if ((cpuPercentage > 80 && cpuPercentage <= 90) || (memoryPercentage > 80 && memoryPercentage <= 90)) {
+    return '#D24E02';
+  } else if ((cpuPercentage > 90 && cpuPercentage <= 100) || (memoryPercentage > 90 && memoryPercentage <= 100)) {
+    return '#b52009';
+  } else {
+    return '#FADEB2';
+  }
+}
+
 
   // Render the SVG element
   return (
@@ -172,8 +195,6 @@ function getColor(cpuPercentage, memoryPercentage) {
 
 
 export default ForceDirectedGraph;
-
-
 
 
 

@@ -38,7 +38,7 @@ const mongoConnect = async () => {
     .catch((err) => console.log(err));
 };
 
-mongoConnect();
+//mongoConnect();
 
 const Schema = mongoose.Schema;
 const dbObj = new Schema({
