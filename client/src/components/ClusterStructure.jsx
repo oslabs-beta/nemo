@@ -53,7 +53,7 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
       // D3 force simulation setup
       const simulation = d3.forceSimulation(nodes)
         .force('link', d3.forceLink(links).id(d => d.id).distance(d => d.distance))
-        .force('charge', d3.forceManyBody().strength(-350)) // attraction force for pods
+        .force('charge', d3.forceManyBody().strength(-350))
         .force('center', d3.forceCenter(window.innerWidth / 2, window.innerHeight / 2));
 
       // Create SVG element
@@ -67,7 +67,7 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
         .data(links)
         .enter()
         .append('line')
-        .attr('stroke', '#ccc') // Set link color to differentiate from node color
+        .attr('stroke', '#ccc')
         .attr('stroke-width', 1);
 
       // Draw nodes
@@ -89,10 +89,10 @@ const ForceDirectedGraph = ({ podsData, nodeData }) => {
       // Append text to nodes for displaying node id
       const text = node.append('text')
         .attr('text-anchor', 'middle')
-        .attr('dy', '0.35em') // Center the text vertically within the node
-        .style('fill', '#fff') // Set text color to white
-        .text(d => d.id) // Display node id as text
-        .style('visibility', 'hidden'); // Initially hide text
+        .attr('dy', '0.35em') 
+        .style('fill', '#fff')
+        .text(d => d.id)
+        .style('visibility', 'hidden');
 
       // Mouseover and mouseout event listeners to show/hide text on hover
       node.on('mouseover', function () {
