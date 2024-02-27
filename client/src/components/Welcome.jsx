@@ -96,21 +96,47 @@ const Welcome = () => {
           }}
         >
           <div>
-            <em style={{ marginBottom: ".5em" }}>DYNAMIC TABLES</em>
+            <em
+              style={{
+                marginBottom: ".5em",
+                fontSize: "40px",
+                marginLeft: "110px",
+                // display: "flex",
+                // flexDirection: "column",
+              }}
+            >
+              DYNAMIC TABLES
+            </em>
             <img src={table} />
           </div>
           <br></br>
-
-          <em style={{ marginBottom: ".5em" }}>
-            GRAPHICAL COLOR-CODED NODE AND POD DATA
-          </em>
-          <img src={donuts} />
-          <br></br>
-          <em style={{ marginBottom: ".5em" }}>
-            COLOR-CODED YOUR CLUSTER ARCHITECTURE
-          </em>
-          <img src={d3} />
         </div>
+      </div>
+      <br></br>
+      <br></br>
+      <div
+        className="ml-64"
+        style={{
+          marginBottom: ".5em",
+          fontSize: "40px",
+          color: "#BCDCFC",
+          display: "flex",
+          justifyContent: "space-around",
+        }}
+      >
+        <em>REAL-TIME NODE AND POD DATA</em>
+        <em>COLOR-CODED CLUSTER ARCHITECTURE</em>
+      </div>
+
+      <div
+        className="ml-64"
+        style={{
+          display: "flex",
+          justifyContent: "space-around",
+        }}
+      >
+        <img src={donuts} />
+        <img src={d3} />
       </div>
     </div>
   );
