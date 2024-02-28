@@ -53,17 +53,18 @@ Nemo provides Kubernetes cluster monitoring and data visualization in a simple a
   
 ## Getting Started
 
-- [ ] Step 1: Connect to your cluster via kubectl
+- [ ] Step 1A: Ensure that you are connected to a Kubernetes cluster and that you have a valid kubeconfig file. Kubectl should be installed as well.
+- [ ] Step 1B: To see available Kubernetes clusters, one can run `kubectl config get-contexts` from the command line. To change the active cluster, one can run `kubectl config use-context <name>`, where `<name>` represents the name of the cluster you want to monitor.
 - [ ] Step 2: Clone the repository
-```js
+```
 git clone https://github.com/oslabs-beta/nemo.git
 ```
 - [ ] Step 3: Install all the necessary dependencies in the server and client directories
-```js
+```
 npm install
 ```
 - [ ] Step 4: Run npm start in server and client directories:
-```js
+```
 npm start
 ```      
   
