@@ -15,7 +15,7 @@ import runDb from './runDb.js';
 import databaseRouter from './routes/databaseRouter.js';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // This starts data fetching and posting to database
 // runDb.postData();
