@@ -111,6 +111,9 @@ metricServerController.getDeployments = async (req, res, next) => {
 metricServerController.getTopPods = async (req, res, next) => {
   try {
     console.log('entered top pods middleware');
+    console.log('k8s log:', k8s);
+    console.log('k8sapi log:', k8sApi);
+    console.log('metricsclient log:', metricsClient);
     const data = await k8s.topPods(k8sApi, metricsClient, '');
     console.log(data);
     const totalUsage = data.reduce(
@@ -193,6 +196,9 @@ metricServerController.getContainers = async (req, res, next) => {
 metricServerController.getTopNodes = async (req, res, next) => {
   try {
     console.log('entered top nodes middleware');
+    console.log('k8s log:', k8s);
+    console.log('k8sapi log:', k8sApi);
+    console.log('metricsclient log:', metricsClient);
     const data = await k8s.topNodes(k8sApi);
     console.log(data);
     const topNodes = data.map((node) => {
