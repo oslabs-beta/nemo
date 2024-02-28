@@ -66,8 +66,6 @@ Nemo provides Kubernetes cluster monitoring and data visualization in a simple a
 
 ## Meet the Team
 
-## Meet the Creators
-
 | Name              | GitHub                                                       | LinkedIn                                                     |
 |-------------------|--------------------------------------------------------------|--------------------------------------------------------------|
 | Ari Benkov        | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/abenkov2) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/ari-benkov-787b25139/) |
