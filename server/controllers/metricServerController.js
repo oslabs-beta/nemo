@@ -110,8 +110,9 @@ metricServerController.getDeployments = async (req, res, next) => {
 
 metricServerController.getTopPods = async (req, res, next) => {
   try {
+    console.log('entered top pods middleware');
     const data = await k8s.topPods(k8sApi, metricsClient, '');
-    //console.log(data[2].Containers);
+    console.log(data);
     const totalUsage = data.reduce(
       (acc, pod) => {
         acc.totalCpu += parseFloat(pod.CPU.CurrentUsage);
@@ -158,7 +159,7 @@ metricServerController.getTopPods = async (req, res, next) => {
 metricServerController.getContainers = async (req, res, next) => {
   try {
     const data = await k8s.topPods(k8sApi, metricsClient, '');
-    // console.log(data[2].Containers);
+    //console.log(data[2].Containers);
     const containers = data.flatMap((pod) => {
       return pod.Containers.map((container) => {
         return {
@@ -191,8 +192,9 @@ metricServerController.getContainers = async (req, res, next) => {
 
 metricServerController.getTopNodes = async (req, res, next) => {
   try {
+    console.log('entered top nodes middleware');
     const data = await k8s.topNodes(k8sApi);
-    //console.log(data);
+    console.log(data);
     const topNodes = data.map((node) => {
       return {
         NODE_NAME: node.Node.metadata.name,
@@ -215,10 +217,10 @@ metricServerController.getTopNodes = async (req, res, next) => {
     return next();
   } catch (err) {
     return next({
-      log: `metricServerController.getTopPods: ERROR ${err}`,
+      log: `metricServerController.getTopNodes: ERROR ${err}`,
       status: 500,
       message: {
-        err: 'Error occured in metricServerController.getTopPods. Check server logs.',
+        err: 'Error occured in metricServerController.getTopNodes. Check server logs.',
       },
     });
   }
