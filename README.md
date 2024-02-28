@@ -2,6 +2,7 @@
   <img src="client/src/assets/nemo-logo-placeholder-cropped.png" alt="Logo">
 </div>
 
+<br/>
 
 <div align='center'>
 
