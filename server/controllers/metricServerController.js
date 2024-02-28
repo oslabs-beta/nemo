@@ -214,7 +214,13 @@ metricServerController.getTopNodes = async (req, res, next) => {
     res.locals.topNodes = topNodes;
     return next();
   } catch (err) {
-    console.error(err);
+    return next({
+      log: `metricServerController.getTopPods: ERROR ${err}`,
+      status: 500,
+      message: {
+        err: 'Error occured in metricServerController.getTopPods. Check server logs.',
+      },
+    });
   }
 };
 
