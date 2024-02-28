@@ -96,6 +96,7 @@ Features yet to be added:
 
 ## License
 
-Add licensing information
+Nemo is an open source product licensed under the MIT license, and is accelerated by [OSLabs](https://www.opensourcelabs.io/).
+
 
 
