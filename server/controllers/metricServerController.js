@@ -192,7 +192,10 @@ metricServerController.getContainers = async (req, res, next) => {
 
 metricServerController.getTopNodes = async (req, res, next) => {
   try {
-    console.log('entered top nodes middleware');
+    // console.log('entered top nodes middleware');
+    // console.log(k8s);
+    // console.log(k8sApi);
+    console.log('k8s log:', k8s.topNodes(k8sApi));
     const data = await k8s.topNodes(k8sApi);
     console.log(data);
     const topNodes = data.map((node) => {
