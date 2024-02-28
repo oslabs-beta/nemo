@@ -48,7 +48,7 @@ Nemo provides Kubernetes cluster monitoring and data visualization in a simple a
 ## Demo
 
 <div align="center">
-  <img alt="Demo" src="./client/src/assets/Gif-Test-Placeholder.gif">
+  <img alt="Demo" src="./client/src/assets/final-gif.gif">
 </div>
   
 ## Getting Started
