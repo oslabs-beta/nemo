@@ -1,4 +1,4 @@
-![Logo](src/client/assets/)
+![Logo](client/src/assets/nemo-logo-placeholder-cropped.png)
 
 <div align='center'>
 
@@ -43,7 +43,9 @@ Nemo provides Kubernetes cluster monitoring and data visualization in a simple a
 
 ## Demo
 
-- Insert Gif
+<div align="center">
+  <img alt="Demo" src="./client/src/assets/Gif-Test-Placeholder.gif">
+</div>
   
 ## Getting Started
 
