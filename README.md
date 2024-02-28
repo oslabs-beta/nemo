@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="client/src/assets/nemo-logo-placeholder-cropped.png" alt="Logo">
+  <img src="client/src/assets/nemo-final-logo1.png" alt="Logo">
 </div>
 
 <br/>
