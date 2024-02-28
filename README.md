@@ -70,9 +70,9 @@ npm start
 ## How To Contribute
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/NewFeature`)
-3. Commit your Changes (`git commit -m 'Add some NewFeature'`)
-4. Push to the Branch (`git push origin feature/NewFeature`)
+2. Create your Feature Branch (`git checkout -b NewFeature`)
+3. Commit your Changes (`git commit -m 'Added a NewFeature'`)
+4. Push to the Branch (`git push origin NewFeature`)
 5. Open a Pull Request
 
 Features yet to be added:
