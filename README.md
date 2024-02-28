@@ -24,7 +24,7 @@
 </div>
 
 <p align="center">
-Nemo provides Kubernetes cluster monitoring and data visualization in a simple and easy to understand user interface.<br/>Find out more at <a href="">Insert Website Here</a>!
+Nemo provides Kubernetes cluster monitoring and data visualization in a simple and easy to understand user interface.<br/>Check out our website <a href="http://www.nemomonitoring.com/">here</a>!
 </p>
 
 <details>
