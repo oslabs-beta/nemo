@@ -53,16 +53,35 @@ Nemo provides Kubernetes cluster monitoring and data visualization in a simple a
   
 ## Getting Started
 
-- [ ] Step 1
-- [ ] Step 2
-- [ ] Step 3
-- [ ] Step 4
-- [ ] Step 5
+- [ ] Step 1: Connect to your cluster via kubectl
+- [ ] Step 2: Clone the repository
+```js
+git clone https://github.com/oslabs-beta/nemo.git
+```
+- [ ] Step 3: Install all the necessary dependencies in the server and client directories
+```js
+npm install
+```
+- [ ] Step 4: Run npm start in server and client directories:
+```js
+npm start
+```      
   
 ## How To Contribute
 
-- Compatability with clusters hosted on AWS and Azure is not yet available
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/NewFeature`)
+3. Commit your Changes (`git commit -m 'Add some NewFeature'`)
+4. Push to the Branch (`git push origin feature/NewFeature`)
+5. Open a Pull Request
+
+Features yet to be added:
+- Test compatability with clusters hosted on AKS and EKS
 - Cost Analysis
+- Implement end to end testing
+- Implement React Testing Library
+- Add historical data as graphs
+- Create a notification that alerts the user when parts of their cluster is being overly taxed
 
 ## Meet the Team
 
