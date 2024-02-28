@@ -1,7 +1,7 @@
 import k8s from '@kubernetes/client-node';
 
 const kc = new k8s.KubeConfig();
-kc.loadFromCluster();
+kc.loadFromFile('~/.kube/config');
 
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
 const k8sNetworkingApi = kc.makeApiClient(k8s.NetworkingV1Api);
