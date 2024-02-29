@@ -1,4 +1,5 @@
 import k8s from '@kubernetes/client-node';
+import 'dotenv/config';
 
 const kc = new k8s.KubeConfig();
 kc.loadFromCluster();
@@ -192,11 +193,17 @@ metricServerController.getContainers = async (req, res, next) => {
 
 metricServerController.getTopNodes = async (req, res, next) => {
   try {
+    const serviceAccountToken = process.env.SA_TOKEN;
+    const requestOptions = {
+      headers: {
+        Authorization: `Bearer ${serviceAccountToken}`,
+      },
+    };
     // console.log('entered top nodes middleware');
     // console.log(k8s);
     // console.log(k8sApi);
-    console.log('k8s log:', k8s.topNodes(k8sApi));
-    const data = await k8s.topNodes(k8sApi);
+    console.log('k8s log:', k8s.topNodes(k8sApi, requestOptions));
+    const data = await k8s.topNodes(k8sApi, requestOptions);
     console.log(data);
     const topNodes = data.map((node) => {
       return {
