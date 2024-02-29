@@ -199,10 +199,12 @@ metricServerController.getTopNodes = async (req, res, next) => {
         Authorization: `Bearer ${serviceAccountToken}`,
       },
     };
+    console.log(serviceAccountToken);
+    console.log(requestOptions);
     // console.log('entered top nodes middleware');
     // console.log(k8s);
     // console.log(k8sApi);
-    console.log('k8s log:', k8s.topNodes(k8sApi, requestOptions));
+    // console.log('k8s log:', k8s.topNodes(k8sApi, requestOptions));
     const data = await k8s.topNodes(k8sApi, requestOptions);
     console.log(data);
     const topNodes = data.map((node) => {
