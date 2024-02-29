@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="client/src/assets/nemo-logo-placeholder-cropped.png" alt="Logo">
+  <img src="client/src/assets/nemo-final-logo2.png" alt="Logo">
 </div>
 
 <br/>
@@ -24,7 +24,7 @@
 </div>
 
 <p align="center">
-Nemo provides Kubernetes cluster monitoring and data visualization in a simple and easy to understand user interface.<br/>Find out more at <a href="">Insert Website Here</a>!
+Nemo provides Kubernetes cluster monitoring and data visualization in a simple and easy to understand user interface.<br/>Check out our website <a href="http://www.nemomonitoring.com/">here</a>!
 </p>
 
 <details>
@@ -48,21 +48,41 @@ Nemo provides Kubernetes cluster monitoring and data visualization in a simple a
 ## Demo
 
 <div align="center">
-  <img alt="Demo" src="./client/src/assets/Gif-Test-Placeholder.gif">
+  <img alt="Demo" src="./client/src/assets/final-gif.gif">
 </div>
   
 ## Getting Started
 
-- [ ] Step 1
-- [ ] Step 2
-- [ ] Step 3
-- [ ] Step 4
-- [ ] Step 5
+- [ ] Step 1A: Ensure that you are connected to a Kubernetes cluster and that you have a valid kubeconfig file. Kubectl should be installed as well.
+- [ ] Step 1B: To see available Kubernetes clusters, one can run `kubectl config get-contexts` from the command line. To change the active cluster, one can run `kubectl config use-context <name>`, where `<name>` represents the name of the cluster you want to monitor.
+- [ ] Step 2: Clone the repository
+```
+git clone https://github.com/oslabs-beta/nemo.git
+```
+- [ ] Step 3: Install all the necessary dependencies in the server and client directories
+```
+npm install
+```
+- [ ] Step 4: Run npm start in server and client directories:
+```
+npm start
+```      
   
 ## How To Contribute
 
-- Compatability with clusters hosted on AWS and Azure is not yet available
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b NewFeature`)
+3. Commit your Changes (`git commit -m 'Added a NewFeature'`)
+4. Push to the Branch (`git push origin NewFeature`)
+5. Open a Pull Request
+
+Features yet to be added:
+- Test compatability with clusters hosted on AKS and EKS
 - Cost Analysis
+- Implement end to end testing
+- Implement React Testing Library
+- Add historical data as graphs
+- Create a notification that alerts the user when parts of their cluster is being overly taxed
 
 ## Meet the Team
 
@@ -70,9 +90,13 @@ Nemo provides Kubernetes cluster monitoring and data visualization in a simple a
 |-------------------|--------------------------------------------------------------|--------------------------------------------------------------|
 | Ari Benkov        | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/abenkov2) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/ari-benkov-787b25139/) |
 | Paul Burger       | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/pvburger) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/pvburger/) |
-| Anthony Chaiditya | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/AnthonyChaiditya) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](www.linkedin.com/in/anthony-chaiditya/) |
+| Anthony Chaiditya | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/AnthonyChaiditya) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/anthony-chaiditya/) |
 | Trevor Hilz       | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/Maelstrom116) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/trevor-hilz/) |
 | Callum Miles      | [![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)](https://github.com/callummiles) | [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=LinkedIn&logoColor=white)](https://www.linkedin.com/in/callum-miles/) |
+
+## License
+
+Nemo is an open source product licensed under the MIT license, and is accelerated by [OSLabs](https://www.opensourcelabs.io/).
 
 
 
