@@ -6,7 +6,6 @@ kc.loadFromDefault();
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
 const k8sNetworkingApi = kc.makeApiClient(k8s.NetworkingV1Api);
 const k8sAppsApi = kc.makeApiClient(k8s.AppsV1Api);
-//const k8sApiMetrics = kc.makeApiClient(k8s.CustomObjectsApi);
 
 const metricServerController = {};
 
@@ -111,7 +110,6 @@ metricServerController.getDeployments = async (req, res, next) => {
 metricServerController.getTopPods = async (req, res, next) => {
   try {
     const data = await k8s.topPods(k8sApi, metricsClient, '');
-    //console.log(data[2].Containers);
     const totalUsage = data.reduce(
       (acc, pod) => {
         acc.totalCpu += parseFloat(pod.CPU.CurrentUsage);
@@ -158,7 +156,6 @@ metricServerController.getTopPods = async (req, res, next) => {
 metricServerController.getContainers = async (req, res, next) => {
   try {
     const data = await k8s.topPods(k8sApi, metricsClient, '');
-    // console.log(data[2].Containers);
     const containers = data.flatMap((pod) => {
       return pod.Containers.map((container) => {
         return {
@@ -174,8 +171,6 @@ metricServerController.getContainers = async (req, res, next) => {
         };
       });
     });
-    //console.table(containers);
-    // console.log(containers);
     res.locals.containers = containers;
     return next();
   } catch (err) {
@@ -192,7 +187,6 @@ metricServerController.getContainers = async (req, res, next) => {
 metricServerController.getTopNodes = async (req, res, next) => {
   try {
     const data = await k8s.topNodes(k8sApi);
-    //console.log(data);
     const topNodes = data.map((node) => {
       return {
         NODE_NAME: node.Node.metadata.name,

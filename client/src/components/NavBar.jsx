@@ -1,27 +1,5 @@
 import React, { useState } from "react";
 
-const buttonStyle = {
-  padding: "10px 15px",
-  textAlign: "left",
-  color: "#E3F1FC",
-  border: "none",
-  //borderRadius: '10px',
-  backgroundColor: "#0E162C",
-  width: "100%",
-  textTransform: "uppercase",
-  marginBottom: "5px",
-  cursor: "pointer",
-  transition: "color 0.3s ease",
-  fontFamily: '"Roboto", sans-serif',
-  fontWeight: "900",
-};
-
-const activeButtonStyle = {
-  ...buttonStyle,
-  backgroundColor: "#081020",
-  color: "#FF743E",
-};
-
 const Navbar = ({ setActiveButton }) => {
   const [hoveredButton, setHoveredButton] = useState(null);
   const [activeButton, setActiveButtonLocally] = useState(null);
@@ -35,7 +13,6 @@ const Navbar = ({ setActiveButton }) => {
 
   return (
     <div className="flex">
-      {/* <div style={sidebarStyle}> */}
       <div className="fixed left-0 top-0 flex h-screen w-64 flex-col bg-nemo-blue-900 pt-5">
         {buttonLabels.map((label, i) => (
           <button
