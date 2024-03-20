@@ -59,7 +59,6 @@ const nodeTable = (props) => {
                 <button
                   onClick={() => {
                     handleButtonClick("NODE_NAME");
-                    //tableSort("NODE_NAME");
                   }}
                 >
                   <svg
@@ -94,7 +93,6 @@ const nodeTable = (props) => {
                 <button
                   onClick={() => {
                     handleButtonClick("CREATED_AT");
-                    //tableSort("CREATED_AT");
                   }}
                 >
                   <svg
@@ -132,7 +130,6 @@ const nodeTable = (props) => {
                 <button
                   onClick={() => {
                     handleButtonClick("CPU_CAPACITY");
-                    //tableSort("CPU_CAPACITY");
                   }}
                 >
                   <svg
@@ -164,7 +161,6 @@ const nodeTable = (props) => {
                 <button
                   onClick={() => {
                     handleButtonClick("CPU_REQUEST_TOTAL");
-                    //tableSort("CPU_REQUEST_TOTAL");
                   }}
                 >
                   <svg
@@ -196,7 +192,6 @@ const nodeTable = (props) => {
                 <button
                   onClick={() => {
                     handleButtonClick("MEMORY_CAPACITY");
-                    //tableSort("MEMORY_CAPACITY");
                   }}
                 >
                   <svg
@@ -228,7 +223,6 @@ const nodeTable = (props) => {
                 <button
                   onClick={() => {
                     handleButtonClick("MEMORY_REQUEST_TOTAL");
-                    //tableSort("MEMORY_REQUEST_TOTAL");
                   }}
                 >
                   <svg

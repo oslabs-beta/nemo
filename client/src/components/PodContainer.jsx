@@ -36,13 +36,8 @@ const PodContainer = ({ podsData }) => {
           memPodNames={memPodNames}
         />
       </div>
-      {/* <div className="font-roboto flex flex-wrap items-start justify-around p-5">
-         <PodSummary podsData={podsData} />
-       </div> */}
       <div className="font-roboto flex flex-wrap items-start justify-around p-5">
-        {/* <h2>Pods!</h2> */}
         <PodTable podsData={podsData} />
-        {/* <PodSummary podsData={podsData} /> */}
       </div>
     </div>
   );

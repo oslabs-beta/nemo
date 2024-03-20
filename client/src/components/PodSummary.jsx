@@ -12,31 +12,11 @@ const PodSummary = ({ podsData }) => {
     setHoverIndex(null);
   };
 
-  // Check if podsData is defined
   if (!podsData) {
     return null; // Return null if podsData is undefined
   }
 
-  // const totalUsage = podsData.reduce(
-  //   (acc, pod) => {
-  //     acc.totalCpu += parseFloat(pod.CPU_USAGE_CORES);
-  //     acc.totalMemory += parseFloat(pod.MEMORY_USAGE_BYTES);
-  //     return acc;
-  //   },
-  //   { totalCpu: 0, totalMemory: 0 }
-  // );
-
   const pods = podsData.map((pod, index) => {
-    // const cpuPercentage =
-    //   ((parseFloat(pod.CPU_USAGE_CORES) / totalUsage.totalCpu) * 100).toFixed(
-    //     3
-    //   );
-    // const memoryPercentage =
-    //   (
-    //     (parseFloat(pod.MEMORY_USAGE_BYTES) / totalUsage.totalMemory) *
-    //     100
-    //   ).toFixed(3);
-
     return (
       <div
         key={index}
