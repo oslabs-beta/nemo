@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
 import NodeContainer from './NodeContainer.jsx';
-import NodeDetail from './NodeDetail.jsx';
 import PodContainer from './PodContainer.jsx';
 import ChartComponent from './ClusterStructure.jsx';
 import Welcome from './Welcome.jsx';
 
 const fetchNodes = async () => {
+  //update fetch endpoint to be flexible via env variables
   const response = await fetch('http://localhost:3000/metricserver/topNodes');
   if (!response.ok) {
     throw new Error('Response from server not ok.');
@@ -15,6 +15,7 @@ const fetchNodes = async () => {
 };
 
 const fetchPods = async () => {
+  //update fetch endpoint to be flexible via env variables
   const response = await fetch('http://localhost:3000/metricserver/topPods');
   if (!response.ok) {
     throw new Error('Response from server not ok.');

@@ -101,8 +101,6 @@ const Welcome = () => {
                 marginBottom: ".5em",
                 fontSize: "40px",
                 marginLeft: "110px",
-                // display: "flex",
-                // flexDirection: "column",
               }}
             >
               DYNAMIC TABLES

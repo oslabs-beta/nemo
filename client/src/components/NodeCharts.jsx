@@ -11,19 +11,6 @@ const NodeChart = ({ memUsages, cpuUsages, cpuNodeNames, memNodeNames }) => {
 
   // update color array to adjust dynamically based on number of nodes
   // with less nodes (e.g. less than 3) the orange shades are not distinct enough
-  // const orangeBG = [
-  //   "#D24E02",
-  //   "#DC6802",
-  //   "#E27602",
-  //   "#E88504",
-  //   "#EC9006",
-  //   "#EE9F28",
-  //   "#F2B04C",
-  //   "#F6C87E",
-  //   "#FADEB2",
-  //   "#FEF0DC",
-  // ];
-
   const orangeBG = ["#D24E02", "#EE9F28", "#FEF0DC"];
 
   const memUsagesLength = memUsages.length;
@@ -33,7 +20,6 @@ const NodeChart = ({ memUsages, cpuUsages, cpuNodeNames, memNodeNames }) => {
     orangeBG.fill("#FEF0DC", orangeBG.length);
   }
 
-  //orangeBG.fill("#FEF0DC", 10);
   orangeBG.fill("#FEF0DC", 3);
 
   const memData = {
