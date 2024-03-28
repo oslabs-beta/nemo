@@ -5,7 +5,6 @@ import d3 from "../assets/d3.jpg";
 import table from "../assets/table.jpg";
 
 const Welcome = () => {
-  // const [text, setText] = useState("Welcome to Nemo!");
   const [showText, setShowText] = useState(false);
   const [showText1, setShowText1] = useState(false);
 
