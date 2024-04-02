@@ -1,13 +1,25 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import Navbar from "./NavBar.jsx";
+import MainContainer from "./MainContainer.jsx";
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <h1>Hello World!</h1>
-      </div>
-    );
-  }
-}
+const queryClient = new QueryClient();
+
+const App = () => {
+  const [activeButton, setActiveButton] = useState(1);
+
+  useEffect(() => {
+    document.body.style.margin = "0";
+  }, []);
+
+  return (
+    <div style={{ backgroundColor: "#081020", minHeight: "100vh" }}>
+      <QueryClientProvider client={queryClient}>
+        <Navbar setActiveButton={setActiveButton} />
+        <MainContainer activeButton={activeButton} />
+      </QueryClientProvider>
+    </div>
+  );
+};
 
 export default App;
