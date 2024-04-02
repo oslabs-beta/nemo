@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../style.scss";
 
-let ascending = true;
-
 const nodeTable = (props) => {
   let count = 1;
   const { nodeData } = props;

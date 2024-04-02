@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PodSummary from "./PodSummary.jsx";
 import PodCharts from "./PodCharts.jsx";
 import PodTable from "./PodTable.jsx";
 
