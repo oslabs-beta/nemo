@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "jsx": "react",
+    "module": "es6",
+    "allowJs": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "target": "es6"
+  },
+  "files": [
+    "./server.ts",
+    "./controllers/metricServerController.ts",
+    "./routes/metricServerRouter.ts"
+  ]
+}
