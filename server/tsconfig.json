@@ -2,14 +2,13 @@
   "compilerOptions": {
     "allowJs": true,
     "target": "es5",
-    // "module": "nodenext",
-    "module": "CommonJS",
-    // "moduleResolution": "node16",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
     "esModuleInterop": true
   },
   "files": [
     "./server.ts",
     "./controllers/metricServerController.ts",
     "./routes/metricServerRouter.ts"
-  ],
+  ]
 }

@@ -1,24 +1,22 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = require("express");
-var metricServerRouter_js_1 = require("./routes/metricServerRouter.js");
-var cors_1 = require("cors");
-var path_1 = require("path");
-var node_path_1 = require("node:path");
-var node_url_1 = require("node:url");
-var __dirname = (0, node_path_1.dirname)((0, node_url_1.fileURLToPath)(import.meta.url));
-var app = (0, express_1.default)();
+import express from 'express';
+import metricServerRouter from './routes/metricServerRouter.js';
+import cors from 'cors';
+import path from 'path';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
+var __dirname = dirname(fileURLToPath(import.meta.url));
+var app = express();
 var PORT = 3000;
-app.use((0, cors_1.default)());
+app.use(cors());
 /**
  * handle data parsing requirements
  */
-app.use(express_1.default.json());
-app.use(express_1.default.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 // Serve static files
-app.use(express_1.default.static(path_1.default.join(__dirname, '../client/src/assets')));
+app.use(express.static(path.join(__dirname, '../client/src/assets')));
 // endpoint fetches metric data 
-app.use('/metricserver', metricServerRouter_js_1.default);
+app.use('/metricserver', metricServerRouter);
 /**
  * handle requests to the root
  */
@@ -46,4 +44,4 @@ app.use(function (err, req, res, next) {
  * start the server
  */
 app.listen(PORT);
-exports.default = app;
+export default app;
