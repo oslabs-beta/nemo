@@ -36,19 +36,19 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var client_node_1 = require("@kubernetes/client-node");
-var kc = new client_node_1.default.KubeConfig();
+var k8s = require("@kubernetes/client-node");
+var kc = new k8s.KubeConfig();
 kc.loadFromDefault();
-var k8sApi = kc.makeApiClient(client_node_1.default.CoreV1Api);
+var k8sApi = kc.makeApiClient(k8s.CoreV1Api);
 var metricServerController = {};
-var metricsClient = new client_node_1.default.Metrics(kc);
+var metricsClient = new k8s.Metrics(kc);
 metricServerController.getTopPods = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
     var data, totalUsage_1, topPods, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, client_node_1.default.topPods(k8sApi, metricsClient, '')];
+                return [4 /*yield*/, k8s.topPods(k8sApi, metricsClient, '')];
             case 1:
                 data = _a.sent();
                 totalUsage_1 = data.reduce(function (acc, pod) {
@@ -95,7 +95,7 @@ metricServerController.getTopNodes = function (req, res, next) { return __awaite
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, client_node_1.default.topNodes(k8sApi)];
+                return [4 /*yield*/, k8s.topNodes(k8sApi)];
             case 1:
                 data = _a.sent();
                 topNodes = data.map(function (node) {

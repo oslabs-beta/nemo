@@ -1,4 +1,5 @@
-import k8s from '@kubernetes/client-node';
+import * as k8s from '@kubernetes/client-node';
+import * as http from 'http';
 
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
