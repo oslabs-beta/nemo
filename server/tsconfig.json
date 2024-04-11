@@ -4,6 +4,7 @@
     "target": "es5",
     "module": "nodenext",
     "moduleResolution": "nodenext",
+    // "strict": true,
     "esModuleInterop": true
   },
   "files": [

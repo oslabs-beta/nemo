@@ -35,98 +35,104 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import * as k8s from '@kubernetes/client-node';
+// import type { RequestHandler } from 'express';
 var kc = new k8s.KubeConfig();
 kc.loadFromDefault();
 var k8sApi = kc.makeApiClient(k8s.CoreV1Api);
-var metricServerController = {};
+// const metricServerController = {};
 var metricsClient = new k8s.Metrics(kc);
-metricServerController.getTopPods = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, totalUsage_1, topPods, err_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, k8s.topPods(k8sApi, metricsClient, '')];
-            case 1:
-                data = _a.sent();
-                totalUsage_1 = data.reduce(function (acc, pod) {
-                    acc.totalCpu += parseFloat(pod.CPU.CurrentUsage);
-                    acc.totalMemory += parseFloat(Number(pod.Memory.CurrentUsage));
-                    return acc;
-                }, { totalCpu: 0, totalMemory: 0 });
-                topPods = data.map(function (pod) {
-                    return {
-                        NODE_NAME: pod.Pod.spec.nodeName,
-                        POD_NAME: pod.Pod.metadata.name,
-                        UID: pod.Pod.metadata.uid,
-                        CREATED_AT: pod.Pod.metadata.creationTimestamp,
-                        CPU_USAGE_CORES: pod.CPU.CurrentUsage,
-                        CPU_PERCENTAGE: ((parseFloat(pod.CPU.CurrentUsage) / totalUsage_1.totalCpu) *
-                            100).toFixed(3),
-                        // number is provided as bigInt by api
-                        MEMORY_USAGE_BYTES: Number(pod.Memory.CurrentUsage),
-                        MEMORY_PERCENTAGE: ((parseFloat(Number(pod.Memory.CurrentUsage)) /
-                            totalUsage_1.totalMemory) *
-                            100).toFixed(3),
-                        CONTAINER_COUNT: pod.Containers.length,
-                        CONDITIONS: pod.Pod.status.conditions,
-                    };
-                });
-                res.locals.topPods = topPods;
-                return [2 /*return*/, next()];
-            case 2:
-                err_1 = _a.sent();
-                return [2 /*return*/, next({
-                        log: "metricServerController.getTopPods: ERROR ".concat(err_1),
-                        status: 500,
-                        message: {
-                            err: 'Error occured in metricServerController.getTopPods. Check server logs.',
-                        },
-                    })];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-metricServerController.getTopNodes = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var data, topNodes, err_2;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, k8s.topNodes(k8sApi)];
-            case 1:
-                data = _a.sent();
-                topNodes = data.map(function (node) {
-                    return {
-                        NODE_NAME: node.Node.metadata.name,
-                        UID: node.Node.metadata.uid,
-                        CREATED_AT: node.Node.metadata.creationTimestamp,
-                        IP_ADDRESSES: node.Node.status.addresses,
-                        RESOURCE_CAPACITY: node.Node.status.capacity,
-                        ALLOCATABLE_RESOURCES: node.Node.status.allocatable,
-                        NODE_INFO: node.Node.status.nodeInfo,
-                        CONDITIONS: node.Node.status.conditions,
-                        CPU_CAPACITY: node.CPU.Capacity,
-                        CPU_REQUEST_TOTAL: node.CPU.RequestTotal,
-                        CPU_LIMIT_TOTAL: node.CPU.LimitTotal,
-                        MEMORY_CAPACITY: Number(node.Memory.Capacity),
-                        MEMORY_REQUEST_TOTAL: Number(node.Memory.RequestTotal),
-                        MEMORY_LIMIT_TOTAL: Number(node.Memory.LimitTotal),
-                    };
-                });
-                res.locals.topNodes = topNodes;
-                return [2 /*return*/, next()];
-            case 2:
-                err_2 = _a.sent();
-                return [2 /*return*/, next({
-                        log: "metricServerController.getTopNodes: ERROR ".concat(err_2),
-                        status: 500,
-                        message: {
-                            err: 'Error occured in metricServerController.getTopNodes. Check server logs.',
-                        },
-                    })];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-export default metricServerController;
+export default {
+    getTopPods: function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+        var data, totalUsage_1, topPods, err_1;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, k8s.topPods(k8sApi, metricsClient, '')];
+                case 1:
+                    data = _a.sent();
+                    totalUsage_1 = data.reduce(function (acc, pod) {
+                        // previously, had passed pod.CPU.CurrentUsage to parseFloat method in the following two lines
+                        acc.totalCpu += Number(pod.CPU.CurrentUsage);
+                        acc.totalMemory += Number(pod.Memory.CurrentUsage);
+                        return acc;
+                    }, { totalCpu: 0, totalMemory: 0 });
+                    topPods = data.map(function (pod) {
+                        return {
+                            NODE_NAME: pod.Pod.spec.nodeName,
+                            POD_NAME: pod.Pod.metadata.name,
+                            UID: pod.Pod.metadata.uid,
+                            CREATED_AT: pod.Pod.metadata.creationTimestamp,
+                            CPU_USAGE_CORES: pod.CPU.CurrentUsage,
+                            // previously, had passed pod.CPU.CurrentUsage to parseFloat method
+                            CPU_PERCENTAGE: ((Number(pod.CPU.CurrentUsage) / totalUsage_1.totalCpu) *
+                                100).toFixed(3),
+                            // number is provided as bigInt by api
+                            MEMORY_USAGE_BYTES: Number(pod.Memory.CurrentUsage),
+                            // previously, had passed pod.CPU.CurrentUsage to parseFloat method
+                            MEMORY_PERCENTAGE: ((Number(pod.Memory.CurrentUsage) /
+                                totalUsage_1.totalMemory) *
+                                100).toFixed(3),
+                            CONTAINER_COUNT: pod.Containers.length,
+                            CONDITIONS: pod.Pod.status.conditions,
+                        };
+                    });
+                    res.locals.topPods = topPods;
+                    return [2 /*return*/, next()];
+                case 2:
+                    err_1 = _a.sent();
+                    return [2 /*return*/, next({
+                            log: "metricServerController.getTopPods: ERROR ".concat(err_1),
+                            status: 500,
+                            message: {
+                                err: 'Error occured in metricServerController.getTopPods. Check server logs.',
+                            },
+                        })];
+                case 3: return [2 /*return*/];
+            }
+        });
+    }); },
+    getTopNodes: function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+        var data, topNodes, err_2;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    _a.trys.push([0, 2, , 3]);
+                    return [4 /*yield*/, k8s.topNodes(k8sApi)];
+                case 1:
+                    data = _a.sent();
+                    topNodes = data.map(function (node) {
+                        return {
+                            NODE_NAME: node.Node.metadata.name,
+                            UID: node.Node.metadata.uid,
+                            CREATED_AT: node.Node.metadata.creationTimestamp,
+                            IP_ADDRESSES: node.Node.status.addresses,
+                            RESOURCE_CAPACITY: node.Node.status.capacity,
+                            ALLOCATABLE_RESOURCES: node.Node.status.allocatable,
+                            NODE_INFO: node.Node.status.nodeInfo,
+                            CONDITIONS: node.Node.status.conditions,
+                            CPU_CAPACITY: node.CPU.Capacity,
+                            CPU_REQUEST_TOTAL: node.CPU.RequestTotal,
+                            CPU_LIMIT_TOTAL: node.CPU.LimitTotal,
+                            MEMORY_CAPACITY: Number(node.Memory.Capacity),
+                            MEMORY_REQUEST_TOTAL: Number(node.Memory.RequestTotal),
+                            MEMORY_LIMIT_TOTAL: Number(node.Memory.LimitTotal),
+                        };
+                    });
+                    res.locals.topNodes = topNodes;
+                    return [2 /*return*/, next()];
+                case 2:
+                    err_2 = _a.sent();
+                    return [2 /*return*/, next({
+                            log: "metricServerController.getTopNodes: ERROR ".concat(err_2),
+                            status: 500,
+                            message: {
+                                err: 'Error occured in metricServerController.getTopNodes. Check server logs.',
+                            },
+                        })];
+                case 3: return [2 /*return*/];
+            }
+        });
+    }); }
+};
+// export default metricServerController;

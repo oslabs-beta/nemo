@@ -1,22 +1,25 @@
 import * as k8s from '@kubernetes/client-node';
-import * as http from 'http';
+import { Request, Response, NextFunction } from 'express';
+// import type { RequestHandler } from 'express';
 
 const kc = new k8s.KubeConfig();
 kc.loadFromDefault();
 
 const k8sApi = kc.makeApiClient(k8s.CoreV1Api);
 
-const metricServerController = {};
+// const metricServerController = {};
 
 const metricsClient = new k8s.Metrics(kc);
 
-metricServerController.getTopPods = async (req, res, next) => {
+export default {
+  getTopPods: async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = await k8s.topPods(k8sApi, metricsClient, '');
     const totalUsage = data.reduce(
       (acc, pod) => {
-        acc.totalCpu += parseFloat(pod.CPU.CurrentUsage);
-        acc.totalMemory += parseFloat(Number(pod.Memory.CurrentUsage));
+        // previously, had passed pod.CPU.CurrentUsage to parseFloat method in the following two lines
+        acc.totalCpu += Number(pod.CPU.CurrentUsage);
+        acc.totalMemory += Number(pod.Memory.CurrentUsage);
         return acc;
       },
       { totalCpu: 0, totalMemory: 0 }
@@ -28,14 +31,16 @@ metricServerController.getTopPods = async (req, res, next) => {
         UID: pod.Pod.metadata.uid,
         CREATED_AT: pod.Pod.metadata.creationTimestamp,
         CPU_USAGE_CORES: pod.CPU.CurrentUsage,
+        // previously, had passed pod.CPU.CurrentUsage to parseFloat method
         CPU_PERCENTAGE: (
-          (parseFloat(pod.CPU.CurrentUsage) / totalUsage.totalCpu) *
+          (Number(pod.CPU.CurrentUsage) / totalUsage.totalCpu) *
           100
         ).toFixed(3),
         // number is provided as bigInt by api
         MEMORY_USAGE_BYTES: Number(pod.Memory.CurrentUsage),
+        // previously, had passed pod.CPU.CurrentUsage to parseFloat method
         MEMORY_PERCENTAGE: (
-          (parseFloat(Number(pod.Memory.CurrentUsage)) /
+          (Number(pod.Memory.CurrentUsage) /
             totalUsage.totalMemory) *
           100
         ).toFixed(3),
@@ -54,9 +59,9 @@ metricServerController.getTopPods = async (req, res, next) => {
       },
     });
   }
-};
+},
 
-metricServerController.getTopNodes = async (req, res, next) => {
+getTopNodes: async (req: Request, res: Response, next: NextFunction) => {
   try {
     const data = await k8s.topNodes(k8sApi);
     const topNodes = data.map((node) => {
@@ -88,6 +93,7 @@ metricServerController.getTopNodes = async (req, res, next) => {
       },
     });
   }
-};
+}
+}
 
-export default metricServerController;
+// export default metricServerController;
