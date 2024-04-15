@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import Navbar from "./NavBar.jsx";
-import MainContainer from "./MainContainer.jsx";
+import Navbar from "./NavBar";
+import MainContainer from "./MainContainer";
 
 const queryClient = new QueryClient();
 

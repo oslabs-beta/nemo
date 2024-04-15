@@ -1,7 +1,9 @@
-import React, { createRoot } from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './components/App.jsx';
-import './style.scss';
-
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var client_1 = __importDefault(require("react-dom/client"));
+require("./style.scss");
+var root = client_1.default.createRoot(document.getElementById('root'));
+root.render(/>););

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import PodCharts from "./PodCharts.jsx";
-import PodTable from "./PodTable.jsx";
+import PodCharts from "./PodCharts";
+import PodTable from "./PodTable";
 
 const PodContainer = ({ podsData }) => {
   const podsDataByMem = podsData.sort(
