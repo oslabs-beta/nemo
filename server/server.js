@@ -1,7 +1,7 @@
 import express from 'express';
-import metricServerRouter from './routes/metricServerRouter.js';
 import cors from 'cors';
 import path from 'path';
+import metricServerRouter from './routes/metricServerRouter.js';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 var __dirname = dirname(fileURLToPath(import.meta.url));
@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Serve static files
 app.use(express.static(path.join(__dirname, '../client/src/assets')));
-// endpoint fetches metric data 
+// endpoint fetches metric data
 app.use('/metricserver', metricServerRouter);
 /**
  * handle requests to the root

@@ -58,12 +58,13 @@ export default {
                         return acc;
                     }, { totalCpu: 0, totalMemory: 0 });
                     topPods = data.map(function (pod) {
+                        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l;
                         return {
-                            NODE_NAME: pod.Pod.spec.nodeName,
-                            POD_NAME: pod.Pod.metadata.name,
-                            UID: pod.Pod.metadata.uid,
-                            CREATED_AT: pod.Pod.metadata.creationTimestamp,
-                            CPU_USAGE_CORES: pod.CPU.CurrentUsage,
+                            NODE_NAME: (_b = (_a = pod.Pod.spec) === null || _a === void 0 ? void 0 : _a.nodeName) !== null && _b !== void 0 ? _b : "defaultNodeName",
+                            POD_NAME: (_d = (_c = pod.Pod.metadata) === null || _c === void 0 ? void 0 : _c.name) !== null && _d !== void 0 ? _d : "defaultPodName",
+                            UID: (_f = (_e = pod.Pod.metadata) === null || _e === void 0 ? void 0 : _e.uid) !== null && _f !== void 0 ? _f : "defaultUIDName",
+                            CREATED_AT: (_h = (_g = pod.Pod.metadata) === null || _g === void 0 ? void 0 : _g.creationTimestamp) !== null && _h !== void 0 ? _h : "defaultTimeStamp",
+                            CPU_USAGE_CORES: (_j = pod.CPU.CurrentUsage) !== null && _j !== void 0 ? _j : 0,
                             // previously, had passed pod.CPU.CurrentUsage to parseFloat method
                             CPU_PERCENTAGE: ((Number(pod.CPU.CurrentUsage) / totalUsage_1.totalCpu) *
                                 100).toFixed(3),
@@ -74,7 +75,7 @@ export default {
                                 totalUsage_1.totalMemory) *
                                 100).toFixed(3),
                             CONTAINER_COUNT: pod.Containers.length,
-                            CONDITIONS: pod.Pod.status.conditions,
+                            CONDITIONS: (_l = (_k = pod.Pod.status) === null || _k === void 0 ? void 0 : _k.conditions) !== null && _l !== void 0 ? _l : "defaultCondition",
                         };
                     });
                     res.locals.topPods = topPods;
@@ -102,15 +103,16 @@ export default {
                 case 1:
                     data = _a.sent();
                     topNodes = data.map(function (node) {
+                        var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r;
                         return {
-                            NODE_NAME: node.Node.metadata.name,
-                            UID: node.Node.metadata.uid,
-                            CREATED_AT: node.Node.metadata.creationTimestamp,
-                            IP_ADDRESSES: node.Node.status.addresses,
-                            RESOURCE_CAPACITY: node.Node.status.capacity,
-                            ALLOCATABLE_RESOURCES: node.Node.status.allocatable,
-                            NODE_INFO: node.Node.status.nodeInfo,
-                            CONDITIONS: node.Node.status.conditions,
+                            NODE_NAME: (_b = (_a = node.Node.metadata) === null || _a === void 0 ? void 0 : _a.name) !== null && _b !== void 0 ? _b : "defaultNodeName",
+                            UID: (_d = (_c = node.Node.metadata) === null || _c === void 0 ? void 0 : _c.uid) !== null && _d !== void 0 ? _d : "defaultUID",
+                            CREATED_AT: (_f = (_e = node.Node.metadata) === null || _e === void 0 ? void 0 : _e.creationTimestamp) !== null && _f !== void 0 ? _f : "defaultTimeStamp",
+                            IP_ADDRESSES: (_h = (_g = node.Node.status) === null || _g === void 0 ? void 0 : _g.addresses) !== null && _h !== void 0 ? _h : "defaultIPAddress",
+                            RESOURCE_CAPACITY: (_k = (_j = node.Node.status) === null || _j === void 0 ? void 0 : _j.capacity) !== null && _k !== void 0 ? _k : "defaultCapacity",
+                            ALLOCATABLE_RESOURCES: (_m = (_l = node.Node.status) === null || _l === void 0 ? void 0 : _l.allocatable) !== null && _m !== void 0 ? _m : "defaultAllocatable",
+                            NODE_INFO: (_p = (_o = node.Node.status) === null || _o === void 0 ? void 0 : _o.nodeInfo) !== null && _p !== void 0 ? _p : "defaultNodeInfo",
+                            CONDITIONS: (_r = (_q = node.Node.status) === null || _q === void 0 ? void 0 : _q.conditions) !== null && _r !== void 0 ? _r : "defaultConditions",
                             CPU_CAPACITY: node.CPU.Capacity,
                             CPU_REQUEST_TOTAL: node.CPU.RequestTotal,
                             CPU_LIMIT_TOTAL: node.CPU.LimitTotal,

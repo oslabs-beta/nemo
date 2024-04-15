@@ -26,11 +26,11 @@ export default {
     );
     const topPods = data.map((pod) => {
       return {
-        NODE_NAME: pod.Pod.spec.nodeName,
-        POD_NAME: pod.Pod.metadata.name,
-        UID: pod.Pod.metadata.uid,
-        CREATED_AT: pod.Pod.metadata.creationTimestamp,
-        CPU_USAGE_CORES: pod.CPU.CurrentUsage,
+        NODE_NAME: pod.Pod.spec?.nodeName ?? "defaultNodeName",
+        POD_NAME: pod.Pod.metadata?.name ?? "defaultPodName",
+        UID: pod.Pod.metadata?.uid ?? "defaultUIDName",
+        CREATED_AT: pod.Pod.metadata?.creationTimestamp ?? "defaultTimeStamp",
+        CPU_USAGE_CORES: pod.CPU.CurrentUsage ?? 0,
         // previously, had passed pod.CPU.CurrentUsage to parseFloat method
         CPU_PERCENTAGE: (
           (Number(pod.CPU.CurrentUsage) / totalUsage.totalCpu) *
@@ -45,7 +45,7 @@ export default {
           100
         ).toFixed(3),
         CONTAINER_COUNT: pod.Containers.length,
-        CONDITIONS: pod.Pod.status.conditions,
+        CONDITIONS: pod.Pod.status?.conditions ?? "defaultCondition",
       };
     });
     res.locals.topPods = topPods;
@@ -66,14 +66,14 @@ getTopNodes: async (req: Request, res: Response, next: NextFunction) => {
     const data = await k8s.topNodes(k8sApi);
     const topNodes = data.map((node) => {
       return {
-        NODE_NAME: node.Node.metadata.name,
-        UID: node.Node.metadata.uid,
-        CREATED_AT: node.Node.metadata.creationTimestamp,
-        IP_ADDRESSES: node.Node.status.addresses,
-        RESOURCE_CAPACITY: node.Node.status.capacity,
-        ALLOCATABLE_RESOURCES: node.Node.status.allocatable,
-        NODE_INFO: node.Node.status.nodeInfo,
-        CONDITIONS: node.Node.status.conditions,
+        NODE_NAME: node.Node.metadata?.name ?? "defaultNodeName",
+        UID: node.Node.metadata?.uid ?? "defaultUID",
+        CREATED_AT: node.Node.metadata?.creationTimestamp ?? "defaultTimeStamp",
+        IP_ADDRESSES: node.Node.status?.addresses ?? "defaultIPAddress",
+        RESOURCE_CAPACITY: node.Node.status?.capacity ?? "defaultCapacity",
+        ALLOCATABLE_RESOURCES: node.Node.status?.allocatable ?? "defaultAllocatable",
+        NODE_INFO: node.Node.status?.nodeInfo ?? "defaultNodeInfo",
+        CONDITIONS: node.Node.status?.conditions ?? "defaultConditions",
         CPU_CAPACITY: node.CPU.Capacity,
         CPU_REQUEST_TOTAL: node.CPU.RequestTotal,
         CPU_LIMIT_TOTAL: node.CPU.LimitTotal,

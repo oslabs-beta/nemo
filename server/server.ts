@@ -1,7 +1,10 @@
 import express from 'express';
-import metricServerRouter from './routes/metricServerRouter.js';
+import { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import path from 'path';
+
+import metricServerRouter from './routes/metricServerRouter.js';
+
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -20,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static files
 app.use(express.static(path.join(__dirname, '../client/src/assets')));
 
-// endpoint fetches metric data 
+// endpoint fetches metric data
 app.use('/metricserver', metricServerRouter);
 
 /**
@@ -38,7 +41,7 @@ app.use((req, res) => res.sendStatus(404));
 /**
  * global error handler
  */
-app.use((err, req, res, next) => {
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   const defaultErr = {
     log: `Express error handler caught unknown error: ${err}`,
     status: 500,
