@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import GitHubButton from "react-github-btn";
-import donuts from "../assets/donuts.jpg";
-import d3 from "../assets/d3.jpg";
-import table from "../assets/table.jpg";
+//import GitHubButton from "react-github-btn";
+//import donuts from "../assets/donuts.jpg";
+//import d3 from "../assets/d3.jpg";
+//import table from "../assets/table.jpg";
 
 const Welcome = () => {
   const [showText, setShowText] = useState(false);
@@ -71,7 +71,7 @@ const Welcome = () => {
               with a color-coding scheme akin to our chart system, designed to
               indicate usage severity.
             </div>
-            <GitHubButton
+            {/* <GitHubButton
               href="https://github.com/oslabs-beta/nemo"
               data-color-scheme="no-preference: light; light: light; dark: dark;"
               data-size="large"
@@ -79,7 +79,7 @@ const Welcome = () => {
               aria-label="Follow @buttons on GitHub"
             >
               Follow Nemo on GitHub
-            </GitHubButton>
+            </GitHubButton> */}
           </h1>
         </div>
 
@@ -104,7 +104,7 @@ const Welcome = () => {
             >
               DYNAMIC TABLES
             </em>
-            <img src={table} />
+            {/* <img src={table} /> */}
           </div>
           <br></br>
         </div>
@@ -132,8 +132,8 @@ const Welcome = () => {
           justifyContent: "space-around",
         }}
       >
-        <img src={donuts} />
-        <img src={d3} />
+        {/* <img src={donuts} />
+        <img src={d3} /> */}
       </div>
     </div>
   );
