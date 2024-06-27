@@ -1,6 +1,6 @@
 import React from "react";
-import NodeCharts from "./NodeCharts";
-import NodeTable from "./NodeTable";
+import NodeCharts from "./NodeCharts.jsx";
+import NodeTable from "./NodeTable.jsx";
 
 const NodeContainer = ({ nodeData }) => {
   const nodeDataByMem = nodeData.sort(
